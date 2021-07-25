@@ -1,0 +1,4 @@
+*.user
+Source/RealisticOreGeneration/.idea/
+*.cache
+Source/RealisticOreGeneration/obj/

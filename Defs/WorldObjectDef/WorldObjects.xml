@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <WorldObjectDef Name="Settlement">
+        <defName>SrMiningOutPost</defName>
+        <label>Mining OutPost</label>
+        <description>A base of one of the factions.</description>
+        <worldObjectClass>MiningOutPost</worldObjectClass>
+        <expandingIcon>true</expandingIcon>
+        <expandingIconPriority>10</expandingIconPriority>
+        <canBePlayerHome>true</canBePlayerHome>
+        <comps>
+            <li Class="WorldObjectCompProperties_FormCaravan"/>
+        </comps>
+    </WorldObjectDef>
+</Defs>

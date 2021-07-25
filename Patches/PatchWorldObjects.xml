@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/WorldObjectDef[defName = "Caravan"]</xpath>
+        <value>
+            <comps>
+                <li Class="RabiSquare.ModRimWorld.RealisticOreGeneration.WorldObjectCompPropertiesMining"/>
+            </comps>
+        </value>
+    </Operation>
+</Patch>
