@@ -50,13 +50,19 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Base\BaseSingleTon.cs" />
+        <Compile Include="DefOf\MapGeneratorDefOf.cs" />
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
+        <Compile Include="ModelData\OreData.cs" />
+        <Compile Include="Model\OreInfoRecoder.cs" />
+        <Compile Include="Model\OreWeightGenerator.cs" />
         <Compile Include="Patch\PatchCaravanGetGizmos.cs" />
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="StartUp\StartUp.cs" />
         <Compile Include="World\Comp\WorldObjectCompMining.cs" />
         <Compile Include="World\Comp\WorldObjectCompPropertiesMining.cs" />
-        <Compile Include="World\Map\MiningOutPost.cs" />
+        <Compile Include="World\Map\MiningOutpost.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

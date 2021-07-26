@@ -4,7 +4,7 @@
         <xpath>/Defs/WorldObjectDef[defName = "Caravan"]</xpath>
         <value>
             <comps>
-                <li Class="RabiSquare.ModRimWorld.RealisticOreGeneration.WorldObjectCompPropertiesMining"/>
+                <li Class="RabiSquare.RealisticOreGeneration.WorldObjectCompPropertiesMining"/>
             </comps>
         </value>
     </Operation>

@@ -7,7 +7,6 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
-using System;
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -23,51 +22,47 @@ namespace RabiSquare.RealisticOreGeneration
 
         public WorldObjectCompPropertiesMining Props => (WorldObjectCompPropertiesMining) props;
 
-        private readonly Caravan _caravan;
-
-        public WorldObjectCompMining()
-        {
-            _caravan = (Caravan) parent;
-        }
+        private Caravan Caravan => (Caravan) parent;
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
-            if (Prefs.DevMode)
+            var commandAction = new Command_Action
             {
-                Command_Action commandAction = new Command_Action
-                {
-                    defaultLabel = "Mining",
-                    icon = FormCaravanCommand,
-                    action = OnClickMining
-                };
-                yield return commandAction;
-            }
+                defaultLabel = "Mining",
+                icon = FormCaravanCommand,
+                action = OnClickMining
+            };
+            yield return commandAction;
         }
 
         private void OnClickMining()
         {
-            var faction = _caravan.Faction;
-            if (faction != Faction.OfPlayer)
+            if (Caravan == null)
             {
-                Log.Warning("caravan is not player");
+                Log.Warning("[RabiSquare.RealisticOreGeneration]can't find caravan");
                 return;
             }
 
-            LongEventHandler.QueueLongEvent(
-                delegate
-                {
-                    GetOrGenerateMapUtility.GetOrGenerateMap(_caravan.Tile, Find.World.info.initialMapSize, null);
-                }, "GeneratingMap", true,
-                GameAndMapInitExceptionHandlers.ErrorWhileGeneratingMap);
-            // LongEventHandler.QueueLongEvent(delegate()
-            //     {
-            //         Map map = newHome.Map;
-            //         Thing t = caravan.PawnsListForReading[0];
-            //         CaravanEnterMapUtility.Enter(caravan, map, CaravanEnterMode.Center,
-            //             CaravanDropInventoryMode.DropInstantly, false, (IntVec3 x) => x.GetRoom(map).CellCount >= 600);
-            //         CameraJumper.TryJump(t);
-            //     }, "SpawningColonists", true,
-            //     new Action<Exception>(GameAndMapInitExceptionHandlers.ErrorWhileGeneratingMap), true);
+            var faction = Caravan.Faction;
+            if (faction != Faction.OfPlayer)
+            {
+                Log.Warning("[RabiSquare.RealisticOreGeneration]caravan is not player");
+                return;
+            }
+
+            var result = OreWeightGenerator.Generate(Caravan.Tile);
+
+            foreach (var kvp in result)
+            {
+                Log.Warning($"ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            }
+
+            var mapParent = (MapParent) WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
+            mapParent.Tile = Caravan.Tile;
+            mapParent.SetFaction(Faction.OfPlayer);
+            Find.WorldObjects.Add(mapParent);
+            var map = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile, new IntVec3(200, 1, 200), null);
+            CaravanEnterMapUtility.Enter(Caravan, map, CaravanEnterMode.Edge);
         }
     }
 }

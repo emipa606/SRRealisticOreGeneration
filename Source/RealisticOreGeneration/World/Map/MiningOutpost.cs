@@ -1,20 +1,19 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       WorldObjectDefOf.cs
+//       /\ /|       @file       MiningOutpost.cs
 //       \ V/        @brief      
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
-//      /  \\        @Modified   2021-07-26 00:00:45
+//      /  \\        @Modified   2021-07-25 23:53:18
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
-using JetBrains.Annotations;
-using RimWorld;
+using RimWorld.Planet;
+using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    [DefOf]
-    public static class WorldObjectDefOf
+    public class MiningOutpost : MapParent
     {
-        [UsedImplicitly] public static readonly WorldObjectDef SrMiningOutpost;
+        public override MapGeneratorDef MapGeneratorDef => MapGeneratorDefOf.SrMiningOutpost;
     }
 }

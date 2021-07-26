@@ -1,20 +1,21 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       WorldObjectDefOf.cs
+//       /\ /|       @file       BaseSingleTon.cs
 //       \ V/        @brief      
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
-//      /  \\        @Modified   2021-07-26 00:00:45
+//      /  \\        @Modified   2021-07-26 19:48:56
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
-using JetBrains.Annotations;
-using RimWorld;
-
 namespace RabiSquare.RealisticOreGeneration
 {
-    [DefOf]
-    public static class WorldObjectDefOf
+    public class BaseSingleTon<T> where T : class, new()
     {
-        [UsedImplicitly] public static readonly WorldObjectDef SrMiningOutpost;
+        public static T Instance => Inner.InternalInstance;
+
+        private static class Inner
+        {
+            internal static readonly T InternalInstance = new T();
+        }
     }
 }

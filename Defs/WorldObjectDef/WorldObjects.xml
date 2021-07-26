@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
     <WorldObjectDef Name="Settlement">
-        <defName>SrMiningOutPost</defName>
+        <defName>SrMiningOutpost</defName>
         <label>Mining OutPost</label>
-        <description>A base of one of the factions.</description>
-        <worldObjectClass>MiningOutPost</worldObjectClass>
+        <description>A destroyed settlement.</description>
+        <worldObjectClass>RabiSquare.RealisticOreGeneration.MiningOutpost</worldObjectClass>
+        <texture>World/WorldObjects/TribalSettlement</texture>
         <expandingIcon>true</expandingIcon>
+        <expandingIconTexture>World/WorldObjects/Expanding/DestroyedSettlement</expandingIconTexture>
         <expandingIconPriority>10</expandingIconPriority>
-        <canBePlayerHome>true</canBePlayerHome>
+        <canBePlayerHome>false</canBePlayerHome>
         <comps>
             <li Class="WorldObjectCompProperties_FormCaravan"/>
         </comps>
