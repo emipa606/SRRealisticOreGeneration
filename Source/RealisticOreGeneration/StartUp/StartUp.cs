@@ -19,9 +19,11 @@ namespace RabiSquare.RealisticOreGeneration
     {
         static StartUp()
         {
-            var oreList = DefDatabase<ThingDef>.AllDefs
+            var surfaceOreList = DefDatabase<ThingDef>.AllDefs
                 .Where(t => t.building != null && t.building.mineableScatterCommonality > 0);
-            OreInfoRecoder.Instance.SetOreDataList(oreList);
+            OreInfoRecoder.Instance.SetSurfaceOreDataList(surfaceOreList);
+            var undergroundOreList = DefDatabase<ThingDef>.AllDefs.Where(t => t.deepCommonality > 0);
+            OreInfoRecoder.Instance.SetUndergroundOreDataList(undergroundOreList);
             if (Prefs.DevMode)
             {
                 Log.Message($"{OreInfoRecoder.Instance}");

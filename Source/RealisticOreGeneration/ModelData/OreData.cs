@@ -11,11 +11,11 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class OreData
     {
-        public string defName;
-        public float mineableScatterCommonality; //relative chance to generate this resource lump by mapgen
-        public float mineableScatterLumpSize; //size of lump
-        public float mineableYield;
-        public float marketValue;
+        public readonly string defName;
+        public readonly float mineableScatterCommonality; //relative chance to generate this resource lump by mapgen
+        public readonly float mineableScatterLumpSize; //size of lump
+        public readonly float mineableYield;
+        public readonly float marketValue;
 
         public OreData(string defName, float mineableScatterCommonality, float mineableScatterLumpSize,
             float mineableYield, float marketValue)

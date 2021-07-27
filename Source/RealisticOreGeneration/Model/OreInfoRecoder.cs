@@ -15,15 +15,23 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class OreInfoRecoder : BaseSingleTon<OreInfoRecoder>, IExposable
     {
-        private readonly List<OreData> _vanillaOreDataList = new List<OreData>(); //vanilla data of all ores
-        private Dictionary<int, Dictionary<string, float>> worldOreAbundant =
-            new Dictionary<int, Dictionary<string, float>>(); //commonality of each ore in each tile <tileId,<defName,commonality>>
+        private readonly List<OreData>
+            _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
+
+        private readonly List<OreData>
+            _vanillaUndergroundOreDataList = new List<OreData>(); //vanilla data of all underground ores
+
+        private Dictionary<int, Dictionary<string, float>> worldSurfaceOreAbundant =
+            new Dictionary<int, Dictionary<string, float>>(); //commonality of each surface ore in each tile <tileId,<defName,commonality>>
+
+        private Dictionary<int, Dictionary<string, float>> worldUndergroundOreAbundant =
+            new Dictionary<int, Dictionary<string, float>>(); //commonality of each underground ore in each tile <tileId,<defName,commonality>>
 
         /// <summary>
-        /// set vanilla data of each ore
+        /// set vanilla data of each surface ore
         /// </summary>
         /// <param name="thingDefs"></param>
-        public void SetOreDataList(IEnumerable<ThingDef> thingDefs)
+        public void SetSurfaceOreDataList(IEnumerable<ThingDef> thingDefs)
         {
             foreach (var thingdef in thingDefs)
             {
@@ -45,71 +53,157 @@ namespace RabiSquare.RealisticOreGeneration
                 var oreData = new OreData(thingdef.defName, buildingProperties.mineableScatterCommonality,
                     buildingProperties.mineableScatterLumpSizeRange.Average, buildingProperties.mineableYield,
                     mineableThing.BaseMarketValue);
-                _vanillaOreDataList.Add(oreData);
+                _vanillaSurfaceOreDataList.Add(oreData);
             }
         }
 
         /// <summary>
-        /// get vanilla data of ore by index
+        /// get vanilla data of surface ore by index
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public OreData GetOreDataByIndex(int index)
+        public OreData GetSurfaceOreDataByIndex(int index)
         {
-            if (_vanillaOreDataList.Count > index)
+            if (_vanillaSurfaceOreDataList.Count > index)
             {
-                return _vanillaOreDataList[index];
+                return _vanillaSurfaceOreDataList[index];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find oreData on index: {index}");
+            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find surface oreData on index: {index}");
             return null;
         }
 
         /// <summary>
-        /// set ore abundant of tile
+        /// how many surface ores can be genetated
+        /// </summary>
+        /// <returns></returns>
+        public int GetSurfaceOreDataListCount()
+        {
+            return _vanillaSurfaceOreDataList.Count;
+        }
+
+        /// <summary>
+        /// set vanilla data of each underground ore 
+        /// </summary>
+        /// <param name="thingDefs"></param>
+        public void SetUndergroundOreDataList(IEnumerable<ThingDef> thingDefs)
+        {
+            foreach (var thingdef in thingDefs)
+            {
+                var oreData = new OreData(thingdef.defName, thingdef.deepCommonality,
+                    thingdef.deepLumpSizeRange.Average, thingdef.deepCountPerPortion,
+                    thingdef.BaseMarketValue);
+                _vanillaUndergroundOreDataList.Add(oreData);
+            }
+        }
+
+        /// <summary>
+        /// get vanilla data of underground ore by index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public OreData GetUndergroundOreDataByIndex(int index)
+        {
+            if (_vanillaUndergroundOreDataList.Count > index)
+            {
+                return _vanillaUndergroundOreDataList[index];
+            }
+
+            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find underground oreData on index: {index}");
+            return null;
+        }
+
+        /// <summary>
+        /// how many underground ores can be genetated
+        /// </summary>
+        /// <returns></returns>
+        public int GetUndergroundOreDataListCount()
+        {
+            return _vanillaUndergroundOreDataList.Count;
+        }
+
+        /// <summary>
+        /// set underground ore abundant of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <param name="oreAbundant"></param>
-        public void SetOreAbundant(int tileId, Dictionary<string, float> oreAbundant)
+        public void SetSurfaceOreAbundant(int tileId, Dictionary<string, float> oreAbundant)
         {
-            if (worldOreAbundant.ContainsKey(tileId))
+            if (worldSurfaceOreAbundant.ContainsKey(tileId))
             {
-                Log.Warning($"[RabiSquare.RealisticOreGeneration]this tile: {tileId} has been calced");
+                Log.Warning(
+                    $"[RabiSquare.RealisticOreGeneration]surfaceOreAbundant of tile: {tileId} has been calced");
+                worldSurfaceOreAbundant[tileId] = oreAbundant;
                 return;
             }
 
-            worldOreAbundant.Add(tileId, oreAbundant);
+            worldSurfaceOreAbundant.Add(tileId, oreAbundant);
         }
 
         /// <summary>
-        /// get ore abundant of tile
+        /// get underground ore abundant of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <returns></returns>
-        public Dictionary<string, float> GetOreAbundant(int tileId)
+        public Dictionary<string, float> GetSurfaceOreAbundant(int tileId)
         {
-            if (worldOreAbundant.ContainsKey(tileId))
+            if (worldSurfaceOreAbundant.ContainsKey(tileId))
             {
-                return worldOreAbundant[tileId];
+                return worldSurfaceOreAbundant[tileId];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find oreAbundant of tile: {tileId}");
+            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find surfaceOreAbundant of tile: {tileId}");
             return null;
         }
 
         /// <summary>
-        /// how many ores
+        /// set underground ore abundant of tile
         /// </summary>
-        /// <returns></returns>
-        public int GetOreDataListCount()
+        /// <param name="tileId"></param>
+        /// <param name="oreAbundant"></param>
+        public void SetUndergroundOreAbundant(int tileId, Dictionary<string, float> oreAbundant)
         {
-            return _vanillaOreDataList.Count;
+            if (worldUndergroundOreAbundant.ContainsKey(tileId))
+            {
+                Log.Warning(
+                    $"[RabiSquare.RealisticOreGeneration]undergroundOreAbundant of tile: {tileId} has been calced");
+                worldUndergroundOreAbundant[tileId] = oreAbundant;
+                return;
+            }
+
+            worldUndergroundOreAbundant.Add(tileId, oreAbundant);
+        }
+
+        /// <summary>
+        /// get underground ore abundant of tile
+        /// </summary>
+        /// <param name="tileId"></param>
+        /// <returns></returns>
+        public Dictionary<string, float> GetUndergroundOreAbundant(int tileId)
+        {
+            if (worldUndergroundOreAbundant.ContainsKey(tileId))
+            {
+                return worldUndergroundOreAbundant[tileId];
+            }
+
+            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find undergroundOreAbundant of tile: {tileId}");
+            return null;
         }
 
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            foreach (var oreData in _vanillaOreDataList)
+            stringBuilder.Append("surface:");
+            stringBuilder.Append("\n");
+            foreach (var oreData in _vanillaSurfaceOreDataList)
+            {
+                stringBuilder.Append(oreData);
+                stringBuilder.Append("\n");
+            }
+
+            stringBuilder.Append("deep:");
+            stringBuilder.Append("\n");
+            foreach (var oreData in _vanillaUndergroundOreDataList)
             {
                 stringBuilder.Append(oreData);
                 stringBuilder.Append("\n");
@@ -120,7 +214,9 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void ExposeData()
         {
-            Scribe_Collections.Look(ref worldOreAbundant, "worldOreAbundant", LookMode.Value,
+            Scribe_Collections.Look(ref worldSurfaceOreAbundant, "worldSurfaceOreAbundant", LookMode.Value,
+                LookMode.Deep);
+            Scribe_Collections.Look(ref worldUndergroundOreAbundant, "worldUndergroundOreAbundant", LookMode.Value,
                 LookMode.Deep);
         }
     }

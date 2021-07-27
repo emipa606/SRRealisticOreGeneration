@@ -50,11 +50,16 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var result = OreWeightGenerator.Generate(Caravan.Tile);
-
+            var result = OreWeightGenerator.GenerateSurfaceAbundance(Caravan.Tile);
             foreach (var kvp in result)
             {
-                Log.Warning($"ore: {kvp.Key}\ncommonality: {kvp.Value}");
+                Log.Warning($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            }
+
+            var result1 = OreWeightGenerator.GenerateUndergroundAbundance(Caravan.Tile);
+            foreach (var kvp in result1)
+            {
+                Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
             }
 
             var mapParent = (MapParent) WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
