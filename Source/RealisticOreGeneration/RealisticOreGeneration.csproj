@@ -55,6 +55,7 @@
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
         <Compile Include="ModelData\OreData.cs" />
         <Compile Include="Model\OreInfoRecoder.cs" />
+        <Compile Include="Model\OreReserveRecoder.cs" />
         <Compile Include="Model\OreWeightGenerator.cs" />
         <Compile Include="Patch\PatchCaravanGetGizmos.cs" />
         <Compile Include="Patch\PatchMain.cs" />

@@ -24,7 +24,7 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random resource abundances
             const float qMin = 1f;
             var n = OreInfoRecoder.Instance.GetOreDataListCount();
-            var q = qMin + Rand.Value * ((float) n / 2 - qMin);
+            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
