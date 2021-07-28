@@ -50,6 +50,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
+            //todo this for test now
             var result = OreWeightGenerator.GenerateSurfaceAbundance(Caravan.Tile);
             foreach (var kvp in result)
             {
@@ -60,6 +61,12 @@ namespace RabiSquare.RealisticOreGeneration
             foreach (var kvp in result1)
             {
                 Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            }
+
+            foreach (var abundance in result)
+            {
+                var rawOreDef = ThingDef.Named(abundance.Key);
+                rawOreDef.building.mineableScatterCommonality = abundance.Value;
             }
 
             var mapParent = (MapParent) WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
