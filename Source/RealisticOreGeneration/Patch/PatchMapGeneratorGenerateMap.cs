@@ -1,5 +1,5 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       PatchMapGenerateMap.cs
+//       /\ /|       @file       PatchMapGeneratorGenerateMap.cs
 //       \ V/        @brief      to patch Map.GenerateMap()
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
@@ -14,8 +14,8 @@ using Verse;
 namespace RabiSquare.RealisticOreGeneration
 {
     [UsedImplicitly]
-    [HarmonyPatch(typeof(Map), "GenerateMap")]
-    public class PatchMapGenerateMap
+    [HarmonyPatch(typeof(MapGenerator), "GenerateMap")]
+    public class PatchMapGeneratorGenerateMap
     {
         /// <summary>
         /// hook mapgen with new params
@@ -37,7 +37,7 @@ namespace RabiSquare.RealisticOreGeneration
                 Log.Warning($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
             }
 
-            var result1 = OreWeightGenerator.GenerateUndergroundAbundance(tileId);
+            var result1 = OreInfoRecoder.Instance.GetUndergroundOreAbundant(tileId);
             foreach (var kvp in result1)
             {
                 Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");

@@ -22,9 +22,10 @@ namespace RabiSquare.RealisticOreGeneration
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]
-        public static void Postfix()
+        // ReSharper disable once InconsistentNaming
+        public static void Postfix(World __result)
         {
-            var world = Current.CreatingWorld;
+            var world = __result;
             if (world == null)
             {
                 Log.Error($"{CoreDef.LogTag}world in generating is null");
@@ -47,10 +48,15 @@ namespace RabiSquare.RealisticOreGeneration
 
             for (var i = 0; i < allTiles.Count; i++)
             {
-                var surfaceAbundance = OreWeightGenerator.GenerateSurfaceAbundance(i);
-                var undergroundAbundance = OreWeightGenerator.GenerateUndergroundAbundance(i);
+                var surfaceAbundance = OreWeightGenerator.GenerateSurfaceAbundance(i, worldGrid);
+                var undergroundAbundance = OreWeightGenerator.GenerateUndergroundAbundance(i, worldGrid);
                 OreInfoRecoder.Instance.SetSurfaceOreAbundant(i, surfaceAbundance);
                 OreInfoRecoder.Instance.SetUndergroundOreAbundant(i, undergroundAbundance);
+            }
+
+            if (Prefs.DevMode)
+            {
+                Log.Message($"hook worldgen success with tile count: {allTiles.Count}");
             }
         }
     }

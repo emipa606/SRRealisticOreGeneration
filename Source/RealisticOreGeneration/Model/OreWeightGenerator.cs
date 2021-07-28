@@ -18,7 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private const float Relief = 15;
 
-        public static Dictionary<string, float> GenerateSurfaceAbundance(int tileId)
+        public static Dictionary<string, float> GenerateSurfaceAbundance(int tileId, WorldGrid worldGrid)
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random resource abundances
@@ -50,7 +50,6 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             //get grid to find tiles
-            var worldGrid = Find.WorldGrid;
             var tile = worldGrid[tileId];
             if (tile == null)
             {
@@ -93,7 +92,7 @@ namespace RabiSquare.RealisticOreGeneration
             return mapCommonality;
         }
 
-        public static Dictionary<string, float> GenerateUndergroundAbundance(int tileId)
+        public static Dictionary<string, float> GenerateUndergroundAbundance(int tileId, WorldGrid worldGrid)
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random resource abundances
@@ -125,7 +124,6 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             //get grid to find tiles
-            var worldGrid = Find.WorldGrid;
             var tile = worldGrid[tileId];
             if (tile == null)
             {

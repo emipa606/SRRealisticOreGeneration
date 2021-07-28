@@ -59,7 +59,7 @@
         <Compile Include="Model\OreWeightGenerator.cs" />
         <Compile Include="Model\UndergroundOreReserveRecoder.cs" />
         <Compile Include="Patch\PatchMain.cs" />
-        <Compile Include="Patch\PatchMapGenerateMap.cs" />
+        <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />
         <Compile Include="Patch\PatchWorldGeneratorGenerateWorld.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="StartUp\StartUp.cs" />
