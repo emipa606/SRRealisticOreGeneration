@@ -24,7 +24,7 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random resource abundances
             const float qMin = 1f;
             var n = OreInfoRecoder.Instance.GetSurfaceOreDataListCount();
-            var q = qMin + Rand.Value * ((float) n / 2 - qMin);
+            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
@@ -54,7 +54,7 @@ namespace RabiSquare.RealisticOreGeneration
             var tile = worldGrid[tileId];
             if (tile == null)
             {
-                Log.Error($"[RabiSquare.RealisticOreGeneration]can't find tile: {tileId}");
+                Log.Error($"{CoreDef.LogTag}can't find tile: {tileId}");
                 return mapCommonality;
             }
 
@@ -72,14 +72,14 @@ namespace RabiSquare.RealisticOreGeneration
                 Mathf.PerlinNoise((pos.x + seed % 100) / Relief, (pos.z + seed % 100) / Relief);
             if (Prefs.DevMode)
             {
-                Log.Message($"[RabiSquare.RealisticOreGeneration]surface:");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]q: {q}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]hillinessFactor: {hillinessFactor}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]mineable resource multiplier: 1");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]pos: {pos}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]seed: {seed}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]relief: {Relief}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]berlinFactor: {berlinFactor}");
+                Log.Message($"{CoreDef.LogTag}surface:");
+                Log.Message($"{CoreDef.LogTag}q: {q}");
+                Log.Message($"{CoreDef.LogTag}hillinessFactor: {hillinessFactor}");
+                Log.Message($"{CoreDef.LogTag}mineable resource multiplier: 1");
+                Log.Message($"{CoreDef.LogTag}pos: {pos}");
+                Log.Message($"{CoreDef.LogTag}seed: {seed}");
+                Log.Message($"{CoreDef.LogTag}relief: {Relief}");
+                Log.Message($"{CoreDef.LogTag}berlinFactor: {berlinFactor}");
             }
 
             scaleCommonality *= berlinFactor;
@@ -99,7 +99,7 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random resource abundances
             const float qMin = 1f;
             var n = OreInfoRecoder.Instance.GetUndergroundOreDataListCount();
-            var q = qMin + Rand.Value * ((float) n / 2 - qMin);
+            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
@@ -129,7 +129,7 @@ namespace RabiSquare.RealisticOreGeneration
             var tile = worldGrid[tileId];
             if (tile == null)
             {
-                Log.Error($"[RabiSquare.RealisticOreGeneration]can't find tile: {tileId}");
+                Log.Error($"{CoreDef.LogTag}can't find tile: {tileId}");
                 return mapCommonality;
             }
 
@@ -147,14 +147,14 @@ namespace RabiSquare.RealisticOreGeneration
                 Mathf.PerlinNoise((pos.x + seed % 100) / Relief, (pos.z + seed % 100) / Relief);
             if (Prefs.DevMode)
             {
-                Log.Message($"[RabiSquare.RealisticOreGeneration]underground:");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]q: {q}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]hillinessFactor: {hillinessFactor}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]mineable resource multiplier: 1");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]pos: {pos}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]seed: {seed}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]relief: {Relief}");
-                Log.Message($"[RabiSquare.RealisticOreGeneration]berlinFactor: {berlinFactor}");
+                Log.Message($"{CoreDef.LogTag}underground:");
+                Log.Message($"{CoreDef.LogTag}q: {q}");
+                Log.Message($"{CoreDef.LogTag}hillinessFactor: {hillinessFactor}");
+                Log.Message($"{CoreDef.LogTag}mineable resource multiplier: 1");
+                Log.Message($"{CoreDef.LogTag}pos: {pos}");
+                Log.Message($"{CoreDef.LogTag}seed: {seed}");
+                Log.Message($"{CoreDef.LogTag}relief: {Relief}");
+                Log.Message($"{CoreDef.LogTag}berlinFactor: {berlinFactor}");
             }
 
             scaleCommonality *= berlinFactor;

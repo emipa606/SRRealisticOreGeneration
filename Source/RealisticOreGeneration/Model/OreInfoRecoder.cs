@@ -39,14 +39,14 @@ namespace RabiSquare.RealisticOreGeneration
                 if (buildingProperties == null)
                 {
                     Log.Warning(
-                        $"[RabiSquare.RealisticOreGeneration]Unexpected buildingProperties: {thingdef.defName}");
+                        $"{CoreDef.LogTag}Unexpected buildingProperties: {thingdef.defName}");
                     continue;
                 }
 
                 var mineableThing = buildingProperties.mineableThing;
                 if (mineableThing == null)
                 {
-                    Log.Warning($"[RabiSquare.RealisticOreGeneration]Unexpected mineableThing: {thingdef.defName}");
+                    Log.Warning($"{CoreDef.LogTag}Unexpected mineableThing: {thingdef.defName}");
                     continue;
                 }
 
@@ -69,7 +69,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return _vanillaSurfaceOreDataList[index];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find surface oreData on index: {index}");
+            Log.Error($"{CoreDef.LogTag}can't find surface oreData on index: {index}");
             return null;
         }
 
@@ -109,7 +109,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return _vanillaUndergroundOreDataList[index];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find underground oreData on index: {index}");
+            Log.Error($"{CoreDef.LogTag}can't find underground oreData on index: {index}");
             return null;
         }
 
@@ -132,7 +132,7 @@ namespace RabiSquare.RealisticOreGeneration
             if (worldSurfaceOreAbundant.ContainsKey(tileId))
             {
                 Log.Warning(
-                    $"[RabiSquare.RealisticOreGeneration]surfaceOreAbundant of tile: {tileId} has been calced");
+                    $"{CoreDef.LogTag}surfaceOreAbundant of tile: {tileId} has been calced");
                 worldSurfaceOreAbundant[tileId] = oreAbundant;
                 return;
             }
@@ -152,7 +152,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return worldSurfaceOreAbundant[tileId];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find surfaceOreAbundant of tile: {tileId}");
+            Log.Error($"{CoreDef.LogTag}can't find surfaceOreAbundant of tile: {tileId}");
             return null;
         }
 
@@ -166,7 +166,7 @@ namespace RabiSquare.RealisticOreGeneration
             if (worldUndergroundOreAbundant.ContainsKey(tileId))
             {
                 Log.Warning(
-                    $"[RabiSquare.RealisticOreGeneration]undergroundOreAbundant of tile: {tileId} has been calced");
+                    $"{CoreDef.LogTag}undergroundOreAbundant of tile: {tileId} has been calced");
                 worldUndergroundOreAbundant[tileId] = oreAbundant;
                 return;
             }
@@ -186,7 +186,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return worldUndergroundOreAbundant[tileId];
             }
 
-            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find undergroundOreAbundant of tile: {tileId}");
+            Log.Error($"{CoreDef.LogTag}can't find undergroundOreAbundant of tile: {tileId}");
             return null;
         }
 

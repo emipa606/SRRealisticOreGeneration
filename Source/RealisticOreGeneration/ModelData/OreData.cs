@@ -30,7 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
         public override string ToString()
         {
             return
-                $"[RabiSquare.RealisticOreGeneration]\ndefName: {defName}\nmineableScatterCommonality: {mineableScatterCommonality}\n" +
+                $"{CoreDef.LogTag}\ndefName: {defName}\nmineableScatterCommonality: {mineableScatterCommonality}\n" +
                 $"mineableScatterLumpSize: {mineableScatterLumpSize}\nmineableYield: {mineableYield}\nmarketValue: {marketValue}";
         }
     }

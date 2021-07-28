@@ -39,34 +39,15 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (Caravan == null)
             {
-                Log.Warning("[RabiSquare.RealisticOreGeneration]can't find caravan");
+                Log.Warning($"{CoreDef.LogTag}can't find caravan");
                 return;
             }
 
             var faction = Caravan.Faction;
             if (faction != Faction.OfPlayer)
             {
-                Log.Warning("[RabiSquare.RealisticOreGeneration]caravan is not player");
+                Log.Warning($"{CoreDef.LogTag}caravan is not player");
                 return;
-            }
-
-            //todo this for test now
-            var result = OreWeightGenerator.GenerateSurfaceAbundance(Caravan.Tile);
-            foreach (var kvp in result)
-            {
-                Log.Warning($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
-
-            var result1 = OreWeightGenerator.GenerateUndergroundAbundance(Caravan.Tile);
-            foreach (var kvp in result1)
-            {
-                Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
-
-            foreach (var abundance in result)
-            {
-                var rawOreDef = ThingDef.Named(abundance.Key);
-                rawOreDef.building.mineableScatterCommonality = abundance.Value;
             }
 
             var mapParent = (MapParent) WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
