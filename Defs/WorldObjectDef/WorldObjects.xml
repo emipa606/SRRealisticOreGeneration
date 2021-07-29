@@ -10,6 +10,9 @@
         <expandingIconTexture>World/WorldObjects/Expanding/DestroyedSettlement</expandingIconTexture>
         <expandingIconPriority>10</expandingIconPriority>
         <canBePlayerHome>false</canBePlayerHome>
+        <IncidentTargetTags>
+            <li>Map_Misc</li>
+        </IncidentTargetTags>
         <comps>
             <li Class="WorldObjectCompProperties_FormCaravan"/>
             <li Class="RabiSquare.RealisticOreGeneration.WorldObjectCompPropertiesAbandon"/>

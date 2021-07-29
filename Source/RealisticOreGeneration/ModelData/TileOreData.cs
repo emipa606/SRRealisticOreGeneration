@@ -11,11 +11,11 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class TileOreData
+    public class TileOreData : IExposable
     {
-        private readonly float berlinFactor;
-        private readonly float surfaceValueFactor;
-        private readonly float undergroundValueFactor;
+        private float berlinFactor;
+        private float surfaceValueFactor;
+        private float undergroundValueFactor;
 
         //commonality of each surface ore in each tile <defName,commonality>
         public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
@@ -24,7 +24,8 @@ namespace RabiSquare.RealisticOreGeneration
         //decide whether the overall ore of the area are more or less on surface
         public float SurfaceAbundance => berlinFactor * surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
         //decide whether the overall ore of the area are more or less in underground
-        public float UndergroundAbundance => berlinFactor * undergroundValueFactor * SettingWindow.Instance.settingModel.undergroundMutilpier;
+        public float UndergroundAbundance =>
+            berlinFactor * undergroundValueFactor * SettingWindow.Instance.settingModel.undergroundMutilpier;
 
         public TileOreData(float berlinFactor, float surfaceValueFactor, float undergroundValueFactor)
         {
@@ -54,6 +55,15 @@ namespace RabiSquare.RealisticOreGeneration
             Log.Message($"berlinFactor: {berlinFactor}");
             Log.Message($"surfaceValueFactor: {surfaceValueFactor}");
             Log.Message($"undergroundValueFactor: {undergroundValueFactor}");
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref berlinFactor, "berlinFactor");
+            Scribe_Values.Look(ref surfaceValueFactor, "surfaceValueFactor");
+            Scribe_Values.Look(ref undergroundValueFactor, "undergroundValueFactor");
+            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value, LookMode.Value);
         }
     }
 }

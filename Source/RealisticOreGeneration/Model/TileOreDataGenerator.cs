@@ -109,7 +109,7 @@ namespace RabiSquare.RealisticOreGeneration
             if (oreDistrubtion.Count == 0)
             {
                 Log.Error($"{MsicDef.LogTag}there is no ore in defs");
-                return 0f;
+                return 1f;
             }
 
             var vanillaTotalValue = 0f;
@@ -121,7 +121,7 @@ namespace RabiSquare.RealisticOreGeneration
                 if (oreData == null)
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by index: {i}");
-                    return 0f;
+                    return 1f;
                 }
 
                 vanillaTotalValue += VanillaOreInfoRecoder.Instance.GetNormalizedSurfaceCommonality(i) * oreData.yield *
@@ -129,7 +129,7 @@ namespace RabiSquare.RealisticOreGeneration
                 if (!oreDistrubtion.ContainsKey(oreData.defName))
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by defName: {oreData.defName}");
-                    return 0f;
+                    return 1f;
                 }
 
                 var currentCommonality = oreDistrubtion[oreData.defName];

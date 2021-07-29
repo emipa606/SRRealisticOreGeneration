@@ -40,7 +40,7 @@ namespace RabiSquare.RealisticOreGeneration
                 commandAction.Disable("TileOccupied".Translate());
             }
 
-            if (MiningOutpostRecorder.Instance.GetOutpostCount() > SettingWindow.Instance.settingModel.maxOutpostCount)
+            if (MiningOutpostRecorder.Instance.GetOutpostCount() >= SettingWindow.Instance.settingModel.maxOutpostCount)
             {
                 commandAction.Disable("SrCommandTooManyOutpostHere".Translate());
             }

@@ -7,13 +7,26 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
+using JetBrains.Annotations;
 using RimWorld.Planet;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
+    [UsedImplicitly]
     public class MiningOutpost : MapParent
     {
         public override MapGeneratorDef MapGeneratorDef => MapGeneratorDefOf.SrMiningOutpost;
+
+        /// <summary>
+        /// map destroy occur on ticking
+        /// </summary>
+        /// <param name="alsoRemoveWorldObject"></param>
+        /// <returns></returns>
+        public override bool ShouldRemoveMapNow(out bool alsoRemoveWorldObject)
+        {
+            alsoRemoveWorldObject = Destroyed;
+            return Destroyed;
+        }
     }
 }

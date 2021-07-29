@@ -212,7 +212,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void ExposeData()
         {
-            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value, LookMode.Deep);
+            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value, LookMode.Reference);
         }
     }
 }
