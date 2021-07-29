@@ -1,5 +1,5 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       OreInfoRecoder.cs
+//       /\ /|       @file       VanillaOreInfoRecoder.cs
 //       \ V/        @brief      record the vanilla data of all ores
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
@@ -13,14 +13,15 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class OreInfoRecoder : BaseSingleTon<OreInfoRecoder>, IExposable
+    public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>, IExposable
     {
+        private float vanallaTotalSurfaceComonality;
+        private float vanallaTotalUndergroundComonality;
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
         private readonly List<OreData>
             _vanillaUndergroundOreDataList = new List<OreData>(); //vanilla data of all underground ores
         private Dictionary<int, TileOreData> worldTileOreDataHashmap = new Dictionary<int, TileOreData>();
-
         /// <summary>
         /// set vanilla data of each surface ore
         /// </summary>
@@ -48,6 +49,8 @@ namespace RabiSquare.RealisticOreGeneration
                     buildingProperties.mineableScatterLumpSizeRange.Average, buildingProperties.mineableYield,
                     mineableThing.BaseMarketValue);
                 _vanillaSurfaceOreDataList.Add(oreData);
+                vanallaTotalSurfaceComonality = 0f;
+                vanallaTotalSurfaceComonality += oreData.commonality;
             }
         }
 
@@ -58,7 +61,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// <returns></returns>
         public OreData GetSurfaceOreDataByIndex(int index)
         {
-            if (_vanillaSurfaceOreDataList.Count > index)
+            if (_vanillaSurfaceOreDataList != null && _vanillaSurfaceOreDataList.Count > index)
             {
                 return _vanillaSurfaceOreDataList[index];
             }
@@ -76,6 +79,17 @@ namespace RabiSquare.RealisticOreGeneration
             return _vanillaSurfaceOreDataList.Count;
         }
 
+        public float GetNormalizedSurfaceCommonality(int index)
+        {
+            if (_vanillaSurfaceOreDataList != null && _vanillaSurfaceOreDataList.Count > index)
+            {
+                return _vanillaSurfaceOreDataList[index].commonality / vanallaTotalSurfaceComonality;
+            }
+
+            Log.Error($"{MsicDef.LogTag}can't find surface oreData on index: {index}");
+            return 0f;
+        }
+
         /// <summary>
         /// set vanilla data of each underground ore 
         /// </summary>
@@ -88,6 +102,8 @@ namespace RabiSquare.RealisticOreGeneration
                     thingdef.deepLumpSizeRange.Average, thingdef.deepCountPerPortion,
                     thingdef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
+                vanallaTotalUndergroundComonality = 0f;
+                vanallaTotalUndergroundComonality += oreData.commonality;
             }
         }
 
@@ -98,7 +114,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// <returns></returns>
         public OreData GetUndergroundOreDataByIndex(int index)
         {
-            if (_vanillaUndergroundOreDataList.Count > index)
+            if (_vanillaUndergroundOreDataList != null && _vanillaUndergroundOreDataList.Count > index)
             {
                 return _vanillaUndergroundOreDataList[index];
             }
@@ -114,6 +130,17 @@ namespace RabiSquare.RealisticOreGeneration
         public int GetUndergroundOreDataListCount()
         {
             return _vanillaUndergroundOreDataList.Count;
+        }
+
+        public float GetNormalizedUndergroundCommonality(int index)
+        {
+            if (_vanillaUndergroundOreDataList != null && _vanillaUndergroundOreDataList.Count > index)
+            {
+                return _vanillaUndergroundOreDataList[index].commonality / vanallaTotalUndergroundComonality;
+            }
+
+            Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
+            return 0f;
         }
 
         /// <summary>

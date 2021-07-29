@@ -30,7 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             var tileId = parent.Tile;
-            var tileOreData = OreInfoRecoder.Instance.GetTileOreData(tileId);
+            var tileOreData = VanillaOreInfoRecoder.Instance.GetTileOreData(tileId);
             if (tileOreData == null)
             {
                 Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");

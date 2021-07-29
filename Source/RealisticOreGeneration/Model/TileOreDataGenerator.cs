@@ -23,7 +23,7 @@ namespace RabiSquare.RealisticOreGeneration
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
-            var n = OreInfoRecoder.Instance.GetSurfaceOreDataListCount();
+            var n = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataListCount();
             var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
@@ -35,10 +35,12 @@ namespace RabiSquare.RealisticOreGeneration
 
             //shuffle
             arrayNewCommonality.Shuffle();
+            //normalized
+            arrayNewCommonality.Normalized();
             //record ore distrubtion
             for (var i = 0; i < n; i++)
             {
-                var oreData = OreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
                 mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
             }
 
@@ -50,7 +52,7 @@ namespace RabiSquare.RealisticOreGeneration
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
-            var n = OreInfoRecoder.Instance.GetUndergroundOreDataListCount();
+            var n = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataListCount();
             var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
@@ -62,16 +64,18 @@ namespace RabiSquare.RealisticOreGeneration
 
             //shuffle
             arrayNewCommonality.Shuffle();
+            //normalized
+            arrayNewCommonality.Normalized();
             //record ore distrubtion
             for (var i = 0; i < n; i++)
             {
-                var oreData = OreInfoRecoder.Instance.GetUndergroundOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataByIndex(i);
                 mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
             }
 
             return mapCommonality;
         }
-        
+
         /// <summary>
         /// ramdom by tile
         /// </summary>
@@ -113,15 +117,15 @@ namespace RabiSquare.RealisticOreGeneration
             //notmalisation by total resource value
             for (var i = 0; i < oreDistrubtion.Count; i++)
             {
-                var oreData = OreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
                 if (oreData == null)
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by index: {i}");
                     return 0f;
                 }
 
-                vanillaTotalValue += oreData.mineableScatterCommonality * oreData.mineableYield *
-                                     oreData.marketValue * oreData.mineableScatterLumpSize;
+                vanillaTotalValue += VanillaOreInfoRecoder.Instance.GetNormalizedSurfaceCommonality(i) * oreData.yield *
+                                     oreData.marketValue * oreData.lumpSize;
                 if (!oreDistrubtion.ContainsKey(oreData.defName))
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by defName: {oreData.defName}");
@@ -129,8 +133,8 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 var currentCommonality = oreDistrubtion[oreData.defName];
-                currentTotalValue += currentCommonality * oreData.mineableYield *
-                                     oreData.marketValue * oreData.mineableScatterLumpSize;
+                currentTotalValue += currentCommonality * oreData.yield *
+                                     oreData.marketValue * oreData.lumpSize;
             }
 
             //scale total value to vanilla
@@ -156,15 +160,15 @@ namespace RabiSquare.RealisticOreGeneration
             //notmalisation by total resource value
             for (var i = 0; i < oreDistrubtion.Count; i++)
             {
-                var oreData = OreInfoRecoder.Instance.GetUndergroundOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataByIndex(i);
                 if (oreData == null)
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by index: {i}");
                     return 0f;
                 }
 
-                vanillaTotalValue += oreData.mineableScatterCommonality * oreData.mineableYield *
-                                     oreData.marketValue * oreData.mineableScatterLumpSize;
+                vanillaTotalValue += VanillaOreInfoRecoder.Instance.GetNormalizedUndergroundCommonality(i) * oreData.yield *
+                                     oreData.marketValue * oreData.lumpSize;
                 if (!oreDistrubtion.ContainsKey(oreData.defName))
                 {
                     Log.Error($"{MsicDef.LogTag}cant't find ore data by defName: {oreData.defName}");
@@ -172,8 +176,8 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 var currentCommonality = oreDistrubtion[oreData.defName];
-                currentTotalValue += currentCommonality * oreData.mineableYield *
-                                     oreData.marketValue * oreData.mineableScatterLumpSize;
+                currentTotalValue += currentCommonality * oreData.yield *
+                                     oreData.marketValue * oreData.lumpSize;
             }
 
             //scale total value to vanilla
