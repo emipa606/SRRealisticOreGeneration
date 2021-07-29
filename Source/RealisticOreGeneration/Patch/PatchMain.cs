@@ -20,7 +20,7 @@ namespace RabiSquare.RealisticOreGeneration
     {
         static PatchMain()
         {
-            var instance = new Harmony(CoreDef.LogTag);
+            var instance = new Harmony(MsicDef.LogTag);
             instance.PatchAll(Assembly.GetExecutingAssembly());
         }
     }

@@ -1,6 +1,6 @@
 ﻿// ******************************************************************
 //       /\ /|       @file       OreData.cs
-//       \ V/        @brief      origin data of each ore
+//       \ V/        @brief      vanilla data of each raw ore
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
 //      /  \\        @Modified   2021-07-26 19:51:04
@@ -12,9 +12,9 @@ namespace RabiSquare.RealisticOreGeneration
     public class OreData
     {
         public readonly string defName;
-        public readonly float mineableScatterCommonality; //relative chance to generate this resource lump by mapgen
+        public readonly float mineableScatterCommonality; //relative chance to generate this resource lump by mapgen (may should be called weight)
         public readonly float mineableScatterLumpSize; //size of lump
-        public readonly float mineableYield;
+        public readonly float mineableYield; //how many ore we can get in each raw ore
         public readonly float marketValue;
 
         public OreData(string defName, float mineableScatterCommonality, float mineableScatterLumpSize,
@@ -30,7 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
         public override string ToString()
         {
             return
-                $"{CoreDef.LogTag}\ndefName: {defName}\nmineableScatterCommonality: {mineableScatterCommonality}\n" +
+                $"{MsicDef.LogTag}\ndefName: {defName}\nmineableScatterCommonality: {mineableScatterCommonality}\n" +
                 $"mineableScatterLumpSize: {mineableScatterLumpSize}\nmineableYield: {mineableYield}\nmarketValue: {marketValue}";
         }
     }

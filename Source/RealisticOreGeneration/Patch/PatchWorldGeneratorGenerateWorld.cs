@@ -28,30 +28,33 @@ namespace RabiSquare.RealisticOreGeneration
             var world = __result;
             if (world == null)
             {
-                Log.Error($"{CoreDef.LogTag}world in generating is null");
+                Log.Error($"{MsicDef.LogTag}world in generating is null");
                 return;
             }
 
             var worldGrid = world.grid;
             if (worldGrid == null)
             {
-                Log.Error($"{CoreDef.LogTag}world grid in generating is null");
+                Log.Error($"{MsicDef.LogTag}world grid in generating is null");
                 return;
             }
 
             var allTiles = worldGrid.tiles;
             if (allTiles == null || allTiles.Count <= 0)
             {
-                Log.Error($"{CoreDef.LogTag}wrong tile count");
+                Log.Error($"{MsicDef.LogTag}wrong tile count");
                 return;
             }
 
             for (var i = 0; i < allTiles.Count; i++)
             {
-                var surfaceAbundance = OreWeightGenerator.GenerateSurfaceAbundance(i, worldGrid);
-                var undergroundAbundance = OreWeightGenerator.GenerateUndergroundAbundance(i, worldGrid);
-                OreInfoRecoder.Instance.SetSurfaceOreAbundant(i, surfaceAbundance);
-                OreInfoRecoder.Instance.SetUndergroundOreAbundant(i, undergroundAbundance);
+                var surfaceDistrubtion = TileOreDataGenerator.GenerateSurfaceDistrubtion();
+                var undergroundDistrubtion = TileOreDataGenerator.GenerateUndergroundDistrubtion();
+                var surfaceValueFactor = TileOreDataGenerator.CalcSurfaceValueFactor(surfaceDistrubtion);
+                var undergroundValueFactor = TileOreDataGenerator.CalcUndergroundValueFactor(undergroundDistrubtion);
+                var berlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid);
+                OreInfoRecoder.Instance.SetTileOreData(i, berlinFactor, surfaceValueFactor, undergroundValueFactor, surfaceDistrubtion,
+                    undergroundDistrubtion);
             }
 
             if (Prefs.DevMode)

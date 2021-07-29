@@ -1,5 +1,5 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       CoreDef.cs
+//       /\ /|       @file       MsicDef.cs
 //       \ V/        @brief      
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
@@ -8,8 +8,8 @@
 // ******************************************************************
 namespace RabiSquare.RealisticOreGeneration
 {
-    public static class CoreDef
+    public static class MsicDef
     {
-        public static readonly string LogTag = "[RabiSquare.RealisticOreGeneration]";
+        public const string LogTag = "[RabiSquare.RealisticOreGeneration]";
     }
 }

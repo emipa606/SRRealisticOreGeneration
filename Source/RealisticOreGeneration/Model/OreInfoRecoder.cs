@@ -17,15 +17,9 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
-
         private readonly List<OreData>
             _vanillaUndergroundOreDataList = new List<OreData>(); //vanilla data of all underground ores
-
-        private Dictionary<int, Dictionary<string, float>> worldSurfaceOreAbundant =
-            new Dictionary<int, Dictionary<string, float>>(); //commonality of each surface ore in each tile <tileId,<defName,commonality>>
-
-        private Dictionary<int, Dictionary<string, float>> worldUndergroundOreAbundant =
-            new Dictionary<int, Dictionary<string, float>>(); //commonality of each underground ore in each tile <tileId,<defName,commonality>>
+        private Dictionary<int, TileOreData> worldTileOreDataHashmap = new Dictionary<int, TileOreData>();
 
         /// <summary>
         /// set vanilla data of each surface ore
@@ -39,14 +33,14 @@ namespace RabiSquare.RealisticOreGeneration
                 if (buildingProperties == null)
                 {
                     Log.Warning(
-                        $"{CoreDef.LogTag}Unexpected buildingProperties: {thingdef.defName}");
+                        $"{MsicDef.LogTag}Unexpected buildingProperties: {thingdef.defName}");
                     continue;
                 }
 
                 var mineableThing = buildingProperties.mineableThing;
                 if (mineableThing == null)
                 {
-                    Log.Warning($"{CoreDef.LogTag}Unexpected mineableThing: {thingdef.defName}");
+                    Log.Warning($"{MsicDef.LogTag}Unexpected mineableThing: {thingdef.defName}");
                     continue;
                 }
 
@@ -69,7 +63,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return _vanillaSurfaceOreDataList[index];
             }
 
-            Log.Error($"{CoreDef.LogTag}can't find surface oreData on index: {index}");
+            Log.Error($"{MsicDef.LogTag}can't find surface oreData on index: {index}");
             return null;
         }
 
@@ -109,7 +103,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return _vanillaUndergroundOreDataList[index];
             }
 
-            Log.Error($"{CoreDef.LogTag}can't find underground oreData on index: {index}");
+            Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
             return null;
         }
 
@@ -123,77 +117,52 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// set underground ore abundant of tile
+        /// set surface ore data of tile
         /// </summary>
         /// <param name="tileId"></param>
-        /// <param name="oreAbundant"></param>
-        public void SetSurfaceOreAbundant(int tileId, Dictionary<string, float> oreAbundant)
+        /// <param name="berlinFactor"></param>
+        /// <param name="surfaceValueFactor"></param>
+        /// <param name="undergroundValueFactor"></param>
+        /// <param name="surfaceDistrubtion"></param>
+        /// <param name="undergroundDistrubtion"></param>
+        public void SetTileOreData(int tileId, float berlinFactor, float surfaceValueFactor, float undergroundValueFactor,
+            Dictionary<string, float> surfaceDistrubtion, Dictionary<string, float> undergroundDistrubtion)
         {
-            if (worldSurfaceOreAbundant.ContainsKey(tileId))
+            if (worldTileOreDataHashmap.ContainsKey(tileId))
             {
-                Log.Warning(
-                    $"{CoreDef.LogTag}surfaceOreAbundant of tile: {tileId} has been calced");
-                worldSurfaceOreAbundant[tileId] = oreAbundant;
+                Log.Warning($"{MsicDef.LogTag}ore data of tile: {tileId} has been calced");
                 return;
             }
 
-            worldSurfaceOreAbundant.Add(tileId, oreAbundant);
+            var tileOreData = new TileOreData(berlinFactor, surfaceValueFactor, undergroundValueFactor)
+            {
+                surfaceDistrubtion = surfaceDistrubtion,
+                undergroundDistrubtion = undergroundDistrubtion
+            };
+
+            worldTileOreDataHashmap.Add(tileId, tileOreData);
         }
 
         /// <summary>
-        /// get underground ore abundant of tile
+        /// get surface ore data of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <returns></returns>
-        public Dictionary<string, float> GetSurfaceOreAbundant(int tileId)
+        public TileOreData GetTileOreData(int tileId)
         {
-            if (worldSurfaceOreAbundant.ContainsKey(tileId))
+            if (worldTileOreDataHashmap.ContainsKey(tileId))
             {
-                return worldSurfaceOreAbundant[tileId];
+                return worldTileOreDataHashmap[tileId];
             }
 
-            Log.Error($"{CoreDef.LogTag}can't find surfaceOreAbundant of tile: {tileId}");
-            return null;
-        }
-
-        /// <summary>
-        /// set underground ore abundant of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <param name="oreAbundant"></param>
-        public void SetUndergroundOreAbundant(int tileId, Dictionary<string, float> oreAbundant)
-        {
-            if (worldUndergroundOreAbundant.ContainsKey(tileId))
-            {
-                Log.Warning(
-                    $"{CoreDef.LogTag}undergroundOreAbundant of tile: {tileId} has been calced");
-                worldUndergroundOreAbundant[tileId] = oreAbundant;
-                return;
-            }
-
-            worldUndergroundOreAbundant.Add(tileId, oreAbundant);
-        }
-
-        /// <summary>
-        /// get underground ore abundant of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <returns></returns>
-        public Dictionary<string, float> GetUndergroundOreAbundant(int tileId)
-        {
-            if (worldUndergroundOreAbundant.ContainsKey(tileId))
-            {
-                return worldUndergroundOreAbundant[tileId];
-            }
-
-            Log.Error($"{CoreDef.LogTag}can't find undergroundOreAbundant of tile: {tileId}");
+            Log.Error($"{MsicDef.LogTag}can't find surfaceOreAbundant of tile: {tileId}");
             return null;
         }
 
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append("surface:");
+            stringBuilder.Append("surface vanilla data:");
             stringBuilder.Append("\n");
             foreach (var oreData in _vanillaSurfaceOreDataList)
             {
@@ -201,7 +170,7 @@ namespace RabiSquare.RealisticOreGeneration
                 stringBuilder.Append("\n");
             }
 
-            stringBuilder.Append("deep:");
+            stringBuilder.Append("underground vanilla data:");
             stringBuilder.Append("\n");
             foreach (var oreData in _vanillaUndergroundOreDataList)
             {
@@ -209,14 +178,14 @@ namespace RabiSquare.RealisticOreGeneration
                 stringBuilder.Append("\n");
             }
 
+            stringBuilder.Append("tile count: ");
+            stringBuilder.Append(worldTileOreDataHashmap.Count);
             return stringBuilder.ToString();
         }
 
         public void ExposeData()
         {
-            Scribe_Collections.Look(ref worldSurfaceOreAbundant, "worldSurfaceOreAbundant", LookMode.Value,
-                LookMode.Deep);
-            Scribe_Collections.Look(ref worldUndergroundOreAbundant, "worldUndergroundOreAbundant", LookMode.Value,
+            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value,
                 LookMode.Deep);
         }
     }

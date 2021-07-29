@@ -39,14 +39,14 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (Caravan == null)
             {
-                Log.Warning($"{CoreDef.LogTag}can't find caravan");
+                Log.Warning($"{MsicDef.LogTag}can't find caravan");
                 return;
             }
 
             var faction = Caravan.Faction;
             if (faction != Faction.OfPlayer)
             {
-                Log.Warning($"{CoreDef.LogTag}caravan is not player");
+                Log.Warning($"{MsicDef.LogTag}caravan is not player");
                 return;
             }
 

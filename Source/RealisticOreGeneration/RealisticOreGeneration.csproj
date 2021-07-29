@@ -53,10 +53,11 @@
         <Compile Include="Base\BaseSingleTon.cs" />
         <Compile Include="DefOf\MapGeneratorDefOf.cs" />
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
-        <Compile Include="Def\CoreDef.cs" />
+        <Compile Include="Def\MsicDef.cs" />
         <Compile Include="ModelData\OreData.cs" />
+        <Compile Include="ModelData\TileOreData.cs" />
         <Compile Include="Model\OreInfoRecoder.cs" />
-        <Compile Include="Model\OreWeightGenerator.cs" />
+        <Compile Include="Model\TileOreDataGenerator.cs" />
         <Compile Include="Model\UndergroundOreReserveRecoder.cs" />
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />

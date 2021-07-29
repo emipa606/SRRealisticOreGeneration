@@ -25,41 +25,40 @@ namespace RabiSquare.RealisticOreGeneration
         public static bool Prefix(MapParent parent)
         {
             var tileId = parent.Tile;
-            var surfaceOreAbundant = OreInfoRecoder.Instance.GetSurfaceOreAbundant(tileId);
-            if (surfaceOreAbundant == null)
+            var tileOreData = OreInfoRecoder.Instance.GetTileOreData(tileId);
+            if (tileOreData == null)
             {
-                Log.Warning($"{CoreDef.LogTag}can't find ore info in tile: {tileId}");
+                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");
                 return true;
             }
+
             //todo test
-            foreach (var kvp in surfaceOreAbundant)
+            foreach (var kvp in tileOreData.surfaceDistrubtion)
             {
                 Log.Warning($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
             }
-
-            var result1 = OreInfoRecoder.Instance.GetUndergroundOreAbundant(tileId);
-            foreach (var kvp in result1)
+            foreach (var kvp in tileOreData.undergroundDistrubtion)
             {
                 Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
             }
             //
-            foreach (var abundance in surfaceOreAbundant)
+            foreach (var kvp in tileOreData.surfaceDistrubtion)
             {
-                var rawOreDef = ThingDef.Named(abundance.Key);
+                var rawOreDef = ThingDef.Named(kvp.Key);
                 if (rawOreDef == null)
                 {
-                    Log.Error($"{CoreDef.LogTag}can't find rawOreDef with defName: {abundance.Key}");
+                    Log.Error($"{MsicDef.LogTag}can't find rawOreDef with defName: {kvp.Key}");
                     return true;
                 }
 
                 var buildingProperties = rawOreDef.building;
                 if (buildingProperties == null)
                 {
-                    Log.Error($"{CoreDef.LogTag}can't find buildingProperties with defName: {abundance.Key}");
+                    Log.Error($"{MsicDef.LogTag}can't find buildingProperties with defName: {kvp.Key}");
                     return true;
                 }
 
-                buildingProperties.mineableScatterCommonality = abundance.Value;
+                buildingProperties.mineableScatterCommonality = kvp.Value;
             }
 
             if (Prefs.DevMode)
