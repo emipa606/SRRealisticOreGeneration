@@ -171,7 +171,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// get surface ore data of tile
+        /// get ore data of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <returns></returns>
@@ -182,7 +182,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return worldTileOreDataHashmap[tileId];
             }
 
-            Log.Error($"{MsicDef.LogTag}can't find surfaceOreAbundant of tile: {tileId}");
+            Log.Error($"{MsicDef.LogTag}can't find ore data of tile: {tileId}");
             return null;
         }
 
@@ -212,8 +212,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void ExposeData()
         {
-            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value,
-                LookMode.Deep);
+            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value, LookMode.Deep);
         }
     }
 }

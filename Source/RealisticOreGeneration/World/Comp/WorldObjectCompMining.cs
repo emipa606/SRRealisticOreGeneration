@@ -19,16 +19,13 @@ namespace RabiSquare.RealisticOreGeneration
     public class WorldObjectCompMining : WorldObjectComp
     {
         private static readonly Texture2D FormCaravanCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
-
-        public WorldObjectCompPropertiesMining Props => (WorldObjectCompPropertiesMining) props;
-
-        private Caravan Caravan => (Caravan) parent;
+        private Caravan Caravan => (Caravan)parent;
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
             var commandAction = new Command_Action
             {
-                defaultLabel = "Mining",
+                defaultLabel = "SrBuildMiningOutpost".Translate(),
                 icon = FormCaravanCommand,
                 action = OnClickMining
             };
@@ -50,7 +47,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var mapParent = (MapParent) WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
+            var mapParent = (MapParent)WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrMiningOutpost);
             mapParent.Tile = Caravan.Tile;
             mapParent.SetFaction(Faction.OfPlayer);
             Find.WorldObjects.Add(mapParent);

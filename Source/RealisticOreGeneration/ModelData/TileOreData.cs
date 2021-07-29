@@ -16,14 +16,15 @@ namespace RabiSquare.RealisticOreGeneration
         private readonly float berlinFactor;
         private readonly float surfaceValueFactor;
         private readonly float undergroundValueFactor;
-        public Dictionary<string, float> surfaceDistrubtion =
-            new Dictionary<string, float>(); //commonality of each surface ore in each tile <defName,commonality>
-        public Dictionary<string, float> undergroundDistrubtion =
-            new Dictionary<string, float>(); //commonality of each underground ore in each tile <defName,commonality>
-        public float SurfaceAbundance =>
-            berlinFactor * surfaceValueFactor * 1.5f; //decide whether the overall ore of the area are more or less on surface
-        public float UndergroundAbundance =>
-            berlinFactor * undergroundValueFactor * 1.5f; //decide whether the overall ore of the area are more or less in underground
+
+        //commonality of each surface ore in each tile <defName,commonality>
+        public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
+        //commonality of each underground ore in each tile <defName,commonality>
+        public Dictionary<string, float> undergroundDistrubtion = new Dictionary<string, float>();
+        //decide whether the overall ore of the area are more or less on surface
+        public float SurfaceAbundance => berlinFactor * surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
+        //decide whether the overall ore of the area are more or less in underground
+        public float UndergroundAbundance => berlinFactor * undergroundValueFactor * SettingWindow.Instance.settingModel.undergroundMutilpier;
 
         public TileOreData(float berlinFactor, float surfaceValueFactor, float undergroundValueFactor)
         {

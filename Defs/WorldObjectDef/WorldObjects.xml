@@ -12,6 +12,7 @@
         <canBePlayerHome>false</canBePlayerHome>
         <comps>
             <li Class="WorldObjectCompProperties_FormCaravan"/>
+            <li Class="RabiSquare.RealisticOreGeneration.WorldObjectCompPropertiesAbandon"/>
         </comps>
     </WorldObjectDef>
 </Defs>

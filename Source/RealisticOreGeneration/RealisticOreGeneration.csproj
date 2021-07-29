@@ -64,9 +64,15 @@
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />
         <Compile Include="Patch\PatchWorldGeneratorGenerateWorld.cs" />
+        <Compile Include="Patch\PatchWorldInspectPaneCurTabs.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="StartUp\StartUp.cs" />
+        <Compile Include="UI\Model\SettingModel.cs" />
+        <Compile Include="UI\Planet\OreTileInfoTab.cs" />
+        <Compile Include="UI\Window\SettingWindow.cs" />
+        <Compile Include="World\Comp\WorldObjectCompAbandon.cs" />
         <Compile Include="World\Comp\WorldObjectCompMining.cs" />
+        <Compile Include="World\Comp\WorldObjectCompPropertiesAbandon.cs" />
         <Compile Include="World\Comp\WorldObjectCompPropertiesMining.cs" />
         <Compile Include="World\Map\MiningOutpost.cs" />
     </ItemGroup>
