@@ -57,6 +57,7 @@
         <Compile Include="Extension\ArrayExtension.cs" />
         <Compile Include="ModelData\OreData.cs" />
         <Compile Include="ModelData\TileOreData.cs" />
+        <Compile Include="Model\MiningOutpostRecorder.cs" />
         <Compile Include="Model\VanillaOreInfoRecoder.cs" />
         <Compile Include="Model\TileOreDataGenerator.cs" />
         <Compile Include="Model\UndergroundOreReserveRecoder.cs" />

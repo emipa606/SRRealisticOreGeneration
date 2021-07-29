@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <WorldObjectDef Name="Settlement">
+    <WorldObjectDef>
         <defName>SrMiningOutpost</defName>
         <label>Mining OutPost</label>
         <description>A destroyed settlement.</description>
@@ -14,5 +14,12 @@
             <li Class="WorldObjectCompProperties_FormCaravan"/>
             <li Class="RabiSquare.RealisticOreGeneration.WorldObjectCompPropertiesAbandon"/>
         </comps>
+    </WorldObjectDef>
+    <WorldObjectDef>
+        <defName>SrAbandonedMiningOutpost</defName>
+        <label>abandoned settlement</label>
+        <description>An abandoned settlement.</description>
+        <texture>World/WorldObjects/TribalSettlement</texture>
+        <worldObjectClass>MapParent</worldObjectClass>
     </WorldObjectDef>
 </Defs>

@@ -24,6 +24,11 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
+            if (Find.WorldSelector.SingleSelectedObject != MapParent)
+            {
+                yield break;
+            }
+
             var commandAction = new Command_Action
             {
                 defaultLabel = "SrCommandAbandonMiningOutpost".Translate(),
@@ -55,14 +60,8 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void OnClickAbandon()
         {
-            if (Map == null)
-            {
-                Abandon();
-                SoundDefOf.Tick_High.PlayOneShotOnCamera();
-                return;
-            }
-
-            Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation("SrAbandonMiningOutPostConfirm", Abandon));
+            Abandon();
+            SoundDefOf.Tick_High.PlayOneShotOnCamera();
         }
 
         private void Abandon()
@@ -74,9 +73,10 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void CreateAbandonedWorldObject()
         {
-            var worldObject = WorldObjectMaker.MakeWorldObject(RimWorld.WorldObjectDefOf.AbandonedSettlement);
+            var worldObject = WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.SrAbandonedMiningOutpost);
             worldObject.Tile = MapParent.Tile;
             Find.WorldObjects.Add(worldObject);
+            MiningOutpostRecorder.Instance.MiningOutpostCountDecrease();
         }
     }
 }

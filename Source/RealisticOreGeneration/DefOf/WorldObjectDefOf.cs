@@ -16,5 +16,6 @@ namespace RabiSquare.RealisticOreGeneration
     public static class WorldObjectDefOf
     {
         [UsedImplicitly] public static readonly WorldObjectDef SrMiningOutpost;
+        [UsedImplicitly] public static readonly WorldObjectDef SrAbandonedMiningOutpost;
     }
 }

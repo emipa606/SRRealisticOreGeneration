@@ -12,21 +12,21 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration.UI.Planet
 {
-    public class OreTileInfoTab : WITab
+    public class OreTileInfoTab : WITab_Planet
     {
-        private static readonly Vector2 WinSize = new Vector2(400f, 150f);
-
-        public OreTileInfoTab()
-        {
-            size = WinSize;
-            labelKey = "SrTabOreTileInfo";
-        }
-
-        public override bool IsVisible => SelTileID >= 0;
-
-        protected override void FillTab()
-        {
-            var rect = new Rect(0f, 0f, WinSize.x, WinSize.y).ContractedBy(10f);
-        }
+        // private static readonly Vector2 WinSize = new Vector2(400f, 150f);
+        //
+        // public OreTileInfoTab()
+        // {
+        //     size = WinSize;
+        //     labelKey = "SrTabOreTileInfo";
+        // }
+        //
+        // public override bool IsVisible => SelTileID >= 0;
+        //
+        // protected override void FillTab()
+        // {
+        //     var rect = new Rect(0f, 0f, WinSize.x, WinSize.y).ContractedBy(10f);
+        // }
     }
 }

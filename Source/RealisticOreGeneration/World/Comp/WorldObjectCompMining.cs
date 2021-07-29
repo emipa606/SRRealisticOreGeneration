@@ -23,12 +23,28 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
+            if (Find.WorldSelector.SingleSelectedObject != Caravan)
+            {
+                yield break;
+            }
+
             var commandAction = new Command_Action
             {
                 defaultLabel = "SrBuildMiningOutpost".Translate(),
                 icon = FormCaravanCommand,
                 action = OnClickMining
             };
+
+            if (Find.WorldObjects.AnyMapParentAt(parent.Tile))
+            {
+                commandAction.Disable("TileOccupied".Translate());
+            }
+
+            if (MiningOutpostRecorder.Instance.GetOutpostCount() > SettingWindow.Instance.settingModel.maxOutpostCount)
+            {
+                commandAction.Disable("SrCommandTooManyOutpostHere".Translate());
+            }
+
             yield return commandAction;
         }
 
@@ -51,8 +67,11 @@ namespace RabiSquare.RealisticOreGeneration
             mapParent.Tile = Caravan.Tile;
             mapParent.SetFaction(Faction.OfPlayer);
             Find.WorldObjects.Add(mapParent);
-            var map = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile, new IntVec3(200, 1, 200), null);
+            var map = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile,
+                new IntVec3(SettingWindow.Instance.settingModel.outpostMapSize, 1, SettingWindow.Instance.settingModel.outpostMapSize),
+                null);
             CaravanEnterMapUtility.Enter(Caravan, map, CaravanEnterMode.Edge);
+            MiningOutpostRecorder.Instance.MiningOutpostCountIncrease();
         }
     }
 }
