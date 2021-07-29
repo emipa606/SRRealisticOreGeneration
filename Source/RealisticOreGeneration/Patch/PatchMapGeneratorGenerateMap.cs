@@ -1,6 +1,6 @@
 ﻿// ******************************************************************
 //       /\ /|       @file       PatchMapGeneratorGenerateMap.cs
-//       \ V/        @brief      to patch Map.GenerateMap()
+//       \ V/        @brief      to patch MapGenerator.GenerateMap()
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
 //      /  \\        @Modified   2021-07-28 17:53:22
@@ -24,6 +24,11 @@ namespace RabiSquare.RealisticOreGeneration
         [HarmonyPrefix]
         public static bool Prefix(MapParent parent)
         {
+            if (parent == null)
+            {
+                return true;
+            }
+
             var tileId = parent.Tile;
             var tileOreData = OreInfoRecoder.Instance.GetTileOreData(tileId);
             if (tileOreData == null)
@@ -32,16 +37,6 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            //todo test
-            foreach (var kvp in tileOreData.surfaceDistrubtion)
-            {
-                Log.Warning($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
-            foreach (var kvp in tileOreData.undergroundDistrubtion)
-            {
-                Log.Warning($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
-            //
             foreach (var kvp in tileOreData.surfaceDistrubtion)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);
@@ -61,11 +56,14 @@ namespace RabiSquare.RealisticOreGeneration
                 buildingProperties.mineableScatterCommonality = kvp.Value;
             }
 
-            if (Prefs.DevMode)
+            if (!Prefs.DevMode)
             {
-                Log.Message($"hook mapgen success in tile: {tileId}");
+                return true;
             }
 
+            Log.Message($"hook mapgen success in tile: {tileId}");
+            tileOreData.DebugShowSurfaceDistrubtion();
+            tileOreData.DebugShowUndergroundDistrubtion();
             return true;
         }
     }

@@ -59,6 +59,7 @@
         <Compile Include="Model\OreInfoRecoder.cs" />
         <Compile Include="Model\TileOreDataGenerator.cs" />
         <Compile Include="Model\UndergroundOreReserveRecoder.cs" />
+        <Compile Include="Patch\PatchGenStepScatterLumpsMineableGenerate.cs" />
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />
         <Compile Include="Patch\PatchWorldGeneratorGenerateWorld.cs" />

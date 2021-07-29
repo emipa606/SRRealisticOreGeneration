@@ -7,14 +7,15 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 using System.Collections.Generic;
+using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
     public class TileOreData
     {
-        public float berlinFactor;
-        public float surfaceValueFactor;
-        public float undergroundValueFactor;
+        private readonly float berlinFactor;
+        private readonly float surfaceValueFactor;
+        private readonly float undergroundValueFactor;
         public Dictionary<string, float> surfaceDistrubtion =
             new Dictionary<string, float>(); //commonality of each surface ore in each tile <defName,commonality>
         public Dictionary<string, float> undergroundDistrubtion =
@@ -29,6 +30,29 @@ namespace RabiSquare.RealisticOreGeneration
             this.berlinFactor = berlinFactor;
             this.surfaceValueFactor = surfaceValueFactor;
             this.undergroundValueFactor = undergroundValueFactor;
+        }
+
+        public void DebugShowSurfaceDistrubtion()
+        {
+            foreach (var kvp in surfaceDistrubtion)
+            {
+                Log.Message($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            }
+        }
+
+        public void DebugShowUndergroundDistrubtion()
+        {
+            foreach (var kvp in undergroundDistrubtion)
+            {
+                Log.Message($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            }
+        }
+
+        public void DebugShowFactors()
+        {
+            Log.Message($"berlinFactor: {berlinFactor}");
+            Log.Message($"surfaceValueFactor: {surfaceValueFactor}");
+            Log.Message($"undergroundValueFactor: {undergroundValueFactor}");
         }
     }
 }
