@@ -41,10 +41,10 @@ namespace RabiSquare.RealisticOreGeneration
             Text.Font = GameFont.Medium;
             ls.GapLine(20f);
             ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}");
-            settingModel.surfaceMutilpier = ls.Slider(settingModel.surfaceMutilpier, 1f, 999f);
+            settingModel.surfaceMutilpier = ls.Slider(settingModel.surfaceMutilpier, 1f, 99f);
             ls.GapLine(20f);
             ls.Label($"{"SrUndergroundMutilpier".Translate()}: {settingModel.undergroundMutilpier}");
-            settingModel.undergroundMutilpier = ls.Slider(settingModel.undergroundMutilpier, 1f, 999f);
+            settingModel.undergroundMutilpier = ls.Slider(settingModel.undergroundMutilpier, 1f, 99f);
             ls.GapLine(20f);
             ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}");
             settingModel.outpostMapSize = Mathf.RoundToInt(ls.Slider(settingModel.outpostMapSize, 100, 300));

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName = "LongRangeMineralScanner"]/comps</xpath>
+        <value>
+            <li Class="RabiSquare.RealisticOreGeneration.CompPropertiesOreScanner">
+                <scanSpeedStat>ResearchSpeed</scanSpeedStat>
+                <scanFindMtbDays>4</scanFindMtbDays>
+                <scanFindGuaranteedDays>8</scanFindGuaranteedDays>
+                <soundWorking>ScannerLongRangeMineral_Ambience</soundWorking>
+            </li>
+        </value>
+    </Operation>
+</Patch>

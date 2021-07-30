@@ -28,20 +28,11 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            Log.Message($"{MsicDef.LogTag}UndergroundAbundance: {tileOreData.UndergroundAbundance}");
-            var freeCycleCount = (int)tileOreData.UndergroundAbundance * 20;
+            var freeCycleCount = (int)tileOreData.UndergroundAbundance;
             var currentCycleCount = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(tileId);
             //free underground ore find
             if (currentCycleCount < freeCycleCount)
             {
-                WorldOreInfoRecorder.Instance.UndergroundMiningCountIncrease(tileId);
-                if (Prefs.DevMode)
-                {
-                    Log.Message(
-                        $"{MsicDef.LogTag}underground mining count increase. tile: {tileId}. " +
-                        $"count: {WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(tileId)}");
-                }
-
                 return;
             }
 
@@ -49,13 +40,6 @@ namespace RabiSquare.RealisticOreGeneration
             var factor2 = currentCycleCount - freeCycleCount;
             scanFindGuaranteedDays *= (int)Mathf.Exp(factor1 * factor2);
             scanFindMtbDays *= (int)Mathf.Exp(factor1 * factor2);
-            if (!Prefs.DevMode)
-            {
-                return;
-            }
-
-            Log.Message($"{MsicDef.LogTag}scanFindGuaranteedDays: {scanFindGuaranteedDays}");
-            Log.Message($"{MsicDef.LogTag}scanFindMtbDays: {scanFindMtbDays}");
         }
     }
 }

@@ -51,6 +51,11 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Base\BaseSingleTon.cs" />
+        <Compile Include="Comp\CompOreScanner.cs" />
+        <Compile Include="Comp\CompPropertiesOreScanner.cs" />
+        <Compile Include="Comp\OreScanMode.cs" />
+        <Compile Include="Comp\ScanMode.cs" />
+        <Compile Include="Comp\ScanRange.cs" />
         <Compile Include="DefOf\MapGeneratorDefOf.cs" />
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
         <Compile Include="Def\MsicDef.cs" />
@@ -63,6 +68,7 @@
         <Compile Include="Model\TileOreDataGenerator.cs" />
         <Compile Include="Model\WorldOreInfoRecorder.cs" />
         <Compile Include="Patch\PatchCompDeepScannerChooseLumpThingDef.cs" />
+        <Compile Include="Patch\PatchCompDeepScannerDoFind.cs" />
         <Compile Include="Patch\PatchCompScannerTickDoesFind.cs" />
         <Compile Include="Patch\PatchGenStepScatterLumpsMineableGenerate.cs" />
         <Compile Include="Patch\PatchMain.cs" />

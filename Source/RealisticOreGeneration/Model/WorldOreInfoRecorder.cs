@@ -13,8 +13,8 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposable
     {
-        private Dictionary<int, TileOreData> worldTileOreDataHashmap = new Dictionary<int, TileOreData>(); //tileId,tileOreData
-        private Dictionary<int, int> worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
+        private Dictionary<int, TileOreData> _worldTileOreDataHashmap = new Dictionary<int, TileOreData>(); //tileId,tileOreData
+        private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
 
         /// <summary>
         /// set surface ore data of tile
@@ -28,19 +28,19 @@ namespace RabiSquare.RealisticOreGeneration
         public void SetTileOreData(int tileId, float berlinFactor, float surfaceValueFactor, float undergroundValueFactor,
             Dictionary<string, float> surfaceDistrubtion, Dictionary<string, float> undergroundDistrubtion)
         {
-            if (worldTileOreDataHashmap.ContainsKey(tileId))
+            if (_worldTileOreDataHashmap.ContainsKey(tileId))
             {
                 Log.Warning($"{MsicDef.LogTag}ore data of tile: {tileId} has been calced");
                 return;
             }
 
-            var tileOreData = new TileOreData(berlinFactor, surfaceValueFactor, undergroundValueFactor)
+            var tileOreData = new TileOreData(tileId, berlinFactor, surfaceValueFactor, undergroundValueFactor)
             {
                 surfaceDistrubtion = surfaceDistrubtion,
                 undergroundDistrubtion = undergroundDistrubtion
             };
 
-            worldTileOreDataHashmap.Add(tileId, tileOreData);
+            _worldTileOreDataHashmap.Add(tileId, tileOreData);
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace RabiSquare.RealisticOreGeneration
         /// <returns></returns>
         public TileOreData GetTileOreData(int tileId)
         {
-            if (worldTileOreDataHashmap.ContainsKey(tileId))
+            if (_worldTileOreDataHashmap.ContainsKey(tileId))
             {
-                return worldTileOreDataHashmap[tileId];
+                return _worldTileOreDataHashmap[tileId];
             }
 
             Log.Error($"{MsicDef.LogTag}can't find ore data of tile: {tileId}");
@@ -62,29 +62,29 @@ namespace RabiSquare.RealisticOreGeneration
         public void UndergroundMiningCountIncrease(int tileId)
         {
             // no info
-            if (!worldTileUndergroundOreMiningCount.ContainsKey(tileId))
+            if (!_worldTileUndergroundOreMiningCount.ContainsKey(tileId))
             {
-                worldTileUndergroundOreMiningCount.Add(tileId, 1);
+                _worldTileUndergroundOreMiningCount.Add(tileId, 1);
                 return;
             }
 
-            worldTileUndergroundOreMiningCount[tileId]++;
+            _worldTileUndergroundOreMiningCount[tileId]++;
         }
 
         public int GetUndergroundMiningCount(int tileId)
         {
-            return !worldTileUndergroundOreMiningCount.ContainsKey(tileId) ? 0 : worldTileUndergroundOreMiningCount[tileId];
+            return !_worldTileUndergroundOreMiningCount.ContainsKey(tileId) ? 0 : _worldTileUndergroundOreMiningCount[tileId];
         }
 
         public override string ToString()
         {
-            return $"tile count: {worldTileOreDataHashmap.Count}";
+            return $"tile count: {_worldTileOreDataHashmap.Count}";
         }
 
         public void ExposeData()
         {
-            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value, LookMode.Reference);
-            Scribe_Collections.Look(ref worldTileUndergroundOreMiningCount, "worldTileUndergroundOreMiningCount", LookMode.Value,
+            Scribe_Collections.Look(ref _worldTileOreDataHashmap, "_worldTileOreDataHashmap", LookMode.Value, LookMode.Reference);
+            Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount", LookMode.Value,
                 LookMode.Value);
         }
     }

@@ -53,11 +53,6 @@ namespace RabiSquare.RealisticOreGeneration
             DeepScannerDataGenerator.GenerateDeepScannerFindDays(parent.Tile, out var scanFindGuaranteedDays, out var scanFindMtbDays);
             compProps.scanFindMtbDays = scanFindMtbDays;
             compProps.scanFindGuaranteedDays = scanFindGuaranteedDays;
-            if (Prefs.DevMode)
-            {
-                Log.Message($"{MsicDef.LogTag}hook deep sanner tick success in tile: {parent.Tile}");
-            }
-
             return true;
         }
     }

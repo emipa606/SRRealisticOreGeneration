@@ -11,27 +11,33 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class TileOreData : IExposable
+    public class TileOreData : IExposable, ILoadReferenceable
     {
-        public float berlinFactor;
-        private float surfaceValueFactor;
-        private float undergroundValueFactor;
-
+        private int _tileId;
+        private float _berlinFactor;
+        private float _surfaceValueFactor;
+        private float _undergroundValueFactor;
         //commonality of each surface ore in each tile <defName,commonality>
         public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
         //commonality of each underground ore in each tile <defName,commonality>
         public Dictionary<string, float> undergroundDistrubtion = new Dictionary<string, float>();
         //decide whether the overall ore of the area are more or less on surface
-        public float SurfaceAbundance => berlinFactor * surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
+        public float SurfaceAbundance => _berlinFactor * _surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
         //decide whether the overall ore of the area are more or less in underground
         public float UndergroundAbundance =>
-            berlinFactor * undergroundValueFactor * SettingWindow.Instance.settingModel.undergroundMutilpier;
+            _berlinFactor * _undergroundValueFactor * SettingWindow.Instance.settingModel.undergroundMutilpier;
 
-        public TileOreData(float berlinFactor, float surfaceValueFactor, float undergroundValueFactor)
+        public TileOreData(int tileId, float berlinFactor, float surfaceValueFactor, float undergroundValueFactor)
         {
-            this.berlinFactor = berlinFactor;
-            this.surfaceValueFactor = surfaceValueFactor;
-            this.undergroundValueFactor = undergroundValueFactor;
+            _tileId = tileId;
+            _berlinFactor = berlinFactor;
+            _surfaceValueFactor = surfaceValueFactor;
+            _undergroundValueFactor = undergroundValueFactor;
+        }
+
+        public string GetUniqueLoadID()
+        {
+            return _tileId.ToString();
         }
 
         public void DebugShowSurfaceDistrubtion()
@@ -52,16 +58,16 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void DebugShowFactors()
         {
-            Log.Message($"berlinFactor: {berlinFactor}");
-            Log.Message($"surfaceValueFactor: {surfaceValueFactor}");
-            Log.Message($"undergroundValueFactor: {undergroundValueFactor}");
+            Log.Message($"berlinFactor: {_berlinFactor}");
+            Log.Message($"surfaceValueFactor: {_surfaceValueFactor}");
+            Log.Message($"undergroundValueFactor: {_undergroundValueFactor}");
         }
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref berlinFactor, "berlinFactor");
-            Scribe_Values.Look(ref surfaceValueFactor, "surfaceValueFactor");
-            Scribe_Values.Look(ref undergroundValueFactor, "undergroundValueFactor");
+            Scribe_Values.Look(ref _berlinFactor, "_berlinFactor");
+            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
+            Scribe_Values.Look(ref _undergroundValueFactor, "_undergroundValueFactor");
             Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value, LookMode.Value);
         }
