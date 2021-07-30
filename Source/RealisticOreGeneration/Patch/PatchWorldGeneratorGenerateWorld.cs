@@ -53,7 +53,7 @@ namespace RabiSquare.RealisticOreGeneration
                 var surfaceValueFactor = TileOreDataGenerator.CalcSurfaceValueFactor(surfaceDistrubtion);
                 var undergroundValueFactor = TileOreDataGenerator.CalcUndergroundValueFactor(undergroundDistrubtion);
                 var berlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid);
-                VanillaOreInfoRecoder.Instance.SetTileOreData(i, berlinFactor, surfaceValueFactor, undergroundValueFactor, surfaceDistrubtion,
+                WorldOreInfoRecorder.Instance.SetTileOreData(i, berlinFactor, surfaceValueFactor, undergroundValueFactor, surfaceDistrubtion,
                     undergroundDistrubtion);
             }
 

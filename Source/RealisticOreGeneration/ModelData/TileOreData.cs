@@ -13,7 +13,7 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class TileOreData : IExposable
     {
-        private float berlinFactor;
+        public float berlinFactor;
         private float surfaceValueFactor;
         private float undergroundValueFactor;
 

@@ -11,5 +11,6 @@ namespace RabiSquare.RealisticOreGeneration
     public static class MsicDef
     {
         public const string LogTag = "[RabiSquare.RealisticOreGeneration]";
+        public const string DeepSannerDefName = "GroundPenetratingScanner";
     }
 }

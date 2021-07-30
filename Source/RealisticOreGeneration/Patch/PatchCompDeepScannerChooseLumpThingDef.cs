@@ -1,29 +1,31 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       PatchMapGeneratorGenerateMap.cs
-//       \ V/        @brief      to patch MapGenerator.GenerateMap()
+//       /\ /|       @file       PatchCompDeepScannerChooseLumpThingDef.cs
+//       \ V/        @brief      to patch CompDeepScanner.ChooseLumpThingDef()
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
-//      /  \\        @Modified   2021-07-28 17:53:22
+//      /  \\        @Modified   2021-07-30 13:18:05
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 using HarmonyLib;
 using JetBrains.Annotations;
-using RimWorld.Planet;
+using RimWorld;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
     [UsedImplicitly]
-    [HarmonyPatch(typeof(MapGenerator), "GenerateMap")]
-    public class PatchMapGeneratorGenerateMap
+    [HarmonyPatch(typeof(CompDeepScanner), "ChooseLumpThingDef")]
+    public class PatchCompDeepScannerChooseLumpThingDef
     {
         /// <summary>
-        /// hook mapgen with new params
+        /// hook underground ore choosing
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
-        public static bool Prefix(MapParent parent)
+        // ReSharper disable once InconsistentNaming
+        public static bool Prefix(CompDeepScanner __instance)
         {
+            var parent = __instance.parent;
             if (parent == null)
             {
                 return true;
@@ -37,32 +39,25 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            foreach (var kvp in tileOreData.surfaceDistrubtion)
+            foreach (var kvp in tileOreData.undergroundDistrubtion)
             {
-                var rawOreDef = ThingDef.Named(kvp.Key);
-                if (rawOreDef == null)
+                var oreDef = ThingDef.Named(kvp.Key);
+                if (oreDef == null)
                 {
-                    Log.Error($"{MsicDef.LogTag}can't find rawOreDef with defName: {kvp.Key}");
+                    Log.Error($"{MsicDef.LogTag}can't find oreDef with defName: {kvp.Key}");
                     return true;
                 }
 
-                var buildingProperties = rawOreDef.building;
-                if (buildingProperties == null)
-                {
-                    Log.Error($"{MsicDef.LogTag}can't find buildingProperties with defName: {kvp.Key}");
-                    return true;
-                }
-
-                buildingProperties.mineableScatterCommonality = kvp.Value;
+                oreDef.deepCommonality = kvp.Value;
             }
 
             if (!Prefs.DevMode)
             {
                 return true;
             }
-            
-            Log.Message($"hook surface oregen success in tile: {tileId}");
-            tileOreData.DebugShowSurfaceDistrubtion();
+
+            Log.Message($"hook underground oregen success in tile: {tileId}");
+            tileOreData.DebugShowUndergroundDistrubtion();
             return true;
         }
     }

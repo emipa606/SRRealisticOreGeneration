@@ -57,10 +57,13 @@
         <Compile Include="Extension\ArrayExtension.cs" />
         <Compile Include="ModelData\OreData.cs" />
         <Compile Include="ModelData\TileOreData.cs" />
+        <Compile Include="Model\DeepScannerDataGenerator.cs" />
         <Compile Include="Model\MiningOutpostRecorder.cs" />
         <Compile Include="Model\VanillaOreInfoRecoder.cs" />
         <Compile Include="Model\TileOreDataGenerator.cs" />
-        <Compile Include="Model\UndergroundOreReserveRecoder.cs" />
+        <Compile Include="Model\WorldOreInfoRecorder.cs" />
+        <Compile Include="Patch\PatchCompDeepScannerChooseLumpThingDef.cs" />
+        <Compile Include="Patch\PatchCompScannerTickDoesFind.cs" />
         <Compile Include="Patch\PatchGenStepScatterLumpsMineableGenerate.cs" />
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />

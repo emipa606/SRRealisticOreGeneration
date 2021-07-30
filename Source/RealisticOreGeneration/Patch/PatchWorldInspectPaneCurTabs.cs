@@ -46,7 +46,27 @@ namespace RabiSquare.RealisticOreGeneration
             //no worldObject and one tile
             if (numSelectedObjects == 0 && selectedTile >= 0)
             {
-                var tileTabs = Traverse.Create(__instance).Field<WITab[]>("TileTabs").Value;
+                var traverse = Traverse.Create(__instance);
+                if (traverse == null)
+                {
+                    Log.Error($"{MsicDef.LogTag}cant't find traverse");
+                    return;
+                }
+
+                var fieldTileTabs = traverse.Field<WITab[]>("TileTabs");
+                if (fieldTileTabs == null)
+                {
+                    Log.Error($"{MsicDef.LogTag}cant't find fieldTileTabs");
+                    return;
+                }
+
+                var tileTabs = fieldTileTabs.Value;
+                if (tileTabs == null || tileTabs.Length == 0)
+                {
+                    Log.Error($"{MsicDef.LogTag}empty tileTabs");
+                    return;
+                }
+                
                 var newTileTabs = new WITab[tileTabs.Length + 1];
                 for (var i = 0; i < tileTabs.Length; i++)
                 {
@@ -55,6 +75,7 @@ namespace RabiSquare.RealisticOreGeneration
 
                 newTileTabs[tileTabs.Length] = oreTileInfoTab;
                 __result = newTileTabs;
+                Log.Message($"{MsicDef.LogTag}hook tileTabs success");
             }
         }
     }

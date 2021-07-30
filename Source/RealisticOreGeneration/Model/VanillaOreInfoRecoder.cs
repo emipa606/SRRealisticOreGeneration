@@ -13,7 +13,7 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>, IExposable
+    public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>
     {
         private float vanallaTotalSurfaceComonality;
         private float vanallaTotalUndergroundComonality;
@@ -21,7 +21,7 @@ namespace RabiSquare.RealisticOreGeneration
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
         private readonly List<OreData>
             _vanillaUndergroundOreDataList = new List<OreData>(); //vanilla data of all underground ores
-        private Dictionary<int, TileOreData> worldTileOreDataHashmap = new Dictionary<int, TileOreData>();
+        
         /// <summary>
         /// set vanilla data of each surface ore
         /// </summary>
@@ -143,49 +143,6 @@ namespace RabiSquare.RealisticOreGeneration
             return 0f;
         }
 
-        /// <summary>
-        /// set surface ore data of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <param name="berlinFactor"></param>
-        /// <param name="surfaceValueFactor"></param>
-        /// <param name="undergroundValueFactor"></param>
-        /// <param name="surfaceDistrubtion"></param>
-        /// <param name="undergroundDistrubtion"></param>
-        public void SetTileOreData(int tileId, float berlinFactor, float surfaceValueFactor, float undergroundValueFactor,
-            Dictionary<string, float> surfaceDistrubtion, Dictionary<string, float> undergroundDistrubtion)
-        {
-            if (worldTileOreDataHashmap.ContainsKey(tileId))
-            {
-                Log.Warning($"{MsicDef.LogTag}ore data of tile: {tileId} has been calced");
-                return;
-            }
-
-            var tileOreData = new TileOreData(berlinFactor, surfaceValueFactor, undergroundValueFactor)
-            {
-                surfaceDistrubtion = surfaceDistrubtion,
-                undergroundDistrubtion = undergroundDistrubtion
-            };
-
-            worldTileOreDataHashmap.Add(tileId, tileOreData);
-        }
-
-        /// <summary>
-        /// get ore data of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <returns></returns>
-        public TileOreData GetTileOreData(int tileId)
-        {
-            if (worldTileOreDataHashmap.ContainsKey(tileId))
-            {
-                return worldTileOreDataHashmap[tileId];
-            }
-
-            Log.Error($"{MsicDef.LogTag}can't find ore data of tile: {tileId}");
-            return null;
-        }
-
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();
@@ -204,15 +161,8 @@ namespace RabiSquare.RealisticOreGeneration
                 stringBuilder.Append(oreData);
                 stringBuilder.Append("\n");
             }
-
-            stringBuilder.Append("tile count: ");
-            stringBuilder.Append(worldTileOreDataHashmap.Count);
+            
             return stringBuilder.ToString();
-        }
-
-        public void ExposeData()
-        {
-            Scribe_Collections.Look(ref worldTileOreDataHashmap, "worldTileOreDataHashmap", LookMode.Value, LookMode.Reference);
         }
     }
 }
