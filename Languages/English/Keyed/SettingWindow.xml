@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <SrShuffleLumpSize>shuffle lump size</SrShuffleLumpSize>
+    <SrDescriptionShuffleLumpSize>This will randomize the size of the veins, and you will have a chance to see a large piece of gold ore, but it is out of reality.</SrDescriptionShuffleLumpSize>
+    <SrSurfaceMutilpier>surface multiplier</SrSurfaceMutilpier>
+    <SrUndergroundMutilpier>underground multiplier</SrUndergroundMutilpier>
+    <SrOutpostMapSize>mining post map size</SrOutpostMapSize>
+    <SrMaxOutpostCount>max post count</SrMaxOutpostCount>
+    <SrDescriptionSurfaceMutilpier>The multiplier of the chance of producing ore on the surface</SrDescriptionSurfaceMutilpier>
+    <SrDescriptionUndergroundMutilpier>The multiplier of the chance of producing ore in the underground</SrDescriptionUndergroundMutilpier>
+    <SrDescriptionOutpostMapSize>Size in map of mining post</SrDescriptionOutpostMapSize>
+    <SrDescriptionMaxOutpostCount>Max number of mining posts owned by colonists</SrDescriptionMaxOutpostCount>
+</LanguageData>

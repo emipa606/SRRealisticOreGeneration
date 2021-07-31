@@ -40,19 +40,24 @@ namespace RabiSquare.RealisticOreGeneration
                 settingModel.SetDefault();
             }
 
-            ls.CheckboxLabeled("SrShuffleLumpSize", ref settingModel.needShuffleLumpSize, "SrDescriptionShuffleLumpSize");
+            ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
+                "SrDescriptionShuffleLumpSize");
             Text.Font = GameFont.Medium;
             ls.GapLine(20f);
-            ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}");
+            ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}",
+                tooltip: "SrDescriptionSurfaceMutilpier".Translate());
             settingModel.surfaceMutilpier = ls.Slider(settingModel.surfaceMutilpier, 1f, 99f);
             ls.GapLine(20f);
-            ls.Label($"{"SrUndergroundMutilpier".Translate()}: {settingModel.undergroundMutilpier}");
+            ls.Label($"{"SrUndergroundMutilpier".Translate()}: {settingModel.undergroundMutilpier}",
+                tooltip: "SrDescriptionUndergroundMutilpier".Translate());
             settingModel.undergroundMutilpier = ls.Slider(settingModel.undergroundMutilpier, 1f, 99f);
             ls.GapLine(20f);
-            ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}");
+            ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}",
+                tooltip: "SrDescriptionOutpostMapSize".Translate());
             settingModel.outpostMapSize = Mathf.RoundToInt(ls.Slider(settingModel.outpostMapSize, 100, 300));
             ls.GapLine(20f);
-            ls.Label($"{"SrMaxOutpostCount".Translate()}: {settingModel.maxOutpostCount}");
+            ls.Label($"{"SrMaxOutpostCount".Translate()}: {settingModel.maxOutpostCount}",
+                tooltip: "SrDescriptionMaxOutpostCount".Translate());
             settingModel.maxOutpostCount = Mathf.RoundToInt(ls.Slider(settingModel.maxOutpostCount, 1, 10));
             ls.End();
         }

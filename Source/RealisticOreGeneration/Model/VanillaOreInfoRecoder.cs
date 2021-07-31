@@ -84,7 +84,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public IntRange GetRandomSurfaceLumpSize()
         {
-            var randomIndex = new IntRange(0, _vanillaSurfaceOreDataList.Count).RandomInRange;
+            var randomIndex = new IntRange(0, _vanillaSurfaceOreDataList.Count - 1).RandomInRange;
             var oreData = GetSurfaceOreDataByIndex(randomIndex);
             if (oreData != null)
             {
@@ -150,7 +150,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public IntRange GetRandomUndergroundLumpSize()
         {
-            var randomIndex = new IntRange(0, _vanillaUndergroundOreDataList.Count).RandomInRange;
+            var randomIndex = new IntRange(0, _vanillaUndergroundOreDataList.Count - 1).RandomInRange;
             var oreData = GetUndergroundOreDataByIndex(randomIndex);
             if (oreData != null)
             {
@@ -183,6 +183,7 @@ namespace RabiSquare.RealisticOreGeneration
                 stringBuilder.Append("\n");
             }
 
+            stringBuilder.Append("\n");
             stringBuilder.Append("underground vanilla data:");
             stringBuilder.Append("\n");
             foreach (var oreData in _vanillaUndergroundOreDataList)

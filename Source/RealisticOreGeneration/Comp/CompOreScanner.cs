@@ -24,7 +24,7 @@ namespace RabiSquare.RealisticOreGeneration
         private static readonly Texture2D TileUnselectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
 
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
-        private int selectedTile = -1;
+        private int _selectedTile = -1;
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
@@ -99,8 +99,8 @@ namespace RabiSquare.RealisticOreGeneration
 
             var commandSelectTile = new Command_Action
             {
-                defaultLabel = selectedTile == -1 ? "SrUnselect".Translate() : "SrSelect".Translate(),
-                icon = selectedTile == -1 ? TileUnselectedCommand : TileSelectedCommand,
+                defaultLabel = _selectedTile == -1 ? "SrUnselect".Translate() : "SrSelect".Translate(),
+                icon = _selectedTile == -1 ? TileUnselectedCommand : TileSelectedCommand,
                 action = OnClickTileSelect
             };
 
@@ -141,7 +141,7 @@ namespace RabiSquare.RealisticOreGeneration
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref selectedTile, "selectedTile");
+            Scribe_Values.Look(ref _selectedTile, "_selectedTile");
         }
     }
 }

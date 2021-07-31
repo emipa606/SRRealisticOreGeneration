@@ -2,8 +2,8 @@
 <Defs>
     <WorldObjectDef>
         <defName>SrMiningOutpost</defName>
-        <label>Mining OutPost</label>
-        <description>A destroyed settlement.</description>
+        <label>mining post</label>
+        <description>A mining post.</description>
         <worldObjectClass>RabiSquare.RealisticOreGeneration.MiningOutpost</worldObjectClass>
         <texture>World/WorldObjects/TribalSettlement</texture>
         <expandingIcon>true</expandingIcon>
@@ -20,8 +20,8 @@
     </WorldObjectDef>
     <WorldObjectDef>
         <defName>SrAbandonedMiningOutpost</defName>
-        <label>abandoned settlement</label>
-        <description>An abandoned settlement.</description>
+        <label>abandoned mining post</label>
+        <description>An abandoned mining post.</description>
         <texture>World/WorldObjects/TribalSettlement</texture>
         <worldObjectClass>MapParent</worldObjectClass>
     </WorldObjectDef>
