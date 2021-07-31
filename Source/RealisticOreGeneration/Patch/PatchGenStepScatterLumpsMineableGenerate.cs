@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 12:54:24
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
@@ -43,9 +44,9 @@ namespace RabiSquare.RealisticOreGeneration
             {
                 return true;
             }
-            
+
             Log.Message($"{MsicDef.LogTag}hook abundance success in tile: {tileId}");
-            tileOreData.DebugShowFactors();
+            tileOreData.DebugShowSurfaceFactors();
             return true;
         }
     }

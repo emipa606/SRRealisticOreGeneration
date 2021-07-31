@@ -28,7 +28,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var freeCycleCount = (int)tileOreData.UndergroundAbundance;
+            var freeCycleCount = (int)tileOreData.FreeUndergroundCycleCount;
             var currentCycleCount = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(tileId);
             //free underground ore find
             if (currentCycleCount < freeCycleCount)

@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-30 13:18:05
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
@@ -49,6 +50,10 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 oreDef.deepCommonality = kvp.Value;
+                if (SettingWindow.Instance.settingModel.needShuffleLumpSize)
+                {
+                    oreDef.deepLumpSizeRange = VanillaOreInfoRecoder.Instance.GetRandomUndergroundLumpSize();
+                }
             }
 
             if (!Prefs.DevMode)

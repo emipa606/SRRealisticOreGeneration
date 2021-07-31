@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 17:42:35
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
@@ -18,6 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     {
         public readonly SettingModel settingModel;
         public static SettingWindow Instance { get; private set; }
+
         public SettingWindow(ModContentPack content) : base(content)
         {
             settingModel = GetSettings<SettingModel>();
@@ -38,6 +40,7 @@ namespace RabiSquare.RealisticOreGeneration
                 settingModel.SetDefault();
             }
 
+            ls.CheckboxLabeled("SrShuffleLumpSize", ref settingModel.needShuffleLumpSize, "SrDescriptionShuffleLumpSize");
             Text.Font = GameFont.Medium;
             ls.GapLine(20f);
             ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}");

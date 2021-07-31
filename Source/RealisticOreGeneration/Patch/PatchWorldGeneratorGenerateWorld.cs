@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-28 17:25:23
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld.Planet;
@@ -51,10 +52,10 @@ namespace RabiSquare.RealisticOreGeneration
                 var surfaceDistrubtion = TileOreDataGenerator.GenerateSurfaceDistrubtion();
                 var undergroundDistrubtion = TileOreDataGenerator.GenerateUndergroundDistrubtion();
                 var surfaceValueFactor = TileOreDataGenerator.CalcSurfaceValueFactor(surfaceDistrubtion);
-                var undergroundValueFactor = TileOreDataGenerator.CalcUndergroundValueFactor(undergroundDistrubtion);
-                var berlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid);
-                WorldOreInfoRecorder.Instance.SetTileOreData(i, berlinFactor, surfaceValueFactor, undergroundValueFactor, surfaceDistrubtion,
-                    undergroundDistrubtion);
+                var surfaceBerlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid, true);
+                var undergroundBerlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid, false);
+                WorldOreInfoRecorder.Instance.SetTileOreData(i, surfaceBerlinFactor, undergroundBerlinFactor,
+                    surfaceValueFactor, surfaceDistrubtion, undergroundDistrubtion);
             }
 
             if (Prefs.DevMode)

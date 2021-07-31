@@ -54,8 +54,6 @@
         <Compile Include="Comp\CompOreScanner.cs" />
         <Compile Include="Comp\CompPropertiesOreScanner.cs" />
         <Compile Include="Comp\OreScanMode.cs" />
-        <Compile Include="Comp\ScanMode.cs" />
-        <Compile Include="Comp\ScanRange.cs" />
         <Compile Include="DefOf\MapGeneratorDefOf.cs" />
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
         <Compile Include="Def\MsicDef.cs" />

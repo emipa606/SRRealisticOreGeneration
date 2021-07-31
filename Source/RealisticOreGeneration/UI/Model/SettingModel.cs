@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 17:37:16
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
@@ -16,6 +17,7 @@ namespace RabiSquare.RealisticOreGeneration
         public float undergroundMutilpier = 1.5f;
         public int outpostMapSize = 200;
         public int maxOutpostCount = 2;
+        public bool needShuffleLumpSize;
 
         public override void ExposeData()
         {
@@ -24,6 +26,7 @@ namespace RabiSquare.RealisticOreGeneration
             Scribe_Values.Look(ref undergroundMutilpier, "undergroundMutilpier", 1.5f);
             Scribe_Values.Look(ref outpostMapSize, "outpostMapSize", 250);
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
+            Scribe_Values.Look(ref needShuffleLumpSize, "needShuffleLumpSize");
         }
 
         public void SetDefault()
@@ -32,6 +35,7 @@ namespace RabiSquare.RealisticOreGeneration
             undergroundMutilpier = 1.5f;
             outpostMapSize = 200;
             maxOutpostCount = 2;
+            needShuffleLumpSize = false;
         }
     }
 }

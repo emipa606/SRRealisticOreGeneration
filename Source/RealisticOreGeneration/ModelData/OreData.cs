@@ -7,17 +7,20 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
+using Verse;
+
 namespace RabiSquare.RealisticOreGeneration
 {
     public class OreData
     {
         public readonly string defName;
-        public readonly float commonality; //relative chance to generate this resource lump by mapgen (may should be called weight)
-        public readonly float lumpSize; //size of lump
+
+        public readonly float commonality; //relative chance to generate lump by mapgen (may should be called weight)
+        public readonly IntRange lumpSize; //size of lump
         public readonly float yield; //how many ore we can get in each raw ore
         public readonly float marketValue;
 
-        public OreData(string defName, float commonality, float lumpSize,
+        public OreData(string defName, float commonality, IntRange lumpSize,
             float @yield, float marketValue)
         {
             this.defName = defName;
@@ -30,7 +33,7 @@ namespace RabiSquare.RealisticOreGeneration
         public override string ToString()
         {
             return $"{MsicDef.LogTag}\ndefName: {defName}\nmineableScatterCommonality: {commonality}\n" +
-                   $"lumpSize: {lumpSize}\nmineableYield: {yield}\nmarketValue: {marketValue}";
+                   $"lumpSize: ({lumpSize.min},{lumpSize.max})\nmineableYield: {yield}\nmarketValue: {marketValue}";
         }
     }
 }

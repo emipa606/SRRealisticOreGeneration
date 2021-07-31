@@ -8,6 +8,7 @@
 // ******************************************************************
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Verse;
 
@@ -15,13 +16,15 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>
     {
-        private float vanallaTotalSurfaceComonality;
-        private float vanallaTotalUndergroundComonality;
+        private float _vanallaTotalSurfaceComonality;
+        private float _vanallaTotalUndergroundComonality;
+
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
+
         private readonly List<OreData>
             _vanillaUndergroundOreDataList = new List<OreData>(); //vanilla data of all underground ores
-        
+
         /// <summary>
         /// set vanilla data of each surface ore
         /// </summary>
@@ -46,11 +49,11 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 var oreData = new OreData(thingdef.defName, buildingProperties.mineableScatterCommonality,
-                    buildingProperties.mineableScatterLumpSizeRange.Average, buildingProperties.mineableYield,
+                    buildingProperties.mineableScatterLumpSizeRange, buildingProperties.mineableYield,
                     mineableThing.BaseMarketValue);
                 _vanillaSurfaceOreDataList.Add(oreData);
-                vanallaTotalSurfaceComonality = 0f;
-                vanallaTotalSurfaceComonality += oreData.commonality;
+                _vanallaTotalSurfaceComonality = 0f;
+                _vanallaTotalSurfaceComonality += oreData.commonality;
             }
         }
 
@@ -79,11 +82,24 @@ namespace RabiSquare.RealisticOreGeneration
             return _vanillaSurfaceOreDataList.Count;
         }
 
+        public IntRange GetRandomSurfaceLumpSize()
+        {
+            var randomIndex = new IntRange(0, _vanillaSurfaceOreDataList.Count).RandomInRange;
+            var oreData = GetSurfaceOreDataByIndex(randomIndex);
+            if (oreData != null)
+            {
+                return oreData.lumpSize;
+            }
+
+            Log.Error($"{MsicDef.LogTag}cant find ore data by random index: {randomIndex}");
+            return new IntRange(1, 20);
+        }
+
         public float GetNormalizedSurfaceCommonality(int index)
         {
             if (_vanillaSurfaceOreDataList != null && _vanillaSurfaceOreDataList.Count > index)
             {
-                return _vanillaSurfaceOreDataList[index].commonality / vanallaTotalSurfaceComonality;
+                return _vanillaSurfaceOreDataList[index].commonality / _vanallaTotalSurfaceComonality;
             }
 
             Log.Error($"{MsicDef.LogTag}can't find surface oreData on index: {index}");
@@ -99,11 +115,11 @@ namespace RabiSquare.RealisticOreGeneration
             foreach (var thingdef in thingDefs)
             {
                 var oreData = new OreData(thingdef.defName, thingdef.deepCommonality,
-                    thingdef.deepLumpSizeRange.Average, thingdef.deepCountPerPortion,
+                    thingdef.deepLumpSizeRange, thingdef.deepCountPerPortion,
                     thingdef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
-                vanallaTotalUndergroundComonality = 0f;
-                vanallaTotalUndergroundComonality += oreData.commonality;
+                _vanallaTotalUndergroundComonality = 0f;
+                _vanallaTotalUndergroundComonality += oreData.commonality;
             }
         }
 
@@ -132,11 +148,24 @@ namespace RabiSquare.RealisticOreGeneration
             return _vanillaUndergroundOreDataList.Count;
         }
 
+        public IntRange GetRandomUndergroundLumpSize()
+        {
+            var randomIndex = new IntRange(0, _vanillaUndergroundOreDataList.Count).RandomInRange;
+            var oreData = GetUndergroundOreDataByIndex(randomIndex);
+            if (oreData != null)
+            {
+                return oreData.lumpSize;
+            }
+
+            Log.Error($"{MsicDef.LogTag}cant find ore data by random index: {randomIndex}");
+            return new IntRange(1, 20);
+        }
+
         public float GetNormalizedUndergroundCommonality(int index)
         {
             if (_vanillaUndergroundOreDataList != null && _vanillaUndergroundOreDataList.Count > index)
             {
-                return _vanillaUndergroundOreDataList[index].commonality / vanallaTotalUndergroundComonality;
+                return _vanillaUndergroundOreDataList[index].commonality / _vanallaTotalUndergroundComonality;
             }
 
             Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
@@ -161,7 +190,7 @@ namespace RabiSquare.RealisticOreGeneration
                 stringBuilder.Append(oreData);
                 stringBuilder.Append("\n");
             }
-            
+
             return stringBuilder.ToString();
         }
     }

@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-28 17:53:22
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld.Planet;
@@ -54,13 +55,18 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 buildingProperties.mineableScatterCommonality = kvp.Value;
+                if (SettingWindow.Instance.settingModel.needShuffleLumpSize)
+                {
+                    buildingProperties.mineableScatterLumpSizeRange =
+                        VanillaOreInfoRecoder.Instance.GetRandomSurfaceLumpSize();
+                }
             }
 
             if (!Prefs.DevMode)
             {
                 return true;
             }
-            
+
             Log.Message($"hook surface oregen success in tile: {tileId}");
             tileOreData.DebugShowSurfaceDistrubtion();
             return true;
