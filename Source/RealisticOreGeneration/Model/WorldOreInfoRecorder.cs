@@ -92,7 +92,7 @@ namespace RabiSquare.RealisticOreGeneration
         public void ExposeData()
         {
             Scribe_Collections.Look(ref _worldTileOreDataHashmap, "_worldTileOreDataHashmap", LookMode.Value,
-                LookMode.Reference);
+                LookMode.Deep);
             Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
                 LookMode.Value,
                 LookMode.Value);

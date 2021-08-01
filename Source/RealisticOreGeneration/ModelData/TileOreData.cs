@@ -12,7 +12,7 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class TileOreData : IExposable, ILoadReferenceable
+    public class TileOreData : IExposable
     {
         private int _tileId;
         private float _surfaceBerlinFactor;
@@ -32,6 +32,10 @@ namespace RabiSquare.RealisticOreGeneration
         //beyond this amount, the cost of finding underground ore will increase
         public float FreeUndergroundCycleCount =>
             _undergroundBerlinFactor * SettingWindow.Instance.settingModel.undergroundMutilpier * 20;
+
+        public TileOreData()
+        {
+        }
 
         public TileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
             float surfaceValueFactor)

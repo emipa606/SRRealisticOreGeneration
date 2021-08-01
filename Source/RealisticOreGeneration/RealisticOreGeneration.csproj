@@ -76,6 +76,7 @@
         <Compile Include="Patch\PatchGenStepScatterLumpsMineableGenerate.cs" />
         <Compile Include="Patch\PatchMain.cs" />
         <Compile Include="Patch\PatchMapGeneratorGenerateMap.cs" />
+        <Compile Include="Patch\PatchWorldExposeData.cs" />
         <Compile Include="Patch\PatchWorldGeneratorGenerateWorld.cs" />
         <Compile Include="Patch\PatchWorldInspectPaneCurTabs.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,13 +7,13 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
-using System.Collections.Generic;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration.UI.Planet
 {
+    [StaticConstructorOnStartup]
     public class OreTileInfoTab : WITab
     {
         private Vector2 _scrollPosition;
@@ -65,7 +65,6 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 return;
             }
 
-            GUI.color = MsicDef.BilibiliPink;
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
             foreach (var kvp in tileOreData.surfaceDistrubtion)
@@ -77,9 +76,11 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                     return;
                 }
 
+                GUI.color = MsicDef.BilibiliPink;
                 Widgets.Label(rect, rawOreDef.label);
                 rect.y += rect.height;
-                Widgets.FillableBar(rect, kvp.Value, MsicDef.BilibiliBlueTex);
+                GUI.color = MsicDef.BilibiliBlue;
+                Widgets.FillableBar(rect, kvp.Value, Texture2D.whiteTexture);
                 rect.y += rect.height;
             }
 
@@ -101,7 +102,6 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 return;
             }
 
-            GUI.color = MsicDef.BilibiliBlue;
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
             foreach (var kvp in tileOreData.undergroundDistrubtion)
@@ -113,9 +113,11 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                     return;
                 }
 
+                GUI.color = MsicDef.BilibiliBlue;
                 Widgets.Label(rect, rawOreDef.label);
                 rect.y += rect.height;
-                Widgets.FillableBar(rect, kvp.Value, MsicDef.BilibiliPinkTex);
+                GUI.color = MsicDef.BilibiliPink;
+                Widgets.FillableBar(rect, kvp.Value, Texture2D.whiteTexture);
                 rect.y += rect.height;
             }
 

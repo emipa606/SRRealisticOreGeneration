@@ -17,4 +17,10 @@
             </value>
         </match>
     </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/WorldObjectDef[defName="AbandonedSettlement"]</xpath>
+        <value>
+            <worldObjectClass>MapParent</worldObjectClass>
+        </value>
+    </Operation>
 </Patch>
