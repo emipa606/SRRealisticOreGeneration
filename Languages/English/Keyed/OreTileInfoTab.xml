@@ -3,4 +3,6 @@
     <SrTabOreTileInfo>Ore</SrTabOreTileInfo>
     <SrSurfaceLumpDistribution>Surface lump distribution</SrSurfaceLumpDistribution>
     <SrUndergroundLumpDistribution>Underground lump distribution</SrUndergroundLumpDistribution>
+    <SrSurfaceAbundance>Surface abundance</SrSurfaceAbundance>
+    <SrUndergroundAbundance>Underground abundance</SrUndergroundAbundance>
 </LanguageData>

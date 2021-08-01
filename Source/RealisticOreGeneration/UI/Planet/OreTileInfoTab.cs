@@ -36,27 +36,16 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             var viewRect = new Rect(0, 0, winRect.width - FrameMargin - BarWidth, _scrollViewHeight);
             var curY = 0f;
             Widgets.BeginScrollView(winRect, ref _scrollPosition, viewRect);
-            var surfaceOreDistributionRect = new Rect
-            {
-                width = viewRect.width
-            };
-            DrawSurfaceOreDistribution(ref curY, surfaceOreDistributionRect);
-            var undergroundOreDistributionRect = new Rect
-            {
-                y = curY, width = viewRect.width
-            };
-            DrawUndergroundOreDistribution(ref curY, undergroundOreDistributionRect);
+            DrawSurfaceAbundance(ref curY, viewRect.width);
+            DrawSurfaceOreDistribution(ref curY, viewRect.width);
+            DrawUndergourndAbundance(ref curY, viewRect.width);
+            DrawUndergroundOreDistribution(ref curY, viewRect.width);
             _scrollViewHeight = curY;
             Widgets.EndScrollView();
         }
 
-        private static void DrawSurfaceOreDistribution(ref float curY, Rect rect)
+        private static void DrawSurfaceAbundance(ref float curY, float width)
         {
-            GUI.color = Color.white;
-            Text.Font = GameFont.Medium;
-            rect.height = Text.LineHeight;
-            Widgets.Label(rect, "SrSurfaceLumpDistribution".Translate());
-            rect.y += rect.height;
             var selectedTile = Find.WorldSelector.selectedTile;
             var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
             if (tileOreData == null)
@@ -65,6 +54,38 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 return;
             }
 
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrSurfaceAbundance".Translate());
+            rect.y += rect.height;
+            //bar
+            GUI.color = Color.green;
+            Widgets.FillableBar(rect, tileOreData.GetSurfaceAbondance(), Texture2D.whiteTexture);
+            rect.y += rect.height;
+            curY = rect.y;
+        }
+
+        private static void DrawSurfaceOreDistribution(ref float curY, float width)
+        {
+            var selectedTile = Find.WorldSelector.selectedTile;
+            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
+            if (tileOreData == null)
+            {
+                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
+                return;
+            }
+
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrSurfaceLumpDistribution".Translate());
+            rect.y += rect.height;
+            //lump progress
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
             foreach (var kvp in tileOreData.surfaceDistrubtion)
@@ -84,16 +105,11 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 rect.y += rect.height;
             }
 
-            curY += rect.y;
+            curY = rect.y;
         }
 
-        private static void DrawUndergroundOreDistribution(ref float curY, Rect rect)
+        private static void DrawUndergourndAbundance(ref float curY, float width)
         {
-            GUI.color = Color.white;
-            Text.Font = GameFont.Medium;
-            rect.height = Text.LineHeight;
-            Widgets.Label(rect, "SrUndergroundLumpDistribution".Translate());
-            rect.y += rect.height;
             var selectedTile = Find.WorldSelector.selectedTile;
             var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
             if (tileOreData == null)
@@ -102,6 +118,38 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 return;
             }
 
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrUndergroundAbundance".Translate());
+            rect.y += rect.height;
+            //bar
+            GUI.color = Color.green;
+            Widgets.FillableBar(rect, tileOreData.UndergroundBerlinFactor, Texture2D.whiteTexture);
+            rect.y += rect.height;
+            curY = rect.y;
+        }
+
+        private static void DrawUndergroundOreDistribution(ref float curY, float width)
+        {
+            var selectedTile = Find.WorldSelector.selectedTile;
+            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
+            if (tileOreData == null)
+            {
+                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
+                return;
+            }
+
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrUndergroundLumpDistribution".Translate());
+            rect.y += rect.height;
+            //ore lump progress
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
             foreach (var kvp in tileOreData.undergroundDistrubtion)
@@ -121,7 +169,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
                 rect.y += rect.height;
             }
 
-            curY += rect.y;
+            curY = rect.y;
         }
     }
 }

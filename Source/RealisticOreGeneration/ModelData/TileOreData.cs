@@ -8,6 +8,8 @@
 // ******************************************************************
 
 using System.Collections.Generic;
+using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
@@ -18,6 +20,7 @@ namespace RabiSquare.RealisticOreGeneration
         private float _surfaceBerlinFactor;
         private float _undergroundBerlinFactor;
         private float _surfaceValueFactor;
+        public float UndergroundBerlinFactor => _undergroundBerlinFactor;
 
         //commonality of each surface ore in each tile <defName,commonality>
         public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
@@ -26,7 +29,7 @@ namespace RabiSquare.RealisticOreGeneration
         public Dictionary<string, float> undergroundDistrubtion = new Dictionary<string, float>();
 
         //decide whether the overall ore of the area are more or less on surface
-        public float SurfaceAbundance =>
+        public float OreGenerationFactor =>
             _surfaceBerlinFactor * _surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
 
         //beyond this amount, the cost of finding underground ore will increase
@@ -35,6 +38,43 @@ namespace RabiSquare.RealisticOreGeneration
 
         public TileOreData()
         {
+        }
+
+        public float GetSurfaceAbondance()
+        {
+            var worldGrid = Find.WorldGrid;
+            if (worldGrid == null)
+            {
+                Log.Error("can't find world grid");
+                return 0f;
+            }
+
+            var tile = worldGrid[_tileId];
+            if (tile == null)
+            {
+                Log.Error($"can't find tile :{_tileId}");
+                return 0f;
+            }
+
+            var terrainFactor = 0f;
+            switch (tile.hilliness)
+            {
+                case Hilliness.Flat:
+                    terrainFactor = 0.27f;
+                    break;
+                case Hilliness.SmallHills:
+                    terrainFactor = 0.53f;
+                    break;
+                case Hilliness.LargeHills:
+                    terrainFactor = 0.73f;
+                    break;
+                case Hilliness.Mountainous:
+                case Hilliness.Impassable:
+                    terrainFactor = 1f;
+                    break;
+            }
+
+            return terrainFactor * _surfaceBerlinFactor;
         }
 
         public TileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
@@ -46,9 +86,15 @@ namespace RabiSquare.RealisticOreGeneration
             _surfaceValueFactor = surfaceValueFactor;
         }
 
-        public string GetUniqueLoadID()
+        public void ExposeData()
         {
-            return _tileId.ToString();
+            Scribe_Values.Look(ref _tileId, "_tileId");
+            Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
+            Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
+            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
+            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value,
+                LookMode.Value);
         }
 
         public void DebugShowSurfaceDistrubtion()
@@ -71,17 +117,6 @@ namespace RabiSquare.RealisticOreGeneration
         {
             Log.Message($"surfaceBerlinFactor: {_surfaceBerlinFactor}");
             Log.Message($"surfaceValueFactor: {_surfaceValueFactor}");
-        }
-
-        public void ExposeData()
-        {
-            Scribe_Values.Look(ref _tileId, "_tileId");
-            Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
-            Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
-            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
-            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value,
-                LookMode.Value);
         }
     }
 }

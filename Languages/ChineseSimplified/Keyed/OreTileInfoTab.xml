@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <SrTabOreTileInfo>矿石</SrTabOreTileInfo>
-    <SrSurfaceLumpDistribution>地表矿脉分布</SrSurfaceLumpDistribution>
-    <SrUndergroundLumpDistribution>地下矿脉分布</SrUndergroundLumpDistribution>
+    <SrSurfaceLumpDistribution>地表矿脉生成几率分布</SrSurfaceLumpDistribution>
+    <SrUndergroundLumpDistribution>地下矿脉生成几率分布</SrUndergroundLumpDistribution>
+    <SrSurfaceAbundance>地表矿石丰度</SrSurfaceAbundance>
+    <SrUndergroundAbundance>地下矿石丰度</SrUndergroundAbundance>
 </LanguageData>

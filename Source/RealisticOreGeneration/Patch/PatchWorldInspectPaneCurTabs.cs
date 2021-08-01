@@ -29,7 +29,8 @@ namespace RabiSquare.RealisticOreGeneration
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]
-        public static void Postfix(WorldInspectPane __instance, ref IEnumerable<InspectTabBase> __result)
+        public static void Postfix(WorldInspectPane __instance, ref IEnumerable<InspectTabBase> __result,
+            WITab[] ___TileTabs)
         {
             if (__result == null)
             {
@@ -47,34 +48,19 @@ namespace RabiSquare.RealisticOreGeneration
             //no worldObject and one tile
             if (numSelectedObjects == 0 && selectedTile >= 0)
             {
-                var traverse = Traverse.Create(__instance);
-                if (traverse == null)
+                if (___TileTabs == null || ___TileTabs.Length == 0)
                 {
-                    Log.Error($"{MsicDef.LogTag}cant't find traverse");
+                    Log.Error($"{MsicDef.LogTag}empty ___TileTabs");
                     return;
                 }
 
-                var fieldTileTabs = traverse.Field<WITab[]>("TileTabs");
-                if (fieldTileTabs == null)
+                var newTileTabs = new WITab[___TileTabs.Length + 1];
+                for (var i = 0; i < ___TileTabs.Length; i++)
                 {
-                    Log.Error($"{MsicDef.LogTag}cant't find fieldTileTabs");
-                    return;
+                    newTileTabs[i] = ___TileTabs[i];
                 }
 
-                var tileTabs = fieldTileTabs.Value;
-                if (tileTabs == null || tileTabs.Length == 0)
-                {
-                    Log.Error($"{MsicDef.LogTag}empty tileTabs");
-                    return;
-                }
-
-                var newTileTabs = new WITab[tileTabs.Length + 1];
-                for (var i = 0; i < tileTabs.Length; i++)
-                {
-                    newTileTabs[i] = tileTabs[i];
-                }
-
-                newTileTabs[tileTabs.Length] = oreTileInfoTab;
+                newTileTabs[___TileTabs.Length] = oreTileInfoTab;
                 __result = newTileTabs;
             }
         }

@@ -39,7 +39,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            __instance.countPer10kCellsRange *= tileOreData.SurfaceAbundance;
+            __instance.countPer10kCellsRange *= tileOreData.OreGenerationFactor;
             if (!Prefs.DevMode)
             {
                 return true;
