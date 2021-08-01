@@ -48,6 +48,10 @@
           <HintPath>Lib\UnityEngine.CoreModule.dll</HintPath>
           <Private>False</Private>
         </Reference>
+        <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>Lib\UnityEngine.IMGUIModule.dll</HintPath>
+          <Private>False</Private>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Base\BaseSingleTon.cs" />
@@ -67,6 +71,7 @@
         <Compile Include="Model\WorldOreInfoRecorder.cs" />
         <Compile Include="Patch\PatchCompDeepScannerChooseLumpThingDef.cs" />
         <Compile Include="Patch\PatchCompDeepScannerDoFind.cs" />
+        <Compile Include="Patch\PatchCompScannerCompInspectStringExtra.cs" />
         <Compile Include="Patch\PatchCompScannerTickDoesFind.cs" />
         <Compile Include="Patch\PatchGenStepScatterLumpsMineableGenerate.cs" />
         <Compile Include="Patch\PatchMain.cs" />

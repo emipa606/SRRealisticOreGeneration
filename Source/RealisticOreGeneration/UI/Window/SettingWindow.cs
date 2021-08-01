@@ -40,9 +40,9 @@ namespace RabiSquare.RealisticOreGeneration
                 settingModel.SetDefault();
             }
 
+            Text.Font = GameFont.Medium;
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
                 "SrDescriptionShuffleLumpSize");
-            Text.Font = GameFont.Medium;
             ls.GapLine(20f);
             ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}",
                 tooltip: "SrDescriptionSurfaceMutilpier".Translate());

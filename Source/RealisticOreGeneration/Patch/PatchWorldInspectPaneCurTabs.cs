@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 18:36:35
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -28,7 +29,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]
-        public static void Postfix(WorldInspectPane __instance, IEnumerable<InspectTabBase> __result)
+        public static void Postfix(WorldInspectPane __instance, ref IEnumerable<InspectTabBase> __result)
         {
             if (__result == null)
             {
@@ -66,7 +67,7 @@ namespace RabiSquare.RealisticOreGeneration
                     Log.Error($"{MsicDef.LogTag}empty tileTabs");
                     return;
                 }
-                
+
                 var newTileTabs = new WITab[tileTabs.Length + 1];
                 for (var i = 0; i < tileTabs.Length; i++)
                 {
@@ -75,7 +76,6 @@ namespace RabiSquare.RealisticOreGeneration
 
                 newTileTabs[tileTabs.Length] = oreTileInfoTab;
                 __result = newTileTabs;
-                Log.Message($"{MsicDef.LogTag}hook tileTabs success");
             }
         }
     }

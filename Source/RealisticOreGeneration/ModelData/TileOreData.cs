@@ -14,7 +14,7 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class TileOreData : IExposable, ILoadReferenceable
     {
-        private readonly int _tileId;
+        private int _tileId;
         private float _surfaceBerlinFactor;
         private float _undergroundBerlinFactor;
         private float _surfaceValueFactor;
@@ -71,6 +71,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void ExposeData()
         {
+            Scribe_Values.Look(ref _tileId, "_tileId");
             Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
             Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
             Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
