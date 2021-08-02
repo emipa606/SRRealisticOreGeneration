@@ -6,9 +6,9 @@
 //      /  \\        @Modified   2021-07-29 11:33:38
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using RimWorld.Planet;
-using UnityEngine;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
@@ -17,15 +17,29 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private int _tileId;
         private float _surfaceBerlinFactor;
-        private float _undergroundBerlinFactor;
         private float _surfaceValueFactor;
-        public float UndergroundBerlinFactor => _undergroundBerlinFactor;
+        private float _undergroundBerlinFactor;
 
         //commonality of each surface ore in each tile <defName,commonality>
         public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
 
         //commonality of each underground ore in each tile <defName,commonality>
         public Dictionary<string, float> undergroundDistrubtion = new Dictionary<string, float>();
+
+        public TileOreData()
+        {
+        }
+
+        public TileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
+            float surfaceValueFactor)
+        {
+            _tileId = tileId;
+            _surfaceBerlinFactor = surfaceBerlinFactor;
+            _undergroundBerlinFactor = undergroundBerlinFactor;
+            _surfaceValueFactor = surfaceValueFactor;
+        }
+
+        public float UndergroundBerlinFactor => _undergroundBerlinFactor;
 
         //decide whether the overall ore of the area are more or less on surface
         public float OreGenerationFactor =>
@@ -35,8 +49,15 @@ namespace RabiSquare.RealisticOreGeneration
         public float FreeUndergroundCycleCount =>
             _undergroundBerlinFactor * SettingWindow.Instance.settingModel.undergroundMutilpier * 20;
 
-        public TileOreData()
+        public void ExposeData()
         {
+            Scribe_Values.Look(ref _tileId, "_tileId");
+            Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
+            Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
+            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
+            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value,
+                LookMode.Value);
         }
 
         public float GetSurfaceAbondance()
@@ -76,40 +97,15 @@ namespace RabiSquare.RealisticOreGeneration
             return terrainFactor * _surfaceBerlinFactor;
         }
 
-        public TileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
-            float surfaceValueFactor)
-        {
-            _tileId = tileId;
-            _surfaceBerlinFactor = surfaceBerlinFactor;
-            _undergroundBerlinFactor = undergroundBerlinFactor;
-            _surfaceValueFactor = surfaceValueFactor;
-        }
-
-        public void ExposeData()
-        {
-            Scribe_Values.Look(ref _tileId, "_tileId");
-            Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
-            Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
-            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
-            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value,
-                LookMode.Value);
-        }
-
         public void DebugShowSurfaceDistrubtion()
         {
-            foreach (var kvp in surfaceDistrubtion)
-            {
-                Log.Message($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
+            foreach (var kvp in surfaceDistrubtion) Log.Message($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
         }
 
         public void DebugShowUndergroundDistrubtion()
         {
             foreach (var kvp in undergroundDistrubtion)
-            {
                 Log.Message($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
-            }
         }
 
         public void DebugShowSurfaceFactors()

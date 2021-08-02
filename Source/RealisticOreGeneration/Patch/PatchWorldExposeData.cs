@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-08-01 14:07:27
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld.Planet;
@@ -17,7 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchWorldExposeData
     {
         /// <summary>
-        /// save our param
+        ///     save our param
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]

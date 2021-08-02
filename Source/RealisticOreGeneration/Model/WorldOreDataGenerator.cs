@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-26 21:10:22
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -15,24 +16,26 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public static class WorldOreDataGenerator
+    public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
     {
         private const float Relief = 15;
+        private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new Dictionary<int, TileOreData>();
 
         /// <summary>
-        /// get ore data of tile
+        ///     get ore data of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <returns></returns>
         [NotNull]
-        public static TileOreData GetTileOreData(int tileId)
+        public TileOreData GetTileOreData(int tileId)
         {
-            var worldGrid = Find.WorldGrid;
-            if (worldGrid == null)
+            if (_cacheTileOreDataHashmap.ContainsKey(tileId))
             {
-                throw new Exception("can't find world grid");
+                return _cacheTileOreDataHashmap[tileId];
             }
 
+            var worldGrid = Find.WorldGrid;
+            if (worldGrid == null) throw new Exception("can't find world grid");
             var surfaceDistrubtion = GenerateSurfaceDistrubtion(tileId);
             var undergroundDistrubtion = GenerateUndergroundDistrubtion(tileId);
             var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistrubtion);
@@ -43,7 +46,7 @@ namespace RabiSquare.RealisticOreGeneration
                 surfaceDistrubtion = surfaceDistrubtion,
                 undergroundDistrubtion = undergroundDistrubtion
             };
-
+            _cacheTileOreDataHashmap.Add(tileId, tileOreData);
             return tileOreData;
         }
 
@@ -53,17 +56,15 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataListCount();
-            var q = qMin + Rand.ValueSeeded(tileId) * ((float)n / 2 - qMin);
+            var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
-            {
                 arrayNewCommonality[i] = 1 / (q * Mathf.Sqrt(2 * 3.14f)) *
-                                         Mathf.Exp(-Mathf.Pow((i - n / 2), 2) / (2 * Mathf.Pow(q, 2)));
-            }
+                                         Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q, 2)));
 
             //shuffle
-            arrayNewCommonality.Shuffle();
+            arrayNewCommonality.Shuffle(tileId);
             //normalized
             arrayNewCommonality.Normalized();
             //record ore distrubtion
@@ -82,17 +83,14 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataListCount();
-            var q = qMin + Rand.ValueSeeded(tileId) * ((float)n / 2 - qMin);
+            var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
-            {
                 arrayNewCommonality[i] = 1 / (q * Mathf.Sqrt(2 * 3.14f)) *
-                                         Mathf.Exp(-Mathf.Pow((i - n / 2), 2) / (2 * Mathf.Pow(q, 2)));
-            }
-
+                                         Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q, 2)));
             //shuffle
-            arrayNewCommonality.Shuffle();
+            arrayNewCommonality.Shuffle(tileId);
             //normalized
             arrayNewCommonality.Normalized();
             //record ore distrubtion
@@ -106,7 +104,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// ramdom by tile
+        ///     ramdom by tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <param name="worldGrid"></param>
@@ -130,7 +128,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// how many times the total value of vanilla is the current total value in the entire map
+        ///     how many times the total value of vanilla is the current total value in the entire map
         /// </summary>
         /// <param name="oreDistrubtion">commonality of each ore. key:defName,value:commonality</param>
         /// <returns></returns>

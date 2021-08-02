@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-30 13:45:43
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
@@ -18,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompScannerTickDoesFind
     {
         /// <summary>
-        /// hook deep sanner working speed
+        ///     hook deep sanner working speed
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
@@ -38,10 +39,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            if (!deepScanner.def.defName.Equals(MsicDef.DeepSannerDefName))
-            {
-                return true;
-            }
+            if (!deepScanner.def.defName.Equals(MsicDef.DeepSannerDefName)) return true;
 
             var compProps = __instance.Props;
             if (compProps == null)
@@ -50,7 +48,8 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            DeepScannerDataGenerator.GenerateDeepScannerFindDays(parent.Tile, out var scanFindGuaranteedDays, out var scanFindMtbDays);
+            DeepScannerDataGenerator.GenerateDeepScannerFindDays(parent.Tile, out var scanFindGuaranteedDays,
+                out var scanFindMtbDays);
             compProps.scanFindMtbDays = scanFindMtbDays;
             compProps.scanFindGuaranteedDays = scanFindGuaranteedDays;
             return true;

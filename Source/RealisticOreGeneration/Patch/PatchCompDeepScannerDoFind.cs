@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-30 21:37:02
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
@@ -26,21 +27,13 @@ namespace RabiSquare.RealisticOreGeneration
         public static void Postfix(CompDeepScanner __instance)
         {
             var parent = __instance.parent;
-            if (parent == null)
-            {
-                return;
-            }
-
+            if (parent == null) return;
             WorldOreInfoRecorder.Instance.UndergroundMiningCountIncrease(parent.Tile);
-            if (!Prefs.DevMode)
-            {
-                return;
-            }
-
-            var oreData = WorldOreDataGenerator.GetTileOreData(parent.Tile);
+            if (!Prefs.DevMode) return;
+            var oreData = WorldOreDataGenerator.Instance.GetTileOreData(parent.Tile);
             Log.Message($"{MsicDef.LogTag}underground mining count increase. tile: {parent.Tile}. " +
                         $"count: {WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(parent.Tile)}");
-            Log.Message($"{MsicDef.LogTag}freeCycleCount: {(int)oreData.FreeUndergroundCycleCount}");
+            Log.Message($"{MsicDef.LogTag}freeCycleCount: {(int) oreData.FreeUndergroundCycleCount}");
         }
     }
 }

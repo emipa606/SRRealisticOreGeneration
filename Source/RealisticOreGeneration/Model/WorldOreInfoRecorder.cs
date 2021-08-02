@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-30 11:55:30
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using Verse;
 
@@ -13,10 +14,31 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposable
     {
-        private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
-        private HashSet<int> _worldSurfaceScannedTile = new HashSet<int>(); //which tile has been scanned
-        private HashSet<int> _worldUndergroundScannedTile = new HashSet<int>(); //which tile has been scanned
         private HashSet<int> _worldAbandonedTile = new HashSet<int>(); //which tile has been abandoned
+        private HashSet<int> _worldSurfaceScannedTile = new HashSet<int>(); //which tile has been scanned
+
+        private Dictionary<int, int>
+            _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
+
+        private HashSet<int> _worldUndergroundScannedTile = new HashSet<int>(); //which tile has been scanned
+
+        public void ExposeData()
+        {
+            Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
+                LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref _worldSurfaceScannedTile, "_worldSurfaceScannedTile", LookMode.Value);
+            Scribe_Collections.Look(ref _worldUndergroundScannedTile, "_worldUndergroundScannedTile", LookMode.Value);
+            Scribe_Collections.Look(ref _worldAbandonedTile, "_worldAbandonedTile", LookMode.Value);
+            //if the mod is added halfway, the reverse sequence will cause the parameter to become null
+            if (_worldTileUndergroundOreMiningCount == null)
+                _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
+
+            if (_worldSurfaceScannedTile == null) _worldSurfaceScannedTile = new HashSet<int>();
+
+            if (_worldUndergroundScannedTile == null) _worldUndergroundScannedTile = new HashSet<int>();
+
+            if (_worldAbandonedTile == null) _worldAbandonedTile = new HashSet<int>();
+        }
 
         public void UndergroundMiningCountIncrease(int tileId)
         {
@@ -84,35 +106,6 @@ namespace RabiSquare.RealisticOreGeneration
         public bool IsTileScannedUnderground(int tileId)
         {
             return _worldUndergroundScannedTile.Contains(tileId);
-        }
-
-        public void ExposeData()
-        {
-            Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
-                LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref _worldSurfaceScannedTile, "_worldSurfaceScannedTile", LookMode.Value);
-            Scribe_Collections.Look(ref _worldUndergroundScannedTile, "_worldUndergroundScannedTile", LookMode.Value);
-            Scribe_Collections.Look(ref _worldAbandonedTile, "_worldAbandonedTile", LookMode.Value);
-            //if the mod is added halfway, the reverse sequence will cause the parameter to become null
-            if (_worldTileUndergroundOreMiningCount == null)
-            {
-                _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
-            }
-
-            if (_worldSurfaceScannedTile == null)
-            {
-                _worldSurfaceScannedTile = new HashSet<int>();
-            }
-            
-            if (_worldUndergroundScannedTile == null)
-            {
-                _worldUndergroundScannedTile = new HashSet<int>();
-            }
-
-            if (_worldAbandonedTile == null)
-            {
-                _worldAbandonedTile = new HashSet<int>();
-            }
         }
     }
 }

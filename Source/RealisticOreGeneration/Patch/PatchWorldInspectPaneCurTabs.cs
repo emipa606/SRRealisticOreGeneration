@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 18:36:35
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -24,7 +25,7 @@ namespace RabiSquare.RealisticOreGeneration
         private static readonly WITab oreTileInfoTab = new OreTileInfoTab();
 
         /// <summary>
-        /// add new tab
+        ///     add new tab
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]

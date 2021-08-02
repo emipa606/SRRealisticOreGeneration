@@ -6,17 +6,18 @@
 //      /  \\        @Modified   2021-07-29 17:37:16
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
     public class SettingModel : ModSettings
     {
-        public float surfaceMutilpier = 1.5f;
-        public float undergroundMutilpier = 1.5f;
-        public int outpostMapSize = 200;
         public int maxOutpostCount = 2;
         public bool needShuffleLumpSize;
+        public int outpostMapSize = 200;
+        public float surfaceMutilpier = 1.5f;
+        public float undergroundMutilpier = 1.5f;
 
         public override void ExposeData()
         {

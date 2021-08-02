@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-30 17:19:09
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
@@ -18,12 +19,24 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private const int MinRange = 5;
         private const int MaxRange = 15;
-        private static readonly Texture2D SingleScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
-        private static readonly Texture2D RangeScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
-        private static readonly Texture2D SurfaceScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
-        private static readonly Texture2D UndergroundScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+
+        private static readonly Texture2D SingleScanModeCommand =
+            ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+
+        private static readonly Texture2D
+            RangeScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+
+        private static readonly Texture2D SurfaceScanModeCommand =
+            ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+
+        private static readonly Texture2D UndergroundScanModeCommand =
+            ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+
         private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
-        private static readonly Texture2D TileUnselectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+
+        private static readonly Texture2D TileUnselectedCommand =
+            ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
         private int _selectedTile = -1;
         private int DefaultTargetTile => 5; //todo 
@@ -36,15 +49,9 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            foreach (var baseGizmo in base.CompGetGizmosExtra())
-            {
-                yield return baseGizmo;
-            }
+            foreach (var baseGizmo in base.CompGetGizmosExtra()) yield return baseGizmo;
             yield return GetScanAreaGizmo();
-            foreach (var scanModeGizmo in GetScanModeGizmo())
-            {
-                yield return scanModeGizmo;
-            }
+            foreach (var scanModeGizmo in GetScanModeGizmo()) yield return scanModeGizmo;
         }
 
         protected override void DoFind(Pawn worker)
@@ -74,16 +81,10 @@ namespace RabiSquare.RealisticOreGeneration
         {
             base.CompTickRare();
             //check target 
-            if (_selectedTile != -1)
-            {
-                return;
-            }
+            if (_selectedTile != -1) return;
 
             //todo no target
-            if (DefaultTargetTile == -1)
-            {
-                return;
-            }
+            if (DefaultTargetTile == -1) return;
 
             _selectedTile = DefaultTargetTile;
         }
@@ -120,10 +121,7 @@ namespace RabiSquare.RealisticOreGeneration
             };
 
             yield return commandChange;
-            if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface)
-            {
-                yield break;
-            }
+            if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface) yield break;
 
             var commandSelectTile = new Command_Action
             {

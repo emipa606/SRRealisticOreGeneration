@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-28 17:35:19
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using UnityEngine;
 
 namespace RabiSquare.RealisticOreGeneration

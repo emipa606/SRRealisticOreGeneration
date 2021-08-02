@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 18:27:50
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
@@ -15,19 +16,20 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
     [StaticConstructorOnStartup]
     public class OreTileInfoTab : WITab
     {
-        private Vector2 _scrollPosition;
-        private float _scrollViewHeight;
-        private static readonly Vector2 WinSize = new Vector2(440f, 540f);
         private const float VerticalMargin = 15f;
         private const float FrameMargin = 10f;
         private const float BarWidth = 16f;
-        public override bool IsVisible => SelTileID >= 0;
+        private static readonly Vector2 WinSize = new Vector2(440f, 540f);
+        private Vector2 _scrollPosition;
+        private float _scrollViewHeight;
 
         public OreTileInfoTab()
         {
             size = WinSize;
             labelKey = "SrTabOreTileInfo";
         }
+
+        public override bool IsVisible => SelTileID >= 0;
 
         protected override void FillTab()
         {
@@ -44,8 +46,9 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             Widgets.EndScrollView();
         }
 
-        private static void DrawWarnning(ref float curY, float width)
+        private void DrawWarnning(ref float curY, float width)
         {
+            if (!WorldOreInfoRecorder.Instance.IsTileAbandoned(SelTileID)) return;
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.red;
@@ -53,12 +56,12 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             rect.height = Text.LineHeight;
             Widgets.Label(rect, "SrResourceDepletion".Translate());
             rect.y += rect.height;
+            curY = rect.y;
         }
 
-        private static void DrawSurfaceAbundance(ref float curY, float width)
+        private void DrawSurfaceAbundance(ref float curY, float width)
         {
-            var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
+            var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(SelTileID);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -73,10 +76,9 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             curY = rect.y;
         }
 
-        private static void DrawSurfaceOreDistribution(ref float curY, float width)
+        private void DrawSurfaceOreDistribution(ref float curY, float width)
         {
-            var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
+            var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(SelTileID);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -107,10 +109,9 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             curY = rect.y;
         }
 
-        private static void DrawUndergourndAbundance(ref float curY, float width)
+        private void DrawUndergourndAbundance(ref float curY, float width)
         {
-            var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
+            var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(SelTileID);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -125,10 +126,9 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             curY = rect.y;
         }
 
-        private static void DrawUndergroundOreDistribution(ref float curY, float width)
+        private void DrawUndergroundOreDistribution(ref float curY, float width)
         {
-            var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
+            var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(SelTileID);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;

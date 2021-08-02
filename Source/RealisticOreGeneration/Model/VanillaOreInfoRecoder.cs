@@ -15,7 +15,6 @@ namespace RabiSquare.RealisticOreGeneration
     public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>
     {
         private float _vanallaTotalSurfaceComonality;
-        private float _vanallaTotalUndergroundComonality;
 
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
@@ -38,7 +37,7 @@ namespace RabiSquare.RealisticOreGeneration
                         $"{MsicDef.LogTag}Unexpected buildingProperties: {thingdef.defName}");
                     continue;
                 }
-
+                
                 var mineableThing = buildingProperties.mineableThing;
                 if (mineableThing == null)
                 {
@@ -116,8 +115,6 @@ namespace RabiSquare.RealisticOreGeneration
                     thingdef.deepLumpSizeRange, thingdef.deepCountPerPortion,
                     thingdef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
-                _vanallaTotalUndergroundComonality = 0f;
-                _vanallaTotalUndergroundComonality += oreData.commonality;
             }
         }
 

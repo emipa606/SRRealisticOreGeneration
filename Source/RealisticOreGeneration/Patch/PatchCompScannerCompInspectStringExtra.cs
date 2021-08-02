@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-31 14:32:40
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Text;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -21,7 +22,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompScannerCompInspectStringExtra
     {
         /// <summary>
-        /// hook inspection
+        ///     hook inspection
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]
@@ -45,7 +46,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var oreData = WorldOreDataGenerator.GetTileOreData(parent.Tile);
+            var oreData = WorldOreDataGenerator.Instance.GetTileOreData(parent.Tile);
             var progress = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(parent.Tile) /
                            oreData.FreeUndergroundCycleCount;
             if (progress > 0.99f)

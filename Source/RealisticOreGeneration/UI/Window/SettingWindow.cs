@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 17:42:35
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using JetBrains.Annotations;
 using UnityEngine;
 using Verse;
@@ -17,13 +18,14 @@ namespace RabiSquare.RealisticOreGeneration
     public class SettingWindow : Mod
     {
         public readonly SettingModel settingModel;
-        public static SettingWindow Instance { get; private set; }
 
         public SettingWindow(ModContentPack content) : base(content)
         {
             settingModel = GetSettings<SettingModel>();
             Instance = this;
         }
+
+        public static SettingWindow Instance { get; private set; }
 
         public override string SettingsCategory()
         {
@@ -34,11 +36,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             var ls = new Listing_Standard();
             ls.Begin(inRect);
-            if (ls.ButtonText("Default"))
-            {
-                settingModel.SetDefault();
-            }
-
+            if (ls.ButtonText("Default")) settingModel.SetDefault();
             Text.Font = GameFont.Medium;
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
                 "SrDescriptionShuffleLumpSize");

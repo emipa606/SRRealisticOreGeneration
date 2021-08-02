@@ -62,6 +62,7 @@
         <Compile Include="DefOf\WorldObjectDefOf.cs" />
         <Compile Include="Def\MsicDef.cs" />
         <Compile Include="Extension\ArrayExtension.cs" />
+        <Compile Include="Extension\ListExtension.cs" />
         <Compile Include="ModelData\OreData.cs" />
         <Compile Include="ModelData\TileOreData.cs" />
         <Compile Include="Model\DeepScannerDataGenerator.cs" />

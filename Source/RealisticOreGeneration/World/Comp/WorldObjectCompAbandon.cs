@@ -6,6 +6,7 @@
 //      /  \\        @Modified   2021-07-29 16:51:49
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -24,10 +25,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
-            if (Find.WorldSelector.SingleSelectedObject != MapParent)
-            {
-                yield break;
-            }
+            if (Find.WorldSelector.SingleSelectedObject != MapParent) yield break;
 
             var commandAction = new Command_Action
             {
@@ -51,10 +49,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             if (mapPawns.AnyColonistSpawned)
-            {
                 commandAction.Disable("SrCommandAbandonAbondonFailAnyColonistsThere".Translate());
-            }
-
             yield return commandAction;
         }
 
