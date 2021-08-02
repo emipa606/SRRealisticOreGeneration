@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-29 17:37:16
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration

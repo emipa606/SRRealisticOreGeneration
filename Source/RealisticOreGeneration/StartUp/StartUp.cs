@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-26 19:39:48
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using System.Linq;
 using JetBrains.Annotations;
 using Verse;

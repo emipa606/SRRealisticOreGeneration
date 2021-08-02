@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-29 11:33:38
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using System.Collections.Generic;
 using RimWorld.Planet;
 using UnityEngine;

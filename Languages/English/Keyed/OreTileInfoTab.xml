@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <SrTabOreTileInfo>Ore</SrTabOreTileInfo>
+    <SrResourceDepletion>Resource Depletion</SrResourceDepletion>
     <SrSurfaceLumpDistribution>Surface lump distribution</SrSurfaceLumpDistribution>
     <SrUndergroundLumpDistribution>Underground lump distribution</SrUndergroundLumpDistribution>
     <SrSurfaceAbundance>Surface abundance</SrSurfaceAbundance>

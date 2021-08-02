@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-25 22:31:38
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -71,6 +70,9 @@ namespace RabiSquare.RealisticOreGeneration
                 new IntVec3(SettingWindow.Instance.settingModel.outpostMapSize, 1, SettingWindow.Instance.settingModel.outpostMapSize),
                 null);
             CaravanEnterMapUtility.Enter(Caravan, map, CaravanEnterMode.Edge);
+            Find.LetterStack.ReceiveLetter("LetterLabelCaravanEnteredMap".Translate((NamedArgument)mapParent),
+                "LetterCaravanEnteredMap".Translate((NamedArgument)Caravan.Label, (NamedArgument)mapParent)
+                    .CapitalizeFirst(), LetterDefOf.NeutralEvent, Caravan.PawnsListForReading);
             MiningOutpostRecorder.Instance.MiningOutpostCountIncrease();
         }
     }

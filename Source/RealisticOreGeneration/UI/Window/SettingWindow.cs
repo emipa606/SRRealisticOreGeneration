@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-29 17:42:35
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using JetBrains.Annotations;
 using UnityEngine;
 using Verse;

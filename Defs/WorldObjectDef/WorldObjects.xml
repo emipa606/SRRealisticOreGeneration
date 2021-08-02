@@ -18,11 +18,4 @@
             <li Class="RabiSquare.RealisticOreGeneration.WorldObjectCompPropertiesAbandon"/>
         </comps>
     </WorldObjectDef>
-    <WorldObjectDef>
-        <defName>SrAbandonedMiningOutpost</defName>
-        <label>abandoned mining post</label>
-        <description>An abandoned mining post.</description>
-        <texture>World/WorldObjects/TribalSettlement</texture>
-        <worldObjectClass>MapParent</worldObjectClass>
-    </WorldObjectDef>
 </Defs>

@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-29 12:54:24
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld;
@@ -33,7 +32,8 @@ namespace RabiSquare.RealisticOreGeneration
 
             var tileId = map.Tile;
             var tileOreData = WorldOreDataGenerator.GetTileOreData(tileId);
-            __instance.countPer10kCellsRange *= tileOreData.OreGenerationFactor;
+            __instance.countPer10kCellsRange *=
+                WorldOreInfoRecorder.Instance.IsTileAbandoned(tileId) ? 0 : tileOreData.OreGenerationFactor;
             if (!Prefs.DevMode)
             {
                 return true;

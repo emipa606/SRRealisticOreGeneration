@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-28 17:53:22
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using HarmonyLib;
 using JetBrains.Annotations;
 using RimWorld.Planet;

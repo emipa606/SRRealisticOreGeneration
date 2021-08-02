@@ -16,15 +16,23 @@ namespace RabiSquare.RealisticOreGeneration
     [StaticConstructorOnStartup]
     public class CompOreScanner : CompScanner
     {
+        private const int MinRange = 5;
+        private const int MaxRange = 15;
         private static readonly Texture2D SingleScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
         private static readonly Texture2D RangeScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
         private static readonly Texture2D SurfaceScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
         private static readonly Texture2D UndergroundScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
         private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
         private static readonly Texture2D TileUnselectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
-
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
         private int _selectedTile = -1;
+        private int DefaultTargetTile => 5; //todo 
+
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Values.Look(ref _selectedTile, "_selectedTile");
+        }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
@@ -59,25 +67,45 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
             }
 
-            //todo single
-            //todo range 
-            Find.LetterStack.ReceiveLetter("TEST", "test", LetterDefOf.PositiveEvent, parent);
+            Find.LetterStack.ReceiveLetter("扫描完成", "test", LetterDefOf.PositiveEvent);
+        }
+
+        public override void CompTickRare()
+        {
+            base.CompTickRare();
+            //check target 
+            if (_selectedTile != -1)
+            {
+                return;
+            }
+
+            //todo no target
+            if (DefaultTargetTile == -1)
+            {
+                return;
+            }
+
+            _selectedTile = DefaultTargetTile;
         }
 
         private void OnSingleSurfaceFind()
         {
+            WorldOreInfoRecorder.Instance.RecordScannedTileSurface(_selectedTile);
         }
 
         private void OnRangeSurfaceFind()
         {
+            WorldOreInfoRecorder.Instance.RecordScannedTileSurface(_selectedTile);
         }
 
         private void OnSingleUndergroundFind()
         {
+            WorldOreInfoRecorder.Instance.RecordScannedTileUnderground(_selectedTile);
         }
 
         private void OnRangeUnderGroundFind()
         {
+            WorldOreInfoRecorder.Instance.RecordScannedTileUnderground(_selectedTile);
         }
 
         private IEnumerable<Gizmo> GetScanModeGizmo()
@@ -99,7 +127,7 @@ namespace RabiSquare.RealisticOreGeneration
 
             var commandSelectTile = new Command_Action
             {
-                defaultLabel = _selectedTile == -1 ? "SrUnselect".Translate() : "SrSelect".Translate(),
+                defaultLabel = $"{"SrSelect".Translate()}",
                 icon = _selectedTile == -1 ? TileUnselectedCommand : TileSelectedCommand,
                 action = OnClickTileSelect
             };
@@ -136,12 +164,7 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void OnClickTileSelect()
         {
-        }
-
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Values.Look(ref _selectedTile, "_selectedTile");
+            //todo 
         }
     }
 }

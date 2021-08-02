@@ -6,7 +6,6 @@
 //      /  \\        @Modified   2021-07-29 18:27:50
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
@@ -36,12 +35,24 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             var viewRect = new Rect(0, 0, winRect.width - FrameMargin - BarWidth, _scrollViewHeight);
             var curY = 0f;
             Widgets.BeginScrollView(winRect, ref _scrollPosition, viewRect);
+            DrawWarnning(ref curY, viewRect.width);
             DrawSurfaceAbundance(ref curY, viewRect.width);
             DrawSurfaceOreDistribution(ref curY, viewRect.width);
             DrawUndergourndAbundance(ref curY, viewRect.width);
             DrawUndergroundOreDistribution(ref curY, viewRect.width);
             _scrollViewHeight = curY;
             Widgets.EndScrollView();
+        }
+
+        private static void DrawWarnning(ref float curY, float width)
+        {
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.red;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrResourceDepletion".Translate());
+            rect.y += rect.height;
         }
 
         private static void DrawSurfaceAbundance(ref float curY, float width)
