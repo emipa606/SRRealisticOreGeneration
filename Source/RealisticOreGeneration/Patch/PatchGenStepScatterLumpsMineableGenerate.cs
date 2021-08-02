@@ -32,13 +32,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             var tileId = map.Tile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(tileId);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");
-                return true;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(tileId);
             __instance.countPer10kCellsRange *= tileOreData.OreGenerationFactor;
             if (!Prefs.DevMode)
             {

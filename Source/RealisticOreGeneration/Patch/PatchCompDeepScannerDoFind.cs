@@ -37,7 +37,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var oreData = WorldOreInfoRecorder.Instance.GetTileOreData(parent.Tile);
+            var oreData = WorldOreDataGenerator.GetTileOreData(parent.Tile);
             Log.Message($"{MsicDef.LogTag}underground mining count increase. tile: {parent.Tile}. " +
                         $"count: {WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(parent.Tile)}");
             Log.Message($"{MsicDef.LogTag}freeCycleCount: {(int)oreData.FreeUndergroundCycleCount}");

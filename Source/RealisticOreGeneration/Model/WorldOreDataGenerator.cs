@@ -6,8 +6,9 @@
 //      /  \\        @Modified   2021-07-26 21:10:22
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
-
+using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
@@ -18,36 +19,41 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private const float Relief = 15;
 
-        public static void GenerateWorldOreInfo(WorldGrid worldGrid)
+        /// <summary>
+        /// get ore data of tile
+        /// </summary>
+        /// <param name="tileId"></param>
+        /// <returns></returns>
+        [NotNull]
+        public static TileOreData GetTileOreData(int tileId)
         {
-            var allTiles = worldGrid.tiles;
-            if (allTiles == null || allTiles.Count <= 0)
+            var worldGrid = Find.WorldGrid;
+            if (worldGrid == null)
             {
-                Log.Error($"{MsicDef.LogTag}wrong tile count");
-                return;
+                throw new Exception("can't find world grid");
             }
 
-            for (var i = 0; i < allTiles.Count; i++)
+            var surfaceDistrubtion = GenerateSurfaceDistrubtion(tileId);
+            var undergroundDistrubtion = GenerateUndergroundDistrubtion(tileId);
+            var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistrubtion);
+            var surfaceBerlinFactor = CalcBerlinFactor(tileId, worldGrid, true);
+            var undergroundBerlinFactor = CalcBerlinFactor(tileId, worldGrid, false);
+            var tileOreData = new TileOreData(tileId, surfaceBerlinFactor, undergroundBerlinFactor, surfaceValueFactor)
             {
-                var surfaceDistrubtion = GenerateSurfaceDistrubtion();
-                var undergroundDistrubtion = GenerateUndergroundDistrubtion();
-                var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistrubtion);
-                var surfaceBerlinFactor = CalcBerlinFactor(i, worldGrid, true);
-                var undergroundBerlinFactor = CalcBerlinFactor(i, worldGrid, false);
-                WorldOreInfoRecorder.Instance.SetTileOreData(i, surfaceBerlinFactor, undergroundBerlinFactor,
-                    surfaceValueFactor, surfaceDistrubtion, undergroundDistrubtion);
-            }
+                surfaceDistrubtion = surfaceDistrubtion,
+                undergroundDistrubtion = undergroundDistrubtion
+            };
 
-            WorldOreInfoRecorder.Instance.Initialized = true;
+            return tileOreData;
         }
 
-        private static Dictionary<string, float> GenerateSurfaceDistrubtion()
+        private static Dictionary<string, float> GenerateSurfaceDistrubtion(int tileId)
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataListCount();
-            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
+            var q = qMin + Rand.ValueSeeded(tileId) * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
@@ -70,13 +76,13 @@ namespace RabiSquare.RealisticOreGeneration
             return mapCommonality;
         }
 
-        private static Dictionary<string, float> GenerateUndergroundDistrubtion()
+        private static Dictionary<string, float> GenerateUndergroundDistrubtion(int tileId)
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataListCount();
-            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
+            var q = qMin + Rand.ValueSeeded(tileId) * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)

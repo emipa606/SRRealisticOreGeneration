@@ -31,13 +31,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             var tileId = parent.Tile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(tileId);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");
-                return true;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(tileId);
             foreach (var kvp in tileOreData.surfaceDistrubtion)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);

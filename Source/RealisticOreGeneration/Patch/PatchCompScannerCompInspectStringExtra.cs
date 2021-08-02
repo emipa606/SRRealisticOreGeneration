@@ -46,7 +46,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var oreData = WorldOreInfoRecorder.Instance.GetTileOreData(parent.Tile);
+            var oreData = WorldOreDataGenerator.GetTileOreData(parent.Tile);
             var progress = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(parent.Tile) /
                            oreData.FreeUndergroundCycleCount;
             if (progress > 0.99f)

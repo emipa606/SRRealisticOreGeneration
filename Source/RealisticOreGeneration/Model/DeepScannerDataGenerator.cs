@@ -21,13 +21,7 @@ namespace RabiSquare.RealisticOreGeneration
             //default value
             scanFindGuaranteedDays = VanillaScanFindGuaranteedDays;
             scanFindMtbDays = VanillaScanFindMtbDays;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(tileId);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");
-                return;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(tileId);
             var freeCycleCount = (int)tileOreData.FreeUndergroundCycleCount;
             var currentCycleCount = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(tileId);
             //free underground ore find

@@ -47,13 +47,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
         private static void DrawSurfaceAbundance(ref float curY, float width)
         {
             var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
-                return;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -71,13 +65,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
         private static void DrawSurfaceOreDistribution(ref float curY, float width)
         {
             var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
-                return;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -111,13 +99,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
         private static void DrawUndergourndAbundance(ref float curY, float width)
         {
             var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
-                return;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;
@@ -135,13 +117,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
         private static void DrawUndergroundOreDistribution(ref float curY, float width)
         {
             var selectedTile = Find.WorldSelector.selectedTile;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(selectedTile);
-            if (tileOreData == null)
-            {
-                Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {selectedTile}");
-                return;
-            }
-
+            var tileOreData = WorldOreDataGenerator.GetTileOreData(selectedTile);
             var rect = new Rect {width = width, y = curY};
             //label
             GUI.color = Color.white;

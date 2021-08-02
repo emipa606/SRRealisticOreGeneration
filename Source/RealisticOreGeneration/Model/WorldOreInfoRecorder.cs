@@ -14,60 +14,8 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposable
     {
-        private bool _initialized; //whether calced world tile info
-        private Dictionary<int, TileOreData> _worldTileOreDataHashmap = new Dictionary<int, TileOreData>(); //tileId,tileOreData
         private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
-        public bool Initialized
-        {
-            get => _initialized;
-            set => _initialized = value;
-        }
-
-        /// <summary>
-        /// set surface ore data of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <param name="surfaceBerlinFactor"></param>
-        /// <param name="undergroundBerlinFactor"></param>
-        /// <param name="surfaceValueFactor"></param>
-        /// <param name="surfaceDistrubtion"></param>
-        /// <param name="undergroundDistrubtion"></param>
-        public void SetTileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
-            float surfaceValueFactor, Dictionary<string, float> surfaceDistrubtion,
-            Dictionary<string, float> undergroundDistrubtion)
-        {
-            if (_worldTileOreDataHashmap.ContainsKey(tileId))
-            {
-                Log.Warning($"{MsicDef.LogTag}ore data of tile: {tileId} has been calced");
-                return;
-            }
-
-            var tileOreData =
-                new TileOreData(tileId, surfaceBerlinFactor, undergroundBerlinFactor, surfaceValueFactor)
-                {
-                    surfaceDistrubtion = surfaceDistrubtion,
-                    undergroundDistrubtion = undergroundDistrubtion
-                };
-
-            _worldTileOreDataHashmap.Add(tileId, tileOreData);
-        }
-
-        /// <summary>
-        /// get ore data of tile
-        /// </summary>
-        /// <param name="tileId"></param>
-        /// <returns></returns>
-        public TileOreData GetTileOreData(int tileId)
-        {
-            if (_worldTileOreDataHashmap.ContainsKey(tileId))
-            {
-                return _worldTileOreDataHashmap[tileId];
-            }
-
-            Log.Error($"{MsicDef.LogTag}can't find ore data of tile: {tileId}");
-            return null;
-        }
-
+        
         public void UndergroundMiningCountIncrease(int tileId)
         {
             // no info
@@ -87,25 +35,12 @@ namespace RabiSquare.RealisticOreGeneration
                 : _worldTileUndergroundOreMiningCount[tileId];
         }
 
-        public override string ToString()
-        {
-            return $"tile count: {_worldTileOreDataHashmap.Count}";
-        }
-
         public void ExposeData()
         {
-            Scribe_Values.Look(ref _initialized, "_initialized");
-            Scribe_Collections.Look(ref _worldTileOreDataHashmap, "_worldTileOreDataHashmap", LookMode.Value,
-                LookMode.Deep);
             Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
                 LookMode.Value,
                 LookMode.Value);
             //if the mod is added halfway, the reverse sequence will cause the parameter to become null
-            if (_worldTileOreDataHashmap == null)
-            {
-                _worldTileOreDataHashmap = new Dictionary<int, TileOreData>();
-            }
-
             if (_worldTileUndergroundOreMiningCount == null)
             {
                 _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
