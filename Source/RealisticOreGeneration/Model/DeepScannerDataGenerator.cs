@@ -11,17 +11,17 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class DeepScannerDataGenerator : BaseSingleTon<DeepScannerDataGenerator>
+    public static class DeepScannerDataGenerator
     {
         private const int VanillaScanFindGuaranteedDays = 6; //garanteed find time interval from Buildings_Misc.xml
         private const int VanillaScanFindMtbDays = 3; //random find time interval from Buildings_Misc.xml
-        
+
         public static void GenerateDeepScannerFindDays(int tileId, out int scanFindGuaranteedDays, out int scanFindMtbDays)
         {
             //default value
             scanFindGuaranteedDays = VanillaScanFindGuaranteedDays;
             scanFindMtbDays = VanillaScanFindMtbDays;
-            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(tileId); 
+            var tileOreData = WorldOreInfoRecorder.Instance.GetTileOreData(tileId);
             if (tileOreData == null)
             {
                 Log.Warning($"{MsicDef.LogTag}can't find ore info in tile: {tileId}");

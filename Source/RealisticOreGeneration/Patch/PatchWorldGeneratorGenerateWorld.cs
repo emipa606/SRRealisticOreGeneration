@@ -40,27 +40,10 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            var allTiles = worldGrid.tiles;
-            if (allTiles == null || allTiles.Count <= 0)
-            {
-                Log.Error($"{MsicDef.LogTag}wrong tile count");
-                return;
-            }
-
-            for (var i = 0; i < allTiles.Count; i++)
-            {
-                var surfaceDistrubtion = TileOreDataGenerator.GenerateSurfaceDistrubtion();
-                var undergroundDistrubtion = TileOreDataGenerator.GenerateUndergroundDistrubtion();
-                var surfaceValueFactor = TileOreDataGenerator.CalcSurfaceValueFactor(surfaceDistrubtion);
-                var surfaceBerlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid, true);
-                var undergroundBerlinFactor = TileOreDataGenerator.CalcBerlinFactor(i, worldGrid, false);
-                WorldOreInfoRecorder.Instance.SetTileOreData(i, surfaceBerlinFactor, undergroundBerlinFactor,
-                    surfaceValueFactor, surfaceDistrubtion, undergroundDistrubtion);
-            }
-
+            WorldOreDataGenerator.GenerateWorldOreInfo(worldGrid);
             if (Prefs.DevMode)
             {
-                Log.Message($"hook worldgen success with tile count: {allTiles.Count}");
+                Log.Message($"hook worldgen success with tile count: {worldGrid.tiles.Count}");
             }
         }
     }

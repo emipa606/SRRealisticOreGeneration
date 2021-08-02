@@ -161,17 +161,6 @@ namespace RabiSquare.RealisticOreGeneration
             return new IntRange(1, 20);
         }
 
-        public float GetNormalizedUndergroundCommonality(int index)
-        {
-            if (_vanillaUndergroundOreDataList != null && _vanillaUndergroundOreDataList.Count > index)
-            {
-                return _vanillaUndergroundOreDataList[index].commonality / _vanallaTotalUndergroundComonality;
-            }
-
-            Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
-            return 0f;
-        }
-
         public override string ToString()
         {
             var stringBuilder = new StringBuilder();

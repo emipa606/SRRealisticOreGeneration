@@ -14,11 +14,14 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposable
     {
-        private Dictionary<int, TileOreData>
-            _worldTileOreDataHashmap = new Dictionary<int, TileOreData>(); //tileId,tileOreData
-
-        private Dictionary<int, int>
-            _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
+        private bool _initialized; //whether calced world tile info
+        private Dictionary<int, TileOreData> _worldTileOreDataHashmap = new Dictionary<int, TileOreData>(); //tileId,tileOreData
+        private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
+        public bool Initialized
+        {
+            get => _initialized;
+            set => _initialized = value;
+        }
 
         /// <summary>
         /// set surface ore data of tile
@@ -91,11 +94,22 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void ExposeData()
         {
+            Scribe_Values.Look(ref _initialized, "_initialized");
             Scribe_Collections.Look(ref _worldTileOreDataHashmap, "_worldTileOreDataHashmap", LookMode.Value,
                 LookMode.Deep);
             Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
                 LookMode.Value,
                 LookMode.Value);
+            //if the mod is added halfway, the reverse sequence will cause the parameter to become null
+            if (_worldTileOreDataHashmap == null)
+            {
+                _worldTileOreDataHashmap = new Dictionary<int, TileOreData>();
+            }
+
+            if (_worldTileUndergroundOreMiningCount == null)
+            {
+                _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
+            }
         }
     }
 }

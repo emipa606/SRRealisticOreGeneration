@@ -1,5 +1,5 @@
 ﻿// ******************************************************************
-//       /\ /|       @file       TileOreDataGenerator.cs
+//       /\ /|       @file       WorldOreDataGenerator.cs
 //       \ V/        @brief      to calc info of ore in some tile
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
@@ -14,17 +14,40 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class TileOreDataGenerator : BaseSingleTon<TileOreDataGenerator>
+    public static class WorldOreDataGenerator
     {
         private const float Relief = 15;
 
-        public static Dictionary<string, float> GenerateSurfaceDistrubtion()
+        public static void GenerateWorldOreInfo(WorldGrid worldGrid)
+        {
+            var allTiles = worldGrid.tiles;
+            if (allTiles == null || allTiles.Count <= 0)
+            {
+                Log.Error($"{MsicDef.LogTag}wrong tile count");
+                return;
+            }
+
+            for (var i = 0; i < allTiles.Count; i++)
+            {
+                var surfaceDistrubtion = GenerateSurfaceDistrubtion();
+                var undergroundDistrubtion = GenerateUndergroundDistrubtion();
+                var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistrubtion);
+                var surfaceBerlinFactor = CalcBerlinFactor(i, worldGrid, true);
+                var undergroundBerlinFactor = CalcBerlinFactor(i, worldGrid, false);
+                WorldOreInfoRecorder.Instance.SetTileOreData(i, surfaceBerlinFactor, undergroundBerlinFactor,
+                    surfaceValueFactor, surfaceDistrubtion, undergroundDistrubtion);
+            }
+
+            WorldOreInfoRecorder.Instance.Initialized = true;
+        }
+
+        private static Dictionary<string, float> GenerateSurfaceDistrubtion()
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataListCount();
-            var q = qMin + Rand.Value * ((float) n / 2 - qMin);
+            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
@@ -47,13 +70,13 @@ namespace RabiSquare.RealisticOreGeneration
             return mapCommonality;
         }
 
-        public static Dictionary<string, float> GenerateUndergroundDistrubtion()
+        private static Dictionary<string, float> GenerateUndergroundDistrubtion()
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distrubtion
             const float qMin = 1f;
             var n = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataListCount();
-            var q = qMin + Rand.Value * ((float) n / 2 - qMin);
+            var q = qMin + Rand.Value * ((float)n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
@@ -83,7 +106,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// <param name="worldGrid"></param>
         /// <param name="isSurface"></param>
         /// <returns></returns>
-        public static float CalcBerlinFactor(int tileId, WorldGrid worldGrid, bool isSurface)
+        private static float CalcBerlinFactor(int tileId, WorldGrid worldGrid, bool isSurface)
         {
             //get grid to find tiles
             var tile = worldGrid[tileId];
@@ -105,7 +128,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// </summary>
         /// <param name="oreDistrubtion">commonality of each ore. key:defName,value:commonality</param>
         /// <returns></returns>
-        public static float CalcSurfaceValueFactor(Dictionary<string, float> oreDistrubtion)
+        private static float CalcSurfaceValueFactor(IReadOnlyDictionary<string, float> oreDistrubtion)
         {
             if (oreDistrubtion.Count == 0)
             {
