@@ -94,12 +94,12 @@ namespace RabiSquare.RealisticOreGeneration
 
         public bool IsTileScannedSurface(int tileId)
         {
-            return _worldSurfaceScannedTile.Contains(tileId);
+            return _worldSurfaceScannedTile.Contains(tileId) || SettingWindow.Instance.settingModel.disableScanner;
         }
 
         public bool IsTileScannedUnderground(int tileId)
         {
-            return _worldUndergroundScannedTile.Contains(tileId);
+            return _worldUndergroundScannedTile.Contains(tileId) || SettingWindow.Instance.settingModel.disableScanner;
         }
     }
 }

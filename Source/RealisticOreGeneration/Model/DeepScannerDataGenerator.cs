@@ -13,7 +13,7 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public static class DeepScannerDataGenerator
     {
-        private const int VanillaScanFindGuaranteedDays = 6; //garanteed find time interval from Buildings_Misc.xml
+        private const int VanillaScanFindGuaranteedDays = 6; //guaranteed find time interval from Buildings_Misc.xml
         private const int VanillaScanFindMtbDays = 3; //random find time interval from Buildings_Misc.xml
 
         public static void GenerateDeepScannerFindDays(int tileId, out int scanFindGuaranteedDays,

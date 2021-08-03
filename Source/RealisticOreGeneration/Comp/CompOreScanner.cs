@@ -1,6 +1,6 @@
 ﻿// ******************************************************************
 //       /\ /|       @file       CompOreScanner.cs
-//       \ V/        @brief      
+//       \ V/        @brief      This will replace CompProperties_LongRangeMineralScanner work
 //       | "")       @author     Shadowrabbit, yingtu0401@gmail.com
 //       /  |                    
 //      /  \\        @Modified   2021-07-30 17:19:09
@@ -19,8 +19,8 @@ namespace RabiSquare.RealisticOreGeneration
     [StaticConstructorOnStartup]
     public class CompOreScanner : CompScanner
     {
-        private const int RangeModeRadius = 5;
-        private const int SingleModeRadius = 15;
+        private const int RangeModeRadius = 6;
+        private const int SingleModeRadius = 24;
 
         private static readonly Texture2D SingleScanModeCommand =
             ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
@@ -42,6 +42,7 @@ namespace RabiSquare.RealisticOreGeneration
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
         private Dictionary<int, int> _ringMap = new Dictionary<int, int>();
         private int _selectedTile = -1;
+        private new CompPropertiesOreScanner Props => (CompPropertiesOreScanner) props;
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
@@ -140,9 +141,10 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             list.Shuffle();
-            if (!WorldOreInfoRecorder.Instance.IsTileScannedSurface(list[0]))
+            foreach (var tileId in list.Where(tileId => !WorldOreInfoRecorder.Instance.IsTileScannedSurface(tileId)))
             {
-                _selectedTile = list[0];
+                _selectedTile = tileId;
+                return;
             }
 
             _selectedTile = -1;
@@ -158,9 +160,11 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             list.Shuffle();
-            if (!WorldOreInfoRecorder.Instance.IsTileScannedUnderground(list[0]))
+            foreach (var tileId in list.Where(tileId =>
+                !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(tileId)))
             {
-                _selectedTile = list[0];
+                _selectedTile = tileId;
+                return;
             }
 
             _selectedTile = -1;
@@ -224,11 +228,17 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        ///     distance of target tile will affect cost
+        /// distance of target tile will affect cost
         /// </summary>
         private void UpdateCostTime()
         {
-            //todo set time 
+            //set time 
+            var distance = GetTargetDistance(_selectedTile);
+            Props.scanFindGuaranteedDays = 1.4f * distance / (distance + 1);
+            Props.scanFindMtbDays = Props.scanFindGuaranteedDays / 2;
+            if ((_oreScanMode & OreScanMode.SingleUnderground) != OreScanMode.SingleUnderground) return;
+            Props.scanFindGuaranteedDays *= 2;
+            Props.scanFindMtbDays *= 2;
         }
 
         private int GetTargetDistance(int tileId)
@@ -258,12 +268,14 @@ namespace RabiSquare.RealisticOreGeneration
                 icon = (_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface
                     ? RangeScanModeCommand
                     : SingleScanModeCommand,
+                defaultDesc = (_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface
+                    ? "SrChangeToSingleMode".Translate()
+                    : "SrChangeToRangeMode".Translate(),
                 action = OnClickScanModeChange
             };
 
             yield return commandChange;
             if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface) yield break;
-
             var commandSelectTile = new Command_Action
             {
                 defaultLabel = $"{"SrSelect".Translate()}",
@@ -282,6 +294,9 @@ namespace RabiSquare.RealisticOreGeneration
                 icon = (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground
                     ? UndergroundScanModeCommand
                     : SurfaceScanModeCommand,
+                defaultDesc = (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground
+                    ? "SrChangeToSurfaceMode".Translate()
+                    : "SrChangeToUndergroundMode".Translate(),
                 action = OnClickScanAreaChange
             };
             return commandAction;
