@@ -41,6 +41,9 @@ namespace RabiSquare.RealisticOreGeneration
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
                 "SrDescriptionShuffleLumpSize");
             ls.GapLine(20f);
+            ls.CheckboxLabeled("SrDisableScanner".Translate(), ref settingModel.disableScanner,
+                "SrDescriptionDisableScanner");
+            ls.GapLine(20f);
             ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
                 tooltip: "SrDescriptionSurfaceMultiplier".Translate());
             settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 99f);

@@ -6,4 +6,6 @@
     <SrUndergroundLumpDistribution>Underground lump distribution</SrUndergroundLumpDistribution>
     <SrSurfaceAbundance>Surface abundance</SrSurfaceAbundance>
     <SrUndergroundAbundance>Underground abundance</SrUndergroundAbundance>
+    <SrNoSurfaceInfo>NO SURFACE INFO</SrNoSurfaceInfo>
+    <SrNoUndergroundInfo>NO UNDERGROUND INFO</SrNoUndergroundInfo>
 </LanguageData>

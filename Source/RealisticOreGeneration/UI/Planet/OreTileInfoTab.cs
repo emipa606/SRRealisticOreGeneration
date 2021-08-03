@@ -38,10 +38,8 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             var curY = 0f;
             Widgets.BeginScrollView(winRect, ref _scrollPosition, viewRect);
             DrawWarning(ref curY, viewRect.width);
-            DrawSurfaceAbundance(ref curY, viewRect.width);
-            DrawSurfaceOreDistribution(ref curY, viewRect.width);
-            DrawUndergroundAbundance(ref curY, viewRect.width);
-            DrawUndergroundOreDistribution(ref curY, viewRect.width);
+            DrawSurfaceInfo(ref curY, viewRect.width);
+            DrawUndergroundInfo(ref curY, viewRect.width);
             _scrollViewHeight = curY;
             Widgets.EndScrollView();
         }
@@ -57,6 +55,42 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             Widgets.Label(rect, "SrResourceDepletion".Translate());
             rect.y += rect.height;
             curY = rect.y;
+        }
+
+        private static void DrawInfo(ref float curY, float width, string text)
+        {
+            var rect = new Rect {width = width, y = curY};
+            //label
+            GUI.color = Color.white;
+            Text.Font = GameFont.Medium;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, text);
+            rect.y += rect.height;
+            curY = rect.y;
+        }
+
+        private void DrawSurfaceInfo(ref float curY, float width)
+        {
+            if (!WorldOreInfoRecorder.Instance.IsTileScannedSurface(SelTileID))
+            {
+                DrawInfo(ref curY, width, "SrNoSurfaceInfo".Translate());
+                return;
+            }
+
+            DrawSurfaceAbundance(ref curY, width);
+            DrawSurfaceOreDistribution(ref curY, width);
+        }
+
+        private void DrawUndergroundInfo(ref float curY, float width)
+        {
+            if (!WorldOreInfoRecorder.Instance.IsTileScannedUnderground(SelTileID))
+            {
+                DrawInfo(ref curY, width, "SrNoUndergroundInfo".Translate());
+                return;
+            }
+
+            DrawUndergroundAbundance(ref curY, width);
+            DrawUndergroundOreDistribution(ref curY, width);
         }
 
         private void DrawSurfaceAbundance(ref float curY, float width)

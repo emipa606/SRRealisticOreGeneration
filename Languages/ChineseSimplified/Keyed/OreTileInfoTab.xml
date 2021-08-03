@@ -6,4 +6,6 @@
     <SrUndergroundLumpDistribution>地下矿脉生成几率分布</SrUndergroundLumpDistribution>
     <SrSurfaceAbundance>地表矿石丰度</SrSurfaceAbundance>
     <SrUndergroundAbundance>地下矿石丰度</SrUndergroundAbundance>
+    <SrNoSurfaceInfo>缺少地表信息</SrNoSurfaceInfo>
+    <SrNoUndergroundInfo>缺少地下信息</SrNoUndergroundInfo>
 </LanguageData>
