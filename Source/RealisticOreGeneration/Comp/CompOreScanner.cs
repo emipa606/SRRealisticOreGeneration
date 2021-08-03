@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 
@@ -278,8 +279,8 @@ namespace RabiSquare.RealisticOreGeneration
             if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface) yield break;
             var commandSelectTile = new Command_Action
             {
-                defaultLabel = $"{"SrSelect".Translate()}",
-                icon = _selectedTile == -1 ? TileUnselectedCommand : TileSelectedCommand,
+                defaultLabel = "SrSelect".Translate(),
+                icon = TileSelectedCommand,
                 action = OnClickTileSelect
             };
 
@@ -318,9 +319,47 @@ namespace RabiSquare.RealisticOreGeneration
             _selectedTile = -1;
         }
 
+        private bool ChoseWorldTarget(GlobalTargetInfo target)
+        {
+            if (!target.IsValid)
+            {
+                Messages.Message("MessageTransportPodsDestinationIsInvalid".Translate(),
+                    MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
+
+            if (Find.WorldGrid.TraversalDistanceBetween(parent.Tile, target.Tile) <= SingleModeRadius)
+            {
+                Messages.Message("TransportPodDestinationBeyondMaximumRange".Translate(), MessageTypeDefOf.RejectInput,
+                    false);
+                return false;
+            }
+
+            //has scanned
+            return false;
+        }
+
+        private string TargetingLabelGetter(GlobalTargetInfo target)
+        {
+            if (!target.IsValid) return null;
+            if (Find.WorldGrid.TraversalDistanceBetween(parent.Tile, target.Tile) > SingleModeRadius)
+            {
+                GUI.color = ColoredText.RedReadable;
+                return "TransportPodDestinationBeyondMaximumRange".Translate();
+            }
+
+            _selectedTile = target.Tile;
+            return "Scan".Translate();
+        }
+
         private void OnClickTileSelect()
         {
-            //todo 
+            CameraJumper.TryJump(CameraJumper.GetWorldTarget((GlobalTargetInfo) parent));
+            Find.WorldSelector.ClearSelection();
+            var tile = parent.Map.Tile;
+            Find.WorldTargeter.BeginTargeting_NewTemp(ChoseWorldTarget, true,
+                CompLaunchable.TargeterMouseAttachment, true,
+                () => GenDraw.DrawWorldRadiusRing(tile, SingleModeRadius), TargetingLabelGetter);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchWorldExposeData
     {
         /// <summary>
-        ///     save our param
+        /// save our param
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
