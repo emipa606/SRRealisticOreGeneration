@@ -30,7 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
             if (parent == null) return true;
             var tileId = parent.Tile;
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
-            foreach (var kvp in tileOreData.undergroundDistrubtion)
+            foreach (var kvp in tileOreData.undergroundDistribution)
             {
                 var oreDef = ThingDef.Named(kvp.Key);
                 if (oreDef == null)
@@ -41,12 +41,12 @@ namespace RabiSquare.RealisticOreGeneration
 
                 oreDef.deepCommonality = kvp.Value;
                 if (SettingWindow.Instance.settingModel.needShuffleLumpSize)
-                    oreDef.deepLumpSizeRange = VanillaOreInfoRecoder.Instance.GetRandomUndergroundLumpSize();
+                    oreDef.deepLumpSizeRange = VanillaOreInfoRecorder.Instance.GetRandomUndergroundLumpSize();
             }
 
             if (!Prefs.DevMode) return true;
-            Log.Message($"hook underground oregen success in tile: {tileId}");
-            tileOreData.DebugShowUndergroundDistrubtion();
+            Log.Message($"hook underground ore gen success in tile: {tileId}");
+            tileOreData.DebugShowUndergroundDistribution();
             return true;
         }
     }

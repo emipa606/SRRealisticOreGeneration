@@ -36,26 +36,26 @@ namespace RabiSquare.RealisticOreGeneration
 
             var worldGrid = Find.WorldGrid;
             if (worldGrid == null) throw new Exception("can't find world grid");
-            var surfaceDistrubtion = GenerateSurfaceDistrubtion(tileId);
-            var undergroundDistrubtion = GenerateUndergroundDistrubtion(tileId);
-            var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistrubtion);
+            var surfaceDistribution = GenerateSurfaceDistribution(tileId);
+            var undergroundDistribution = GenerateUndergroundDistribution(tileId);
+            var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistribution);
             var surfaceBerlinFactor = CalcBerlinFactor(tileId, worldGrid, true);
             var undergroundBerlinFactor = CalcBerlinFactor(tileId, worldGrid, false);
             var tileOreData = new TileOreData(tileId, surfaceBerlinFactor, undergroundBerlinFactor, surfaceValueFactor)
             {
-                surfaceDistrubtion = surfaceDistrubtion,
-                undergroundDistrubtion = undergroundDistrubtion
+                surfaceDistribution = surfaceDistribution,
+                undergroundDistribution = undergroundDistribution
             };
             _cacheTileOreDataHashmap.Add(tileId, tileOreData);
             return tileOreData;
         }
 
-        private static Dictionary<string, float> GenerateSurfaceDistrubtion(int tileId)
+        private static Dictionary<string, float> GenerateSurfaceDistribution(int tileId)
         {
             var mapCommonality = new Dictionary<string, float>();
-            //generate random ore distrubtion
+            //generate random ore distribution
             const float qMin = 1f;
-            var n = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataListCount();
+            var n = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount();
             var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
@@ -67,22 +67,22 @@ namespace RabiSquare.RealisticOreGeneration
             arrayNewCommonality.Shuffle(tileId);
             //normalized
             arrayNewCommonality.Normalized();
-            //record ore distrubtion
+            //record ore distribution
             for (var i = 0; i < n; i++)
             {
-                var oreData = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByIndex(i);
                 mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
             }
 
             return mapCommonality;
         }
 
-        private static Dictionary<string, float> GenerateUndergroundDistrubtion(int tileId)
+        private static Dictionary<string, float> GenerateUndergroundDistribution(int tileId)
         {
             var mapCommonality = new Dictionary<string, float>();
-            //generate random ore distrubtion
+            //generate random ore distribution
             const float qMin = 1f;
-            var n = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataListCount();
+            var n = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
             var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 
             var arrayNewCommonality = new float[n];
@@ -93,10 +93,10 @@ namespace RabiSquare.RealisticOreGeneration
             arrayNewCommonality.Shuffle(tileId);
             //normalized
             arrayNewCommonality.Normalized();
-            //record ore distrubtion
+            //record ore distribution
             for (var i = 0; i < n; i++)
             {
-                var oreData = VanillaOreInfoRecoder.Instance.GetUndergroundOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataByIndex(i);
                 mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
             }
 
@@ -104,7 +104,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        ///     ramdom by tile
+        /// random by tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <param name="worldGrid"></param>
@@ -130,37 +130,38 @@ namespace RabiSquare.RealisticOreGeneration
         /// <summary>
         ///     how many times the total value of vanilla is the current total value in the entire map
         /// </summary>
-        /// <param name="oreDistrubtion">commonality of each ore. key:defName,value:commonality</param>
+        /// <param name="oreDistribution">commonality of each ore. key:defName,value:commonality</param>
         /// <returns></returns>
-        private static float CalcSurfaceValueFactor(IReadOnlyDictionary<string, float> oreDistrubtion)
+        private static float CalcSurfaceValueFactor(IReadOnlyDictionary<string, float> oreDistribution)
         {
-            if (oreDistrubtion.Count == 0)
+            if (oreDistribution.Count == 0)
             {
-                Log.Error($"{MsicDef.LogTag}there is no ore in defs");
+                Log.Error($"{MsicDef.LogTag}there is no ore in defList");
                 return 1f;
             }
 
             var vanillaTotalValue = 0f;
             var currentTotalValue = 0f;
-            //notmalisation by total resource value
-            for (var i = 0; i < oreDistrubtion.Count; i++)
+            //normalization by total resource value
+            for (var i = 0; i < oreDistribution.Count; i++)
             {
-                var oreData = VanillaOreInfoRecoder.Instance.GetSurfaceOreDataByIndex(i);
+                var oreData = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByIndex(i);
                 if (oreData == null)
                 {
-                    Log.Error($"{MsicDef.LogTag}cant't find ore data by index: {i}");
+                    Log.Error($"{MsicDef.LogTag}can't find ore data by index: {i}");
                     return 1f;
                 }
 
-                vanillaTotalValue += VanillaOreInfoRecoder.Instance.GetNormalizedSurfaceCommonality(i) * oreData.yield *
+                vanillaTotalValue += VanillaOreInfoRecorder.Instance.GetNormalizedSurfaceCommonality(i) *
+                                     oreData.yield *
                                      oreData.marketValue * oreData.lumpSize.Average;
-                if (!oreDistrubtion.ContainsKey(oreData.defName))
+                if (!oreDistribution.ContainsKey(oreData.defName))
                 {
-                    Log.Error($"{MsicDef.LogTag}cant't find ore data by defName: {oreData.defName}");
+                    Log.Error($"{MsicDef.LogTag}can't find ore data by defName: {oreData.defName}");
                     return 1f;
                 }
 
-                var currentCommonality = oreDistrubtion[oreData.defName];
+                var currentCommonality = oreDistribution[oreData.defName];
                 currentTotalValue += currentCommonality * oreData.yield *
                                      oreData.marketValue * oreData.lumpSize.Average;
             }

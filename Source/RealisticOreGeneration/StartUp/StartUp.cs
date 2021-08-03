@@ -21,10 +21,10 @@ namespace RabiSquare.RealisticOreGeneration
         {
             var surfaceOreList = DefDatabase<ThingDef>.AllDefs
                 .Where(t => t.building != null && t.building.mineableScatterCommonality > 0);
-            VanillaOreInfoRecoder.Instance.SetSurfaceOreDataList(surfaceOreList);
+            VanillaOreInfoRecorder.Instance.SetSurfaceOreDataList(surfaceOreList);
             var undergroundOreList = DefDatabase<ThingDef>.AllDefs.Where(t => t.deepCommonality > 0);
-            VanillaOreInfoRecoder.Instance.SetUndergroundOreDataList(undergroundOreList);
-            if (Prefs.DevMode) Log.Message($"{VanillaOreInfoRecoder.Instance}");
+            VanillaOreInfoRecorder.Instance.SetUndergroundOreDataList(undergroundOreList);
+            if (Prefs.DevMode) Log.Message($"{VanillaOreInfoRecorder.Instance}");
         }
     }
 }

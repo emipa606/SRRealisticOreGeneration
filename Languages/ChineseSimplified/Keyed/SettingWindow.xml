@@ -2,12 +2,12 @@
 <LanguageData>
     <SrShuffleLumpSize>打乱矿脉尺寸</SrShuffleLumpSize>
     <SrDescriptionShuffleLumpSize>这将随机化矿脉的大小，你将有机会看到一大块金矿石，但它不符合现实。</SrDescriptionShuffleLumpSize>
-    <SrSurfaceMutilpier>地表矿脉倍数</SrSurfaceMutilpier>
-    <SrUndergroundMutilpier>地下矿脉倍数</SrUndergroundMutilpier>
+    <SrSurfaceMultiplier>地表矿脉倍数</SrSurfaceMultiplier>
+    <SrUndergroundMultiplier>地下矿脉倍数</SrUndergroundMultiplier>
     <SrOutpostMapSize>采矿站地图尺寸</SrOutpostMapSize>
     <SrMaxOutpostCount>最大采矿站数量</SrMaxOutpostCount>
-    <SrDescriptionSurfaceMutilpier>在地表生成矿石的机会倍率</SrDescriptionSurfaceMutilpier>
-    <SrDescriptionUndergroundMutilpier>在地下生成矿石的机会倍率</SrDescriptionUndergroundMutilpier>
+    <SrDescriptionSurfaceMultiplier>在地表生成矿石的机会倍率</SrDescriptionSurfaceMultiplier>
+    <SrDescriptionUndergroundMultiplier>在地下生成矿石的机会倍率</SrDescriptionUndergroundMultiplier>
     <SrDescriptionOutpostMapSize>采矿站地图的尺寸</SrDescriptionOutpostMapSize>
     <SrDescriptionMaxOutpostCount>殖民者可拥有的最大采矿站数量</SrDescriptionMaxOutpostCount>
 </LanguageData>

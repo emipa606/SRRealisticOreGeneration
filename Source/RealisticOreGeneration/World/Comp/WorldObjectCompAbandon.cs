@@ -49,7 +49,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             if (mapPawns.AnyColonistSpawned)
-                commandAction.Disable("SrCommandAbandonAbondonFailAnyColonistsThere".Translate());
+                commandAction.Disable("SrCommandAbandonFailAnyColonistsThere".Translate());
             yield return commandAction;
         }
 

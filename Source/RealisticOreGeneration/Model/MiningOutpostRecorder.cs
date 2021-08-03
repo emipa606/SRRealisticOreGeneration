@@ -13,26 +13,26 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class MiningOutpostRecorder : BaseSingleTon<MiningOutpostRecorder>, IExposable
     {
-        private int _mingingOutpostCount;
+        private int _miningOutpostCount;
 
         public void ExposeData()
         {
-            Scribe_Values.Look(ref _mingingOutpostCount, "_mingingOutpostCount");
+            Scribe_Values.Look(ref _miningOutpostCount, "_miningOutpostCount");
         }
 
         public void MiningOutpostCountIncrease()
         {
-            _mingingOutpostCount++;
+            _miningOutpostCount++;
         }
 
         public void MiningOutpostCountDecrease()
         {
-            _mingingOutpostCount--;
+            _miningOutpostCount--;
         }
 
         public int GetOutpostCount()
         {
-            return _mingingOutpostCount;
+            return _miningOutpostCount;
         }
     }
 }

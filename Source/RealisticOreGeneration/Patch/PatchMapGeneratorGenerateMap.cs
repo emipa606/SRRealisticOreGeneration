@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchMapGeneratorGenerateMap
     {
         /// <summary>
-        ///     hook mapgen with new params
+        ///     hook map gen with new params
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
@@ -29,7 +29,7 @@ namespace RabiSquare.RealisticOreGeneration
 
             var tileId = parent.Tile;
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
-            foreach (var kvp in tileOreData.surfaceDistrubtion)
+            foreach (var kvp in tileOreData.surfaceDistribution)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);
                 if (rawOreDef == null)
@@ -48,12 +48,12 @@ namespace RabiSquare.RealisticOreGeneration
                 buildingProperties.mineableScatterCommonality = kvp.Value;
                 if (SettingWindow.Instance.settingModel.needShuffleLumpSize)
                     buildingProperties.mineableScatterLumpSizeRange =
-                        VanillaOreInfoRecoder.Instance.GetRandomSurfaceLumpSize();
+                        VanillaOreInfoRecorder.Instance.GetRandomSurfaceLumpSize();
             }
 
             if (!Prefs.DevMode) return true;
-            Log.Message($"hook surface oregen success in tile: {tileId}");
-            tileOreData.DebugShowSurfaceDistrubtion();
+            Log.Message($"hook surface ore gen success in tile: {tileId}");
+            tileOreData.DebugShowSurfaceDistribution();
             return true;
         }
     }

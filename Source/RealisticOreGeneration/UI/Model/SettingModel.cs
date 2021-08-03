@@ -16,14 +16,14 @@ namespace RabiSquare.RealisticOreGeneration
         public int maxOutpostCount = 2;
         public bool needShuffleLumpSize;
         public int outpostMapSize = 200;
-        public float surfaceMutilpier = 1.5f;
-        public float undergroundMutilpier = 1.5f;
+        public float surfaceMultiplier = 1.5f;
+        public float undergroundMultiplier = 1.5f;
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look(ref surfaceMutilpier, "surfaceMutilpier", 1.5f);
-            Scribe_Values.Look(ref undergroundMutilpier, "undergroundMutilpier", 1.5f);
+            Scribe_Values.Look(ref surfaceMultiplier, "surfaceMultiplier", 1.5f);
+            Scribe_Values.Look(ref undergroundMultiplier, "undergroundMultiplier", 1.5f);
             Scribe_Values.Look(ref outpostMapSize, "outpostMapSize", 250);
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
             Scribe_Values.Look(ref needShuffleLumpSize, "needShuffleLumpSize");
@@ -31,8 +31,8 @@ namespace RabiSquare.RealisticOreGeneration
 
         public void SetDefault()
         {
-            surfaceMutilpier = 1.5f;
-            undergroundMutilpier = 1.5f;
+            surfaceMultiplier = 1.5f;
+            undergroundMultiplier = 1.5f;
             outpostMapSize = 200;
             maxOutpostCount = 2;
             needShuffleLumpSize = false;

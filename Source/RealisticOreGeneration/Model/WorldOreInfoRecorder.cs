@@ -16,11 +16,8 @@ namespace RabiSquare.RealisticOreGeneration
     {
         private HashSet<int> _worldAbandonedTile = new HashSet<int>(); //which tile has been abandoned
         private HashSet<int> _worldSurfaceScannedTile = new HashSet<int>(); //which tile has been scanned
-
-        private Dictionary<int, int>
-            _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); //tileId,mingingCount
-
         private HashSet<int> _worldUndergroundScannedTile = new HashSet<int>(); //which tile has been scanned
+        private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); // tileId,count
 
         public void ExposeData()
         {
@@ -32,11 +29,8 @@ namespace RabiSquare.RealisticOreGeneration
             //if the mod is added halfway, the reverse sequence will cause the parameter to become null
             if (_worldTileUndergroundOreMiningCount == null)
                 _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
-
             if (_worldSurfaceScannedTile == null) _worldSurfaceScannedTile = new HashSet<int>();
-
             if (_worldUndergroundScannedTile == null) _worldUndergroundScannedTile = new HashSet<int>();
-
             if (_worldAbandonedTile == null) _worldAbandonedTile = new HashSet<int>();
         }
 

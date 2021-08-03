@@ -13,18 +13,17 @@ using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class TileOreData : IExposable
+    public class TileOreData
     {
-        private int _tileId;
-        private float _surfaceBerlinFactor;
-        private float _surfaceValueFactor;
-        private float _undergroundBerlinFactor;
+        private readonly int _tileId;
+        private readonly float _surfaceBerlinFactor;
+        private readonly float _surfaceValueFactor;
 
         //commonality of each surface ore in each tile <defName,commonality>
-        public Dictionary<string, float> surfaceDistrubtion = new Dictionary<string, float>();
+        public Dictionary<string, float> surfaceDistribution = new Dictionary<string, float>();
 
         //commonality of each underground ore in each tile <defName,commonality>
-        public Dictionary<string, float> undergroundDistrubtion = new Dictionary<string, float>();
+        public Dictionary<string, float> undergroundDistribution = new Dictionary<string, float>();
 
         public TileOreData()
         {
@@ -35,32 +34,21 @@ namespace RabiSquare.RealisticOreGeneration
         {
             _tileId = tileId;
             _surfaceBerlinFactor = surfaceBerlinFactor;
-            _undergroundBerlinFactor = undergroundBerlinFactor;
+            UndergroundBerlinFactor = undergroundBerlinFactor;
             _surfaceValueFactor = surfaceValueFactor;
         }
 
-        public float UndergroundBerlinFactor => _undergroundBerlinFactor;
+        public float UndergroundBerlinFactor { get; }
 
         //decide whether the overall ore of the area are more or less on surface
         public float OreGenerationFactor =>
-            _surfaceBerlinFactor * _surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMutilpier;
+            _surfaceBerlinFactor * _surfaceValueFactor * SettingWindow.Instance.settingModel.surfaceMultiplier;
 
         //beyond this amount, the cost of finding underground ore will increase
         public float FreeUndergroundCycleCount =>
-            _undergroundBerlinFactor * SettingWindow.Instance.settingModel.undergroundMutilpier * 20;
+            UndergroundBerlinFactor * SettingWindow.Instance.settingModel.undergroundMultiplier * 20;
 
-        public void ExposeData()
-        {
-            Scribe_Values.Look(ref _tileId, "_tileId");
-            Scribe_Values.Look(ref _surfaceBerlinFactor, "_surfaceBerlinFactor");
-            Scribe_Values.Look(ref _undergroundBerlinFactor, "_undergroundBerlinFactor");
-            Scribe_Values.Look(ref _surfaceValueFactor, "_surfaceValueFactor");
-            Scribe_Collections.Look(ref surfaceDistrubtion, "surfaceDistrubtion", LookMode.Value, LookMode.Value);
-            Scribe_Collections.Look(ref undergroundDistrubtion, "undergroundDistrubtion", LookMode.Value,
-                LookMode.Value);
-        }
-
-        public float GetSurfaceAbondance()
+        public float GetSurfaceAbundance()
         {
             var worldGrid = Find.WorldGrid;
             if (worldGrid == null)
@@ -97,14 +85,14 @@ namespace RabiSquare.RealisticOreGeneration
             return terrainFactor * _surfaceBerlinFactor;
         }
 
-        public void DebugShowSurfaceDistrubtion()
+        public void DebugShowSurfaceDistribution()
         {
-            foreach (var kvp in surfaceDistrubtion) Log.Message($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
+            foreach (var kvp in surfaceDistribution) Log.Message($"surface ore: {kvp.Key}\ncommonality: {kvp.Value}");
         }
 
-        public void DebugShowUndergroundDistrubtion()
+        public void DebugShowUndergroundDistribution()
         {
-            foreach (var kvp in undergroundDistrubtion)
+            foreach (var kvp in undergroundDistribution)
                 Log.Message($"underground ore: {kvp.Key}\ncommonality: {kvp.Value}");
         }
 

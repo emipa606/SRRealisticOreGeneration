@@ -67,7 +67,7 @@
         <Compile Include="ModelData\TileOreData.cs" />
         <Compile Include="Model\DeepScannerDataGenerator.cs" />
         <Compile Include="Model\MiningOutpostRecorder.cs" />
-        <Compile Include="Model\VanillaOreInfoRecoder.cs" />
+        <Compile Include="Model\VanillaOreInfoRecorder.cs" />
         <Compile Include="Model\WorldOreDataGenerator.cs" />
         <Compile Include="Model\WorldOreInfoRecorder.cs" />
         <Compile Include="Patch\PatchCompDeepScannerChooseLumpThingDef.cs" />

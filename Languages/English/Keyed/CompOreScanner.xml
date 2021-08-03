@@ -3,4 +3,5 @@
     <SrScanAreaChange>change scan area</SrScanAreaChange>
     <SrScanModeChange>change scan mode</SrScanModeChange>
     <SrSelect>select area</SrSelect>
+    <SrNoTargetTile>{0} has been shut down because it could not find a suitable target</SrNoTargetTile>
 </LanguageData>

@@ -6,15 +6,16 @@
 //      /  \\        @Modified   2021-07-26 19:49:24
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
+
 using System.Collections.Generic;
 using System.Text;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
 {
-    public class VanillaOreInfoRecoder : BaseSingleTon<VanillaOreInfoRecoder>
+    public class VanillaOreInfoRecorder : BaseSingleTon<VanillaOreInfoRecorder>
     {
-        private float _vanallaTotalSurfaceComonality;
+        private float _vanillaTotalSurfaceCommonality;
 
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
@@ -25,32 +26,31 @@ namespace RabiSquare.RealisticOreGeneration
         /// <summary>
         /// set vanilla data of each surface ore
         /// </summary>
-        /// <param name="thingDefs"></param>
-        public void SetSurfaceOreDataList(IEnumerable<ThingDef> thingDefs)
+        /// <param name="thingDefList"></param>
+        public void SetSurfaceOreDataList(IEnumerable<ThingDef> thingDefList)
         {
-            foreach (var thingdef in thingDefs)
+            foreach (var thingDef in thingDefList)
             {
-                var buildingProperties = thingdef.building;
+                var buildingProperties = thingDef.building;
                 if (buildingProperties == null)
                 {
-                    Log.Warning(
-                        $"{MsicDef.LogTag}Unexpected buildingProperties: {thingdef.defName}");
-                    continue;
-                }
-                
-                var mineableThing = buildingProperties.mineableThing;
-                if (mineableThing == null)
-                {
-                    Log.Warning($"{MsicDef.LogTag}Unexpected mineableThing: {thingdef.defName}");
+                    Log.Warning($"{MsicDef.LogTag}Unexpected buildingProperties: {thingDef.defName}");
                     continue;
                 }
 
-                var oreData = new OreData(thingdef.defName, buildingProperties.mineableScatterCommonality,
+                var mineableThing = buildingProperties.mineableThing;
+                if (mineableThing == null)
+                {
+                    Log.Warning($"{MsicDef.LogTag}Unexpected mineableThing: {thingDef.defName}");
+                    continue;
+                }
+
+                var oreData = new OreData(thingDef.defName, buildingProperties.mineableScatterCommonality,
                     buildingProperties.mineableScatterLumpSizeRange, buildingProperties.mineableYield,
                     mineableThing.BaseMarketValue);
                 _vanillaSurfaceOreDataList.Add(oreData);
-                _vanallaTotalSurfaceComonality = 0f;
-                _vanallaTotalSurfaceComonality += oreData.commonality;
+                _vanillaTotalSurfaceCommonality = 0f;
+                _vanillaTotalSurfaceCommonality += oreData.commonality;
             }
         }
 
@@ -71,7 +71,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// how many surface ores can be genetated
+        /// how many surface ores can be generated
         /// </summary>
         /// <returns></returns>
         public int GetSurfaceOreDataListCount()
@@ -96,7 +96,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (_vanillaSurfaceOreDataList != null && _vanillaSurfaceOreDataList.Count > index)
             {
-                return _vanillaSurfaceOreDataList[index].commonality / _vanallaTotalSurfaceComonality;
+                return _vanillaSurfaceOreDataList[index].commonality / _vanillaTotalSurfaceCommonality;
             }
 
             Log.Error($"{MsicDef.LogTag}can't find surface oreData on index: {index}");
@@ -109,11 +109,11 @@ namespace RabiSquare.RealisticOreGeneration
         /// <param name="thingDefs"></param>
         public void SetUndergroundOreDataList(IEnumerable<ThingDef> thingDefs)
         {
-            foreach (var thingdef in thingDefs)
+            foreach (var thingDef in thingDefs)
             {
-                var oreData = new OreData(thingdef.defName, thingdef.deepCommonality,
-                    thingdef.deepLumpSizeRange, thingdef.deepCountPerPortion,
-                    thingdef.BaseMarketValue);
+                var oreData = new OreData(thingDef.defName, thingDef.deepCommonality,
+                    thingDef.deepLumpSizeRange, thingDef.deepCountPerPortion,
+                    thingDef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
             }
         }
@@ -135,7 +135,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        /// how many underground ores can be genetated
+        /// how many underground ores can be generated
         /// </summary>
         /// <returns></returns>
         public int GetUndergroundOreDataListCount()

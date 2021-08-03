@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompScannerTickDoesFind
     {
         /// <summary>
-        ///     hook deep sanner working speed
+        ///     hook deep scanner working speed
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
@@ -39,7 +39,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return true;
             }
 
-            if (!deepScanner.def.defName.Equals(MsicDef.DeepSannerDefName)) return true;
+            if (!deepScanner.def.defName.Equals(MsicDef.DeepScannerDefName)) return true;
 
             var compProps = __instance.Props;
             if (compProps == null)

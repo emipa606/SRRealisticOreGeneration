@@ -14,4 +14,10 @@
             </value>
         </match>
     </Operation>
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="LongRangeMineralScanner"]</xpath>
+        <value>
+            <tickerType>Rare</tickerType>
+        </value>
+    </Operation>
 </Patch>

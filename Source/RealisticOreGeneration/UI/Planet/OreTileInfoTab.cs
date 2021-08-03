@@ -37,16 +37,16 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             var viewRect = new Rect(0, 0, winRect.width - FrameMargin - BarWidth, _scrollViewHeight);
             var curY = 0f;
             Widgets.BeginScrollView(winRect, ref _scrollPosition, viewRect);
-            DrawWarnning(ref curY, viewRect.width);
+            DrawWarning(ref curY, viewRect.width);
             DrawSurfaceAbundance(ref curY, viewRect.width);
             DrawSurfaceOreDistribution(ref curY, viewRect.width);
-            DrawUndergourndAbundance(ref curY, viewRect.width);
+            DrawUndergroundAbundance(ref curY, viewRect.width);
             DrawUndergroundOreDistribution(ref curY, viewRect.width);
             _scrollViewHeight = curY;
             Widgets.EndScrollView();
         }
 
-        private void DrawWarnning(ref float curY, float width)
+        private void DrawWarning(ref float curY, float width)
         {
             if (!WorldOreInfoRecorder.Instance.IsTileAbandoned(SelTileID)) return;
             var rect = new Rect {width = width, y = curY};
@@ -71,7 +71,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             rect.y += rect.height;
             //bar
             GUI.color = Color.green;
-            Widgets.FillableBar(rect, tileOreData.GetSurfaceAbondance(), Texture2D.whiteTexture);
+            Widgets.FillableBar(rect, tileOreData.GetSurfaceAbundance(), Texture2D.whiteTexture);
             rect.y += rect.height;
             curY = rect.y;
         }
@@ -89,7 +89,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             //lump progress
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
-            foreach (var kvp in tileOreData.surfaceDistrubtion)
+            foreach (var kvp in tileOreData.surfaceDistribution)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);
                 if (rawOreDef == null)
@@ -109,7 +109,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             curY = rect.y;
         }
 
-        private void DrawUndergourndAbundance(ref float curY, float width)
+        private void DrawUndergroundAbundance(ref float curY, float width)
         {
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(SelTileID);
             var rect = new Rect {width = width, y = curY};
@@ -139,7 +139,7 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             //ore lump progress
             Text.Font = GameFont.Small;
             rect.height = Text.LineHeight;
-            foreach (var kvp in tileOreData.undergroundDistrubtion)
+            foreach (var kvp in tileOreData.undergroundDistribution)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);
                 if (rawOreDef == null)

@@ -41,7 +41,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            if (!deepScanner.def.defName.Equals(MsicDef.DeepSannerDefName))
+            if (!deepScanner.def.defName.Equals(MsicDef.DeepScannerDefName))
             {
                 return;
             }

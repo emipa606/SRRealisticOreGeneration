@@ -41,13 +41,13 @@ namespace RabiSquare.RealisticOreGeneration
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
                 "SrDescriptionShuffleLumpSize");
             ls.GapLine(20f);
-            ls.Label($"{"SrSurfaceMutilpier".Translate()}: {settingModel.surfaceMutilpier}",
-                tooltip: "SrDescriptionSurfaceMutilpier".Translate());
-            settingModel.surfaceMutilpier = ls.Slider(settingModel.surfaceMutilpier, 1f, 99f);
+            ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
+                tooltip: "SrDescriptionSurfaceMultiplier".Translate());
+            settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 99f);
             ls.GapLine(20f);
-            ls.Label($"{"SrUndergroundMutilpier".Translate()}: {settingModel.undergroundMutilpier}",
-                tooltip: "SrDescriptionUndergroundMutilpier".Translate());
-            settingModel.undergroundMutilpier = ls.Slider(settingModel.undergroundMutilpier, 1f, 99f);
+            ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier}",
+                tooltip: "SrDescriptionUndergroundMultiplier".Translate());
+            settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 1f, 99f);
             ls.GapLine(20f);
             ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}",
                 tooltip: "SrDescriptionOutpostMapSize".Translate());

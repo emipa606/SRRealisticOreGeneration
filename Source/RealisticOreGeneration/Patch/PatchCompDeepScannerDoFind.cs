@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompDeepScannerDoFind
     {
         /// <summary>
-        /// hook deep sanner working speed
+        /// hook deep scanner working speed
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]
