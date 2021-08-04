@@ -49,6 +49,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             base.PostSpawnSetup(respawningAfterLoad);
             GetRingMap(SingleModeRadius);
+            UpdateDefaultTarget();
         }
 
         public override void PostExposeData()
@@ -86,6 +87,7 @@ namespace RabiSquare.RealisticOreGeneration
             //works well
             if (_selectedTile != -1) return;
             //no target
+            Log.Warning("tick");
             UpdateDefaultTarget();
             //still no target
             if (_selectedTile == -1)
@@ -108,8 +110,6 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void UpdateDefaultTarget()
         {
-            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}set default target");
-
             switch (_oreScanMode)
             {
                 case OreScanMode.SingleSurface:
@@ -127,6 +127,8 @@ namespace RabiSquare.RealisticOreGeneration
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}set default target: {_selectedTile}");
         }
 
         private void UpdateDefaultTargetSingleSurface()
@@ -247,12 +249,22 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void OnSurfaceFind()
         {
+            if (_selectedTile == -1)
+            {
+                return;
+            }
+
             WorldOreInfoRecorder.Instance.RecordScannedTileSurface(_selectedTile);
             UpdateDefaultTarget();
         }
 
         private void OnUndergroundFind()
         {
+            if (_selectedTile == -1)
+            {
+                return;
+            }
+
             WorldOreInfoRecorder.Instance.RecordScannedTileUnderground(_selectedTile);
             UpdateDefaultTarget();
         }

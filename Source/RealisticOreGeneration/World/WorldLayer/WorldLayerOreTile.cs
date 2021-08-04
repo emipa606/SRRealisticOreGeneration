@@ -62,6 +62,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             DrawDepletionInfo();
+            FinalizeMesh(MeshParts.All);
         }
 
         private void DrawDepletionInfo()
@@ -73,6 +74,7 @@ namespace RabiSquare.RealisticOreGeneration
                 if (WorldOreInfoRecorder.Instance.IsTileAbandoned(oreInfoTileId))
                 {
                     DrawOreInfoCursor(oreInfoTileId, DepletionInfoMaterial);
+                    Log.Warning("1");
                     continue;
                 }
 
@@ -80,6 +82,7 @@ namespace RabiSquare.RealisticOreGeneration
                     WorldOreInfoRecorder.Instance.IsTileScannedUnderground(oreInfoTileId))
                 {
                     DrawOreInfoCursor(oreInfoTileId, CompleteInfoMaterial);
+                    Log.Warning("2");
                     continue;
                 }
 
@@ -87,6 +90,7 @@ namespace RabiSquare.RealisticOreGeneration
                     WorldOreInfoRecorder.Instance.IsTileScannedUnderground(oreInfoTileId))
                 {
                     DrawOreInfoCursor(oreInfoTileId, HalfInfoMaterial);
+                    Log.Warning("3");
                 }
             }
         }
@@ -107,8 +111,6 @@ namespace RabiSquare.RealisticOreGeneration
                 subMesh.tris.Add(subMeshVertsCount + num + 1);
                 subMesh.tris.Add(subMeshVertsCount);
             }
-
-            FinalizeMesh(MeshParts.All);
         }
     }
 }
