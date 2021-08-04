@@ -3,9 +3,11 @@
     <SrScanAreaChange>change scan area</SrScanAreaChange>
     <SrScanModeChange>change scan mode</SrScanModeChange>
     <SrSelect>select area</SrSelect>
+    <SrScan>scan</SrScan>
     <SrNoTargetTile>{0} has been shut down because it could not find a suitable target</SrNoTargetTile>
     <SrChangeToSingleMode>Switch to single mode. The scanning area can be freely selected in this mode.</SrChangeToSingleMode>
     <SrChangeToRangeMode>Switch to range mode. In this mode, the surrounding area will be scanned slowly.</SrChangeToRangeMode>
     <SrChangeToSurfaceMode>Switch to the surface scan mode.</SrChangeToSurfaceMode>
     <SrChangeToUndergroundMode>Switch to underground scanning mode.</SrChangeToUndergroundMode>
+    <SrRepeatScan>repeated scanning</SrRepeatScan>
 </LanguageData>

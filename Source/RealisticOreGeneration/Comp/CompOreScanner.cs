@@ -37,8 +37,8 @@ namespace RabiSquare.RealisticOreGeneration
 
         private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
 
-        private static readonly Texture2D TileUnselectedCommand =
-            ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+        private static readonly Texture2D ScanCursor =
+            ContentFinder<Texture2D>.Get("UI/Overlays/LaunchableMouseAttachment");
 
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
         private Dictionary<int, int> _ringMap = new Dictionary<int, int>();
@@ -77,15 +77,11 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
             }
 
-            if (Prefs.DevMode)
-            {
-                Log.Warning($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
-            }
+            if (Prefs.DevMode) Log.Warning($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
         }
 
         public override void CompTickRare()
         {
-            Log.Warning("tick");
             base.CompTickRare();
             //works well
             if (_selectedTile != -1) return;
@@ -112,7 +108,8 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void UpdateDefaultTarget()
         {
-            Log.Warning("SetDefaultTarget");
+            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}set default target");
+
             switch (_oreScanMode)
             {
                 case OreScanMode.SingleSurface:
@@ -224,12 +221,11 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             if (!Prefs.DevMode) return;
-            Log.Message($"{MsicDef.LogTag}ring map:");
-            foreach (var kvp in _ringMap) Log.Message($"{MsicDef.LogTag}k:{kvp.Key} v:{kvp.Value}");
+            Log.Message($"{MsicDef.LogTag}ring map count: {_ringMap.Count}");
         }
 
         /// <summary>
-        /// distance of target tile will affect cost
+        ///     distance of target tile will affect cost
         /// </summary>
         private void UpdateCostTime()
         {
@@ -319,7 +315,7 @@ namespace RabiSquare.RealisticOreGeneration
             _selectedTile = -1;
         }
 
-        private bool ChoseWorldTarget(GlobalTargetInfo target)
+        private bool OnWorldTargetSelected(GlobalTargetInfo target)
         {
             if (!target.IsValid)
             {
@@ -328,7 +324,7 @@ namespace RabiSquare.RealisticOreGeneration
                 return false;
             }
 
-            if (Find.WorldGrid.TraversalDistanceBetween(parent.Tile, target.Tile) <= SingleModeRadius)
+            if (Find.WorldGrid.TraversalDistanceBetween(parent.Tile, target.Tile) > SingleModeRadius)
             {
                 Messages.Message("TransportPodDestinationBeyondMaximumRange".Translate(), MessageTypeDefOf.RejectInput,
                     false);
@@ -336,30 +332,53 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             //has scanned
-            return false;
+            if (WorldOreInfoRecorder.Instance.IsTileScannedUnderground(target.Tile) &&
+                (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground ||
+                WorldOreInfoRecorder.Instance.IsTileScannedSurface(target.Tile) &&
+                (_oreScanMode & OreScanMode.SingleUnderground) != OreScanMode.SingleUnderground)
+            {
+                Messages.Message("SrRepeatScan".Translate(), MessageTypeDefOf.RejectInput,
+                    false);
+                return false;
+            }
+
+            _selectedTile = target.Tile;
+            return true;
         }
 
         private string TargetingLabelGetter(GlobalTargetInfo target)
         {
-            if (!target.IsValid) return null;
+            if (!target.IsValid)
+            {
+                GUI.color = ColoredText.WarningColor;
+                return "MessageTransportPodsDestinationIsInvalid".Translate();
+            }
+
             if (Find.WorldGrid.TraversalDistanceBetween(parent.Tile, target.Tile) > SingleModeRadius)
             {
-                GUI.color = ColoredText.RedReadable;
+                GUI.color = ColoredText.WarningColor;
                 return "TransportPodDestinationBeyondMaximumRange".Translate();
             }
 
-            _selectedTile = target.Tile;
-            return "Scan".Translate();
+            if (WorldOreInfoRecorder.Instance.IsTileScannedUnderground(target.Tile) &&
+                (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground ||
+                WorldOreInfoRecorder.Instance.IsTileScannedSurface(target.Tile) &&
+                (_oreScanMode & OreScanMode.SingleUnderground) != OreScanMode.SingleUnderground)
+            {
+                GUI.color = ColoredText.WarningColor;
+                return "SrRepeatScan".Translate();
+            }
+
+            GUI.color = ColoredText.ExpectationsColor;
+            return "SrScan".Translate();
         }
 
         private void OnClickTileSelect()
         {
             CameraJumper.TryJump(CameraJumper.GetWorldTarget((GlobalTargetInfo) parent));
             Find.WorldSelector.ClearSelection();
-            var tile = parent.Map.Tile;
-            Find.WorldTargeter.BeginTargeting_NewTemp(ChoseWorldTarget, true,
-                CompLaunchable.TargeterMouseAttachment, true,
-                () => GenDraw.DrawWorldRadiusRing(tile, SingleModeRadius), TargetingLabelGetter);
+            Find.WorldTargeter.BeginTargeting(OnWorldTargetSelected, true, ScanCursor, false,
+                () => GenDraw.DrawWorldRadiusRing(parent.Tile, SingleModeRadius), TargetingLabelGetter);
         }
     }
 }
