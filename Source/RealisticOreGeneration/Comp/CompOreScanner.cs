@@ -77,7 +77,7 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
             }
 
-            if (Prefs.DevMode) Log.Warning($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
+            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
         }
 
         public override void CompTickRare()
@@ -225,7 +225,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        ///     distance of target tile will affect cost
+        /// distance of target tile will affect cost
         /// </summary>
         private void UpdateCostTime()
         {

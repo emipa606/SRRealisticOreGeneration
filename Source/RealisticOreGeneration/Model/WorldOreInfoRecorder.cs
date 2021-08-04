@@ -19,6 +19,21 @@ namespace RabiSquare.RealisticOreGeneration
         private HashSet<int> _worldUndergroundScannedTile = new HashSet<int>(); //which tile has been scanned
         private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); // tileId,count
 
+        /// <summary>
+        /// abandoned or surface scanned or underground scanned
+        /// </summary>
+        public IEnumerable<int> WorldOreInfoTile
+        {
+            get
+            {
+                var worldOreInfoTile = new HashSet<int>();
+                worldOreInfoTile.AddRange(_worldAbandonedTile);
+                worldOreInfoTile.AddRange(_worldSurfaceScannedTile);
+                worldOreInfoTile.AddRange(_worldUndergroundScannedTile);
+                return worldOreInfoTile;
+            }
+        }
+
         public void ExposeData()
         {
             Scribe_Collections.Look(ref _worldTileUndergroundOreMiningCount, "_worldTileUndergroundOreMiningCount",
@@ -62,6 +77,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             _worldAbandonedTile.Add(tileId);
+            WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
         }
 
         public void RecordScannedTileSurface(int tileId)
@@ -73,6 +89,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             _worldSurfaceScannedTile.Add(tileId);
+            WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
         }
 
         public void RecordScannedTileUnderground(int tileId)
@@ -84,6 +101,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             _worldUndergroundScannedTile.Add(tileId);
+            WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
         }
 
 
