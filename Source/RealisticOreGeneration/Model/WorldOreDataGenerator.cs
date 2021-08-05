@@ -54,7 +54,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distribution
-            const float qMin = 1f;
+            var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
             var n = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount();
             var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 
@@ -81,7 +81,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             var mapCommonality = new Dictionary<string, float>();
             //generate random ore distribution
-            const float qMin = 1f;
+            var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
             var n = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
             var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
 

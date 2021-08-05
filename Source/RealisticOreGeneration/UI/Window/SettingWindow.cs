@@ -59,6 +59,13 @@ namespace RabiSquare.RealisticOreGeneration
             ls.Label($"{"SrMaxOutpostCount".Translate()}: {settingModel.maxOutpostCount}",
                 tooltip: "SrDescriptionMaxOutpostCount".Translate());
             settingModel.maxOutpostCount = Mathf.RoundToInt(ls.Slider(settingModel.maxOutpostCount, 1, 10));
+            if (Prefs.DevMode)
+            {
+                ls.GapLine(20f);
+                ls.Label($"sigmaSeed: {settingModel.sigmaSeed}", tooltip: "sigma seed");
+                settingModel.sigmaSeed = ls.Slider(settingModel.sigmaSeed, 0.1f, 2f);
+            }
+
             ls.End();
         }
     }
