@@ -39,10 +39,13 @@ namespace RabiSquare.RealisticOreGeneration
             if (ls.ButtonText("Default")) settingModel.SetDefault();
             Text.Font = GameFont.Medium;
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
-                "SrDescriptionShuffleLumpSize");
+                "SrDescriptionShuffleLumpSize".Translate());
+            ls.GapLine(20f);
+            ls.CheckboxLabeled("SrShuffleCommonality".Translate(), ref settingModel.needShuffleCommonality,
+                "SrDescriptionShuffleCommonality".Translate());
             ls.GapLine(20f);
             ls.CheckboxLabeled("SrDisableScanner".Translate(), ref settingModel.disableScanner,
-                "SrDescriptionDisableScanner");
+                "SrDescriptionDisableScanner".Translate());
             ls.GapLine(20f);
             ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
                 tooltip: "SrDescriptionSurfaceMultiplier".Translate());

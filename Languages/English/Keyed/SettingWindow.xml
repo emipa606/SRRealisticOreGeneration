@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <SrShuffleLumpSize>shuffle lump size</SrShuffleLumpSize>
-    <SrDescriptionShuffleLumpSize>This will randomize the size of the veins, and you will have a chance to see a large piece of gold ore, but it is out of reality.</SrDescriptionShuffleLumpSize>
+    <SrDescriptionShuffleLumpSize>This will randomize the size of the lump.</SrDescriptionShuffleLumpSize>
+    <SrShuffleCommonality>shuffle lump distribution</SrShuffleCommonality>
+    <SrDescriptionShuffleCommonality>This will randomize the distribution of the lump.</SrDescriptionShuffleCommonality>
     <SrDisableScanner>disable scanner system</SrDisableScanner>
     <SrDescriptionDisableScanner>This will allow you to see all the ore information without using the scanner. It is not recommended to turn it on</SrDescriptionDisableScanner>
     <SrSurfaceMultiplier>surface multiplier</SrSurfaceMultiplier>

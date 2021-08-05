@@ -15,6 +15,7 @@ namespace RabiSquare.RealisticOreGeneration
     {
         public int maxOutpostCount = 2;
         public bool needShuffleLumpSize;
+        public bool needShuffleCommonality = true;
         public bool disableScanner;
         public int outpostMapSize = 200;
         public float surfaceMultiplier = 1.5f;
@@ -29,6 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
             Scribe_Values.Look(ref outpostMapSize, "outpostMapSize", 250);
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
             Scribe_Values.Look(ref needShuffleLumpSize, "needShuffleLumpSize");
+            Scribe_Values.Look(ref needShuffleCommonality, "needShuffleCommonality", true);
             Scribe_Values.Look(ref disableScanner, "disableScanner");
             Scribe_Values.Look(ref sigmaSeed, "sigmaSeed", 1f);
         }
@@ -41,6 +43,7 @@ namespace RabiSquare.RealisticOreGeneration
             maxOutpostCount = 2;
             needShuffleLumpSize = false;
             disableScanner = false;
+            needShuffleCommonality = true;
             sigmaSeed = 1f;
         }
     }
