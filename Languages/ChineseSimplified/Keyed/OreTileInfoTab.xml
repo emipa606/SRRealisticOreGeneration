@@ -2,6 +2,7 @@
 <LanguageData>
     <SrTabOreTileInfo>矿石</SrTabOreTileInfo>
     <SrResourceDepletion>资源枯竭</SrResourceDepletion>
+    <SrResourceDepletionDesc>你无法在该区域找到任何有价值的矿石</SrResourceDepletionDesc>
     <SrSurfaceLumpDistribution>地表矿脉生成几率分布</SrSurfaceLumpDistribution>
     <SrUndergroundLumpDistribution>地下矿脉生成几率分布</SrUndergroundLumpDistribution>
     <SrSurfaceAbundance>地表矿石丰度</SrSurfaceAbundance>

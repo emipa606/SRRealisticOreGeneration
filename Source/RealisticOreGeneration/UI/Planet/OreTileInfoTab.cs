@@ -55,6 +55,12 @@ namespace RabiSquare.RealisticOreGeneration.UI.Planet
             Widgets.Label(rect, "SrResourceDepletion".Translate());
             rect.y += rect.height;
             curY = rect.y;
+            //label
+            Text.Font = GameFont.Small;
+            rect.height = Text.LineHeight;
+            Widgets.Label(rect, "SrResourceDepletionDesc".Translate());
+            rect.y += rect.height;
+            curY = rect.y;
         }
 
         private static void DrawInfo(ref float curY, float width, string text)

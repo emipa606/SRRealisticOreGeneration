@@ -22,7 +22,7 @@ namespace RabiSquare.RealisticOreGeneration
         private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new Dictionary<int, TileOreData>();
 
         /// <summary>
-        ///     get ore data of tile
+        /// get ore data of tile
         /// </summary>
         /// <param name="tileId"></param>
         /// <returns></returns>
@@ -134,7 +134,7 @@ namespace RabiSquare.RealisticOreGeneration
         }
 
         /// <summary>
-        ///     how many times the total value of vanilla is the current total value in the entire map
+        /// how many times the total value of vanilla is the current total value in the entire map
         /// </summary>
         /// <param name="oreDistribution">commonality of each ore. key:defName,value:commonality</param>
         /// <returns></returns>
