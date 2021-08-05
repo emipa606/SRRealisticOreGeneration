@@ -87,7 +87,6 @@ namespace RabiSquare.RealisticOreGeneration
             //works well
             if (_selectedTile != -1) return;
             //no target
-            Log.Warning("tick");
             UpdateDefaultTarget();
             //still no target
             if (_selectedTile == -1)
@@ -251,6 +250,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (_selectedTile == -1)
             {
+                Log.Warning($"{MsicDef.LogTag}find tile with none on surface");
                 return;
             }
 
@@ -262,6 +262,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (_selectedTile == -1)
             {
+                Log.Warning($"{MsicDef.LogTag}find tile with none in underground");
                 return;
             }
 
@@ -316,7 +317,7 @@ namespace RabiSquare.RealisticOreGeneration
             _oreScanMode = (_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface
                 ? _oreScanMode & ~OreScanMode.RangeSurface
                 : _oreScanMode | OreScanMode.RangeSurface;
-            _selectedTile = -1;
+            UpdateDefaultTarget();
         }
 
         private void OnClickScanAreaChange()
@@ -324,7 +325,7 @@ namespace RabiSquare.RealisticOreGeneration
             _oreScanMode = (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground
                 ? _oreScanMode & ~OreScanMode.SingleUnderground
                 : _oreScanMode | OreScanMode.SingleUnderground;
-            _selectedTile = -1;
+            UpdateDefaultTarget();
         }
 
         private bool OnWorldTargetSelected(GlobalTargetInfo target)
@@ -389,7 +390,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             CameraJumper.TryJump(CameraJumper.GetWorldTarget((GlobalTargetInfo) parent));
             Find.WorldSelector.ClearSelection();
-            Find.WorldTargeter.BeginTargeting(OnWorldTargetSelected, true, ScanCursor, false,
+            Find.WorldTargeter.BeginTargeting(OnWorldTargetSelected, true, ScanCursor, true,
                 () => GenDraw.DrawWorldRadiusRing(parent.Tile, SingleModeRadius), TargetingLabelGetter);
         }
     }

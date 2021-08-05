@@ -21,37 +21,16 @@ namespace RabiSquare.RealisticOreGeneration
     [StaticConstructorOnStartup]
     public class WorldLayerOreTile : WorldLayer
     {
-        private static readonly Material OreInfoTile =
-            MaterialPool.MatFrom("World/SelectedTile", ShaderDatabase.WorldOverlayAdditive, 3559);
-
         private readonly List<Vector3> _verts = new List<Vector3>();
 
-        private static Material DepletionInfoMaterial
-        {
-            get
-            {
-                OreInfoTile.color = Color.red;
-                return OreInfoTile;
-            }
-        }
+        private static readonly Material OreInfoTileDepletion =
+            MaterialPool.MatFrom("World/SelectedTile", ShaderDatabase.WorldOverlayAdditive, Color.red, 3559);
 
-        private static Material HalfInfoMaterial
-        {
-            get
-            {
-                OreInfoTile.color = Color.cyan;
-                return OreInfoTile;
-            }
-        }
+        private static readonly Material OreInfoTileComplete =
+            MaterialPool.MatFrom("World/SelectedTile", ShaderDatabase.WorldOverlayAdditive, Color.green, 3559);
 
-        private static Material CompleteInfoMaterial
-        {
-            get
-            {
-                OreInfoTile.color = Color.green;
-                return OreInfoTile;
-            }
-        }
+        private static readonly Material OreInfoTileHalf =
+            MaterialPool.MatFrom("World/SelectedTile", ShaderDatabase.WorldOverlayAdditive, Color.cyan, 3559);
 
 
         public override IEnumerable Regenerate()
@@ -67,37 +46,36 @@ namespace RabiSquare.RealisticOreGeneration
 
         private void DrawDepletionInfo()
         {
-            Log.Warning(
-                $"WorldOreInfoRecorder.Instance.WorldOreInfoTile:{WorldOreInfoRecorder.Instance.WorldOreInfoTile.Count()}");
+            if (Prefs.DevMode)
+            {
+                Log.Warning($"{MsicDef.LogTag}total mesh: {WorldOreInfoRecorder.Instance.WorldOreInfoTile.Count()}");
+            }
+
             foreach (var oreInfoTileId in WorldOreInfoRecorder.Instance.WorldOreInfoTile)
             {
                 if (WorldOreInfoRecorder.Instance.IsTileAbandoned(oreInfoTileId))
                 {
-                    DrawOreInfoCursor(oreInfoTileId, DepletionInfoMaterial);
-                    Log.Warning("1");
+                    DrawOreInfoCursor(oreInfoTileId, OreInfoTileDepletion);
                     continue;
                 }
 
                 if (WorldOreInfoRecorder.Instance.IsTileScannedSurface(oreInfoTileId) &&
                     WorldOreInfoRecorder.Instance.IsTileScannedUnderground(oreInfoTileId))
                 {
-                    DrawOreInfoCursor(oreInfoTileId, CompleteInfoMaterial);
-                    Log.Warning("2");
+                    DrawOreInfoCursor(oreInfoTileId, OreInfoTileComplete);
                     continue;
                 }
 
                 if (WorldOreInfoRecorder.Instance.IsTileScannedSurface(oreInfoTileId) ||
                     WorldOreInfoRecorder.Instance.IsTileScannedUnderground(oreInfoTileId))
                 {
-                    DrawOreInfoCursor(oreInfoTileId, HalfInfoMaterial);
-                    Log.Warning("3");
+                    DrawOreInfoCursor(oreInfoTileId, OreInfoTileHalf);
                 }
             }
         }
 
         private void DrawOreInfoCursor(int tileId, Material material)
         {
-            Log.Warning($"tileId:{tileId}");
             var subMesh = GetSubMesh(material);
             Find.WorldGrid.GetTileVertices(tileId, _verts);
             var subMeshVertsCount = subMesh.verts.Count;
