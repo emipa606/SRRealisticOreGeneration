@@ -30,7 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
             Scribe_Values.Look(ref needShuffleLumpSize, "needShuffleLumpSize");
             Scribe_Values.Look(ref disableScanner, "disableScanner");
-            Scribe_Values.Look(ref sigmaSeed, "sigmaSeed");
+            Scribe_Values.Look(ref sigmaSeed, "sigmaSeed", 1f);
         }
 
         public void SetDefault()

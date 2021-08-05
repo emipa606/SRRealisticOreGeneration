@@ -56,12 +56,18 @@ namespace RabiSquare.RealisticOreGeneration
             //generate random ore distribution
             var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
             var n = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount();
-            var q = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
-
+            var q1 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
+            var q2 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
             var arrayNewCommonality = new float[n];
             for (var i = 0; i < n; i++)
-                arrayNewCommonality[i] = 1 / (q * Mathf.Sqrt(2 * 3.14f)) *
-                                         Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q, 2)));
+            {
+                arrayNewCommonality[i] = 1 / (q1 * Mathf.Sqrt(2 * 3.14f)) *
+                                         Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q1, 2)));
+                arrayNewCommonality[i] = arrayNewCommonality[i] * (1 / (q2 * Mathf.Sqrt(2 * 3.14f)) *
+                                                                   Mathf.Exp(-Mathf.Pow(
+                                                                       i - Rand.ValueSeeded(tileId) * ((float) n / 2),
+                                                                       2) / (2 * Mathf.Pow(q2, 2))));
+            }
 
             //shuffle
             arrayNewCommonality.Shuffle(tileId);
