@@ -10,4 +10,6 @@
     <SrChangeToSurfaceMode>Switch to the surface scan mode.</SrChangeToSurfaceMode>
     <SrChangeToUndergroundMode>Switch to underground scanning mode.</SrChangeToUndergroundMode>
     <SrRepeatScan>repeated scanning</SrRepeatScan>
+    <SrScanComplete>Scan complete</SrScanComplete>
+    <SrScanCompleteDesc>We have completed a scan of the mineral information in the area</SrScanCompleteDesc>
 </LanguageData>

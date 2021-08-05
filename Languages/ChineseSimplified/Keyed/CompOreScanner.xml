@@ -10,4 +10,6 @@
     <SrChangeToSurfaceMode>切换为地表扫描模式。</SrChangeToSurfaceMode>
     <SrChangeToUndergroundMode>切换为地下扫描模式。</SrChangeToUndergroundMode>
     <SrRepeatScan>无法重复扫描</SrRepeatScan>
+    <SrScanComplete>扫描完成</SrScanComplete>
+    <SrScanCompleteDesc>我们完成了对该地区矿物信息的扫描</SrScanCompleteDesc>
 </LanguageData>

@@ -7,6 +7,7 @@
 //    *(__\_\        @Copyright  Copyright (c) 2021, Shadowrabbit
 // ******************************************************************
 
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using RimWorld.Planet;
@@ -55,14 +56,20 @@ namespace RabiSquare.RealisticOreGeneration
             mapParent.Tile = Caravan.Tile;
             mapParent.SetFaction(Faction.OfPlayer);
             Find.WorldObjects.Add(mapParent);
-            var map = GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile,
-                new IntVec3(SettingWindow.Instance.settingModel.outpostMapSize, 1,
-                    SettingWindow.Instance.settingModel.outpostMapSize),
-                null);
-            CaravanEnterMapUtility.Enter(Caravan, map, CaravanEnterMode.Edge);
-            Find.LetterStack.ReceiveLetter("LetterLabelCaravanEnteredMap".Translate((NamedArgument) mapParent),
-                "LetterCaravanEnteredMap".Translate((NamedArgument) Caravan.Label, (NamedArgument) mapParent)
-                    .CapitalizeFirst(), LetterDefOf.NeutralEvent, Caravan.PawnsListForReading);
+            //enter map
+            LongEventHandler.QueueLongEvent(
+                () =>
+                    GetOrGenerateMapUtility.GetOrGenerateMap(mapParent.Tile, Find.World.info.initialMapSize,
+                        null), "GeneratingMap", true,
+                GameAndMapInitExceptionHandlers.ErrorWhileGeneratingMap);
+            LongEventHandler.QueueLongEvent(() =>
+                {
+                    var pawn = Caravan.PawnsListForReading[0];
+                    CaravanEnterMapUtility.Enter(Caravan, mapParent.Map, CaravanEnterMode.Edge);
+                    CameraJumper.TryJump((GlobalTargetInfo) pawn);
+                }, "SpawningColonists", true,
+                GameAndMapInitExceptionHandlers.ErrorWhileGeneratingMap);
+            //record count
             MiningOutpostRecorder.Instance.MiningOutpostCountIncrease();
         }
     }

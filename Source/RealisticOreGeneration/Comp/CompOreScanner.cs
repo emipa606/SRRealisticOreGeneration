@@ -78,12 +78,16 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
             }
 
+            Find.LetterStack.ReceiveLetter("SrScanComplete".Translate(), "SrScanCompleteDesc".Translate(),
+                LetterDefOf.PositiveEvent,
+                new GlobalTargetInfo(_selectedTile));
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
+            UpdateDefaultTarget();
+            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}next target: {_selectedTile}");
         }
 
         public override void CompTickRare()
         {
-            base.CompTickRare();
             //works well
             if (_selectedTile != -1) return;
             //no target
@@ -255,7 +259,6 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             WorldOreInfoRecorder.Instance.RecordScannedTileSurface(_selectedTile);
-            UpdateDefaultTarget();
         }
 
         private void OnUndergroundFind()
@@ -267,7 +270,6 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             WorldOreInfoRecorder.Instance.RecordScannedTileUnderground(_selectedTile);
-            UpdateDefaultTarget();
         }
 
         private IEnumerable<Gizmo> GetScanModeGizmo()
