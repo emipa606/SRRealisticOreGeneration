@@ -83,7 +83,6 @@ namespace RabiSquare.RealisticOreGeneration
                 new GlobalTargetInfo(_selectedTile));
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
             UpdateDefaultTarget();
-            if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}next target: {_selectedTile}");
         }
 
         public override void CompTickRare()

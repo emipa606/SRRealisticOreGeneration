@@ -119,5 +119,13 @@ namespace RabiSquare.RealisticOreGeneration
         {
             return _worldUndergroundScannedTile.Contains(tileId) || SettingWindow.Instance.settingModel.disableScanner;
         }
+
+        public void Clear()
+        {
+            _worldAbandonedTile.Clear();
+            _worldSurfaceScannedTile.Clear();
+            _worldUndergroundScannedTile.Clear();
+            _worldTileUndergroundOreMiningCount.Clear();
+        }
     }
 }

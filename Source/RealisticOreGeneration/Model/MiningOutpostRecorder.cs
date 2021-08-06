@@ -34,5 +34,10 @@ namespace RabiSquare.RealisticOreGeneration
         {
             return _miningOutpostCount;
         }
+
+        public void Clear()
+        {
+            _miningOutpostCount = 0;
+        }
     }
 }
