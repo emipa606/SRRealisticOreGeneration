@@ -26,7 +26,6 @@ namespace RabiSquare.RealisticOreGeneration
         public static bool Prefix(MapParent parent)
         {
             if (parent == null) return true;
-
             var tileId = parent.Tile;
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
             foreach (var kvp in tileOreData.surfaceDistribution)

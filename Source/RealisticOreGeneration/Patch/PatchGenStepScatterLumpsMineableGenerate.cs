@@ -27,6 +27,11 @@ namespace RabiSquare.RealisticOreGeneration
         public static bool Prefix(GenStep_ScatterLumpsMineable __instance, Map map)
         {
             if (map == null) return true;
+            if (Prefs.DevMode)
+            {
+                Log.Message($"{MsicDef.LogTag}vanilla countPer10kCellsRange: {__instance.countPer10kCellsRange}");
+            }
+
             var tileId = map.Tile;
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
             __instance.countPer10kCellsRange *=
@@ -34,6 +39,8 @@ namespace RabiSquare.RealisticOreGeneration
             if (!Prefs.DevMode) return true;
             Log.Message($"{MsicDef.LogTag}hook abundance success in tile: {tileId}");
             tileOreData.DebugShowSurfaceFactors();
+            Log.Message($"{MsicDef.LogTag}surfaceMultiplier: {SettingWindow.Instance.settingModel.surfaceMultiplier}");
+            Log.Message($"{MsicDef.LogTag}current countPer10kCellsRange: {__instance.countPer10kCellsRange}");
             return true;
         }
     }
