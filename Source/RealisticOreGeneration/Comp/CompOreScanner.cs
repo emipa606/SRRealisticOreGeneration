@@ -88,21 +88,25 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override void CompTickRare()
         {
+            if (!CanUseNow)
+            {
+                return;
+            }
+
             //works well
             if (_selectedTile != -1) return;
             //no target
             UpdateDefaultTarget();
-            //still no target
+            //still no target disable
+            var comp = parent.GetComp<CompFlickable>();
+            if (comp == null)
+            {
+                Log.Warning($"{MsicDef.LogTag}can't find comp");
+                return;
+            }
+
             if (_selectedTile == -1)
             {
-                //disable
-                var comp = parent.GetComp<CompFlickable>();
-                if (comp == null)
-                {
-                    Log.Warning($"{MsicDef.LogTag}can't find comp");
-                    return;
-                }
-
                 Messages.Message("SrNoTargetTile".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
                 comp.SwitchIsOn = false;
                 return;
