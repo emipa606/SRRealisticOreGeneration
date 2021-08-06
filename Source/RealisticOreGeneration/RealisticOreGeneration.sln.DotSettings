@@ -33,4 +33,5 @@ namespace $NAMESPACE$
     }
 }
 </s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=mineable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Shadowrabbit/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

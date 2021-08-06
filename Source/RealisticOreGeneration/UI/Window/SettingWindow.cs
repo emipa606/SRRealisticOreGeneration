@@ -41,19 +41,20 @@ namespace RabiSquare.RealisticOreGeneration
             ls.CheckboxLabeled("SrShuffleLumpSize".Translate(), ref settingModel.needShuffleLumpSize,
                 "SrDescriptionShuffleLumpSize".Translate());
             ls.GapLine(20f);
-            ls.CheckboxLabeled("SrShuffleCommonality".Translate(), ref settingModel.needShuffleCommonality,
-                "SrDescriptionShuffleCommonality".Translate());
-            ls.GapLine(20f);
             ls.CheckboxLabeled("SrDisableScanner".Translate(), ref settingModel.disableScanner,
                 "SrDescriptionDisableScanner".Translate());
             ls.GapLine(20f);
-            ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
-                tooltip: "SrDescriptionSurfaceMultiplier".Translate());
-            settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 99f);
+            ls.Label($"{"SrVanillaSimilarityPercentage".Translate()}: {settingModel.vanillaPercent.ToStringPercent()}",
+                tooltip: "SrVanillaSimilarityPercentageDesc".Translate());
+            settingModel.vanillaPercent = ls.Slider(settingModel.vanillaPercent, 0f, 1f);
             ls.GapLine(20f);
-            ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier}",
+            ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier.ToStringPercent()}",
+                tooltip: "SrDescriptionSurfaceMultiplier".Translate());
+            settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 10f);
+            ls.GapLine(20f);
+            ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier.ToStringPercent()}",
                 tooltip: "SrDescriptionUndergroundMultiplier".Translate());
-            settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 1f, 99f);
+            settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 1f, 10f);
             ls.GapLine(20f);
             ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}",
                 tooltip: "SrDescriptionOutpostMapSize".Translate());

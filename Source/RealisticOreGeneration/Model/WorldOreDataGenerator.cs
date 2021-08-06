@@ -36,8 +36,8 @@ namespace RabiSquare.RealisticOreGeneration
 
             var worldGrid = Find.WorldGrid;
             if (worldGrid == null) throw new Exception("can't find world grid");
-            var surfaceDistribution = GenerateSurfaceDistribution(tileId);
-            var undergroundDistribution = GenerateUndergroundDistribution(tileId);
+            var surfaceDistribution = GenerateFixDistribution(tileId, true);
+            var undergroundDistribution = GenerateFixDistribution(tileId, false);
             var surfaceValueFactor = CalcSurfaceValueFactor(surfaceDistribution);
             var surfaceBerlinFactor = CalcBerlinFactor(tileId, worldGrid, true);
             var undergroundBerlinFactor = CalcBerlinFactor(tileId, worldGrid, false);
@@ -50,84 +50,58 @@ namespace RabiSquare.RealisticOreGeneration
             return tileOreData;
         }
 
-        private static Dictionary<string, float> GenerateSurfaceDistribution(int tileId)
+        private static float[] GenerateNormalizedRandomDistribution(int seed, int count)
         {
-            var mapCommonality = new Dictionary<string, float>();
             //generate random ore distribution
             var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
-            var n = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount();
-            var q1 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
-            var q2 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
-            var arrayNewCommonality = new float[n];
-            for (var i = 0; i < n; i++)
+            var q = qMin + Rand.ValueSeeded(seed) * ((float) count / 2 - qMin);
+            var arrayNewCommonality = new float[count];
+            for (var i = 0; i < count; i++)
             {
-                if (SettingWindow.Instance.settingModel.needShuffleCommonality)
-                {
-                    arrayNewCommonality[i] = 1 / (q1 * Mathf.Sqrt(2 * 3.14f)) *
-                                             Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q1, 2)));
-                    arrayNewCommonality[i] *= (1 / (q2 * Mathf.Sqrt(2 * 3.14f)) * Mathf.Exp(-Mathf.Pow(
-                        i - Rand.ValueSeeded(tileId) * ((float) n / 2), 2) / (2 * Mathf.Pow(q2, 2))));
-                    continue;
-                }
-
-                var oreData = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByIndex(i);
-                arrayNewCommonality[i] = oreData.commonality *
-                                         (2 * Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q1, 2))));
-                arrayNewCommonality[i] *= (2 * Mathf.Exp(-Mathf.Pow(i - Rand.ValueSeeded(tileId) * ((float) n / 2), 2) /
-                                                         (2 * Mathf.Pow(q2, 2))));
+                arrayNewCommonality[i] = 1 / (q * Mathf.Sqrt(2 * 3.14f)) *
+                                         Mathf.Exp(-Mathf.Pow(i - count / 2, 2) / (2 * Mathf.Pow(q, 2)));
+                arrayNewCommonality[i] *= 1 / (q * Mathf.Sqrt(2 * 3.14f)) * Mathf.Exp(-Mathf.Pow(
+                    i - Rand.ValueSeeded(seed) * ((float) count / 2), 2) / (2 * Mathf.Pow(q, 2)));
             }
 
             //shuffle
-            arrayNewCommonality.Shuffle(tileId);
+            arrayNewCommonality.Shuffle(seed);
             //normalized
             arrayNewCommonality.Normalized();
-            //record ore distribution
-            for (var i = 0; i < n; i++)
-            {
-                var oreData = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByIndex(i);
-                mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
-            }
-
-            return mapCommonality;
+            return arrayNewCommonality;
         }
 
-        private static Dictionary<string, float> GenerateUndergroundDistribution(int tileId)
+        /// <summary>
+        /// mix with vanilla
+        /// </summary>
+        /// <param name="seed"></param>
+        /// <param name="isSurface"></param>
+        /// <returns></returns>
+        private static Dictionary<string, float> GenerateFixDistribution(int seed, bool isSurface)
         {
+            var count = isSurface
+                ? VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount()
+                : VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
+            var arrayCommonality = GenerateNormalizedRandomDistribution(seed, count);
             var mapCommonality = new Dictionary<string, float>();
-            //generate random ore distribution
-            var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
-            var n = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
-            var q1 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
-            var q2 = qMin + Rand.ValueSeeded(tileId) * ((float) n / 2 - qMin);
-            var arrayNewCommonality = new float[n];
-            for (var i = 0; i < n; i++)
+            for (var i = 0; i < count; i++)
             {
-                if (SettingWindow.Instance.settingModel.needShuffleCommonality)
-                {
-                    arrayNewCommonality[i] = 1 / (q1 * Mathf.Sqrt(2 * 3.14f)) *
-                                             Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q1, 2)));
-                    arrayNewCommonality[i] *= (1 / (q2 * Mathf.Sqrt(2 * 3.14f)) * Mathf.Exp(-Mathf.Pow(
-                        i - Rand.ValueSeeded(tileId) * ((float) n / 2), 2) / (2 * Mathf.Pow(q2, 2))));
-                    continue;
-                }
-
-                var oreData = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataByIndex(i);
-                arrayNewCommonality[i] = oreData.commonality *
-                                         (2 * Mathf.Exp(-Mathf.Pow(i - n / 2, 2) / (2 * Mathf.Pow(q1, 2))));
-                arrayNewCommonality[i] *= (2 * Mathf.Exp(-Mathf.Pow(i - Rand.ValueSeeded(tileId) * ((float) n / 2), 2) /
-                                                         (2 * Mathf.Pow(q2, 2))));
+                var vanillaNormalizedCommonality = isSurface
+                    ? VanillaOreInfoRecorder.Instance.GetNormalizedSurfaceCommonality(i)
+                    : VanillaOreInfoRecorder.Instance.GetNormalizedUndergroundCommonality(i);
+                arrayCommonality[i] =
+                    vanillaNormalizedCommonality * SettingWindow.Instance.settingModel.vanillaPercent +
+                    arrayCommonality[i] * (1 - SettingWindow.Instance.settingModel.vanillaPercent);
             }
 
-
-            //shuffle
-            arrayNewCommonality.Shuffle(tileId);
-            //normalized
-            arrayNewCommonality.Normalized();
+            arrayCommonality.Normalized();
             //record ore distribution
-            for (var i = 0; i < n; i++)
+            for (var i = 0; i < count; i++)
             {
-                var oreData = VanillaOreInfoRecorder.Instance.GetUndergroundOreDataByIndex(i);
-                mapCommonality.Add(oreData.defName, arrayNewCommonality[i]);
+                var oreData = isSurface
+                    ? VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByIndex(i)
+                    : VanillaOreInfoRecorder.Instance.GetUndergroundOreDataByIndex(i);
+                mapCommonality.Add(oreData.defName, arrayCommonality[i]);
             }
 
             return mapCommonality;
