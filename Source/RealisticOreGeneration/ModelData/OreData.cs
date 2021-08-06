@@ -31,8 +31,11 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override string ToString()
         {
-            return $"{MsicDef.LogTag}\ndefName: {defName}\nmineableScatterCommonality: {commonality}\n" +
-                   $"lumpSize: ({lumpSize.min},{lumpSize.max})\nmineableYield: {yield}\nmarketValue: {marketValue}";
+            return
+                $"{MsicDef.LogTag}defName: {defName}\n" +
+                $"mineableScatterCommonality: {commonality}, lumpSize: ({lumpSize.min},{lumpSize.max}), " +
+                $"mineableYield: {yield}, marketValue: {marketValue}\n" +
+                $"lumpValue: {lumpSize.Average * yield * marketValue}, weightValue: {lumpSize.Average * yield * marketValue * commonality}";
         }
     }
 }
