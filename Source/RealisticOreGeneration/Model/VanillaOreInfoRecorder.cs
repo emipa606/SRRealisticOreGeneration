@@ -30,6 +30,7 @@ namespace RabiSquare.RealisticOreGeneration
         /// <param name="thingDefList"></param>
         public void SetSurfaceOreDataList(IEnumerable<ThingDef> thingDefList)
         {
+            _vanillaTotalSurfaceCommonality = 0f;
             foreach (var thingDef in thingDefList)
             {
                 var buildingProperties = thingDef.building;
@@ -50,7 +51,6 @@ namespace RabiSquare.RealisticOreGeneration
                     buildingProperties.mineableScatterLumpSizeRange, buildingProperties.mineableYield,
                     mineableThing.BaseMarketValue);
                 _vanillaSurfaceOreDataList.Add(oreData);
-                _vanillaTotalSurfaceCommonality = 0f;
                 _vanillaTotalSurfaceCommonality += oreData.commonality;
             }
         }
@@ -121,13 +121,13 @@ namespace RabiSquare.RealisticOreGeneration
         /// <param name="thingDefList"></param>
         public void SetUndergroundOreDataList(IEnumerable<ThingDef> thingDefList)
         {
+            _vanillaTotalUndergroundCommonality = 0f;
             foreach (var thingDef in thingDefList)
             {
                 var oreData = new OreData(thingDef.defName, thingDef.deepCommonality,
                     thingDef.deepLumpSizeRange, thingDef.deepCountPerPortion,
                     thingDef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
-                _vanillaTotalUndergroundCommonality = 0f;
                 _vanillaTotalUndergroundCommonality += oreData.commonality;
             }
         }
@@ -147,7 +147,7 @@ namespace RabiSquare.RealisticOreGeneration
             Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
             return null;
         }
-        
+
         /// <summary>
         /// how many underground ores can be generated
         /// </summary>

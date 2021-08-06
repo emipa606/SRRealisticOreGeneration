@@ -16,8 +16,8 @@ namespace RabiSquare.RealisticOreGeneration
         public bool needShuffleLumpSize;
         public bool disableScanner;
         public float vanillaPercent = 0.5f;
-        public float surfaceMultiplier = 1.5f;
-        public float undergroundMultiplier = 1.5f;
+        public float surfaceMultiplier = 1.2f;
+        public float undergroundMultiplier = 1.2f;
         public int outpostMapSize = 200;
         public int maxOutpostCount = 2;
         public float sigmaSeed = 1f;
@@ -28,8 +28,8 @@ namespace RabiSquare.RealisticOreGeneration
             Scribe_Values.Look(ref needShuffleLumpSize, "needShuffleLumpSize");
             Scribe_Values.Look(ref disableScanner, "disableScanner");
             Scribe_Values.Look(ref vanillaPercent, "vanillaPercent", 0.5f);
-            Scribe_Values.Look(ref surfaceMultiplier, "surfaceMultiplier", 1.5f);
-            Scribe_Values.Look(ref undergroundMultiplier, "undergroundMultiplier", 1.5f);
+            Scribe_Values.Look(ref surfaceMultiplier, "surfaceMultiplier", 1.2f);
+            Scribe_Values.Look(ref undergroundMultiplier, "undergroundMultiplier", 1.2f);
             Scribe_Values.Look(ref outpostMapSize, "outpostMapSize", 250);
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
             Scribe_Values.Look(ref sigmaSeed, "sigmaSeed", 1f);
@@ -40,8 +40,8 @@ namespace RabiSquare.RealisticOreGeneration
             needShuffleLumpSize = false;
             disableScanner = false;
             vanillaPercent = 0.5f;
-            surfaceMultiplier = 1.5f;
-            undergroundMultiplier = 1.5f;
+            surfaceMultiplier = 1.2f;
+            undergroundMultiplier = 1.2f;
             outpostMapSize = 200;
             maxOutpostCount = 2;
             sigmaSeed = 1f;

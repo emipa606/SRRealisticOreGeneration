@@ -18,7 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
 {
     public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
     {
-        private const float Relief = 15;
+        private const float Relief = 5f;
         private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new Dictionary<int, TileOreData>();
 
         /// <summary>
@@ -82,8 +82,7 @@ namespace RabiSquare.RealisticOreGeneration
             var count = isSurface
                 ? VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount()
                 : VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
-            var arrayCommonality = GenerateNormalizedRandomDistribution(seed, count);
-            var mapCommonality = new Dictionary<string, float>();
+            var arrayCommonality = GenerateNormalizedRandomDistribution(isSurface ? seed : seed / 2, count);
             for (var i = 0; i < count; i++)
             {
                 var vanillaNormalizedCommonality = isSurface
@@ -96,6 +95,7 @@ namespace RabiSquare.RealisticOreGeneration
 
             arrayCommonality.Normalized();
             //record ore distribution
+            var mapCommonality = new Dictionary<string, float>();
             for (var i = 0; i < count; i++)
             {
                 var oreData = isSurface
@@ -128,6 +128,7 @@ namespace RabiSquare.RealisticOreGeneration
             var seed = isSurface ? tile.GetHashCode() : tile.GetHashCode() / 2;
             var berlinFactor =
                 Mathf.PerlinNoise((pos.x + seed % 100) / Relief, (pos.z + seed % 100) / Relief);
+            Mathf.Clamp(berlinFactor, 0f, 1f);
             return berlinFactor;
         }
 

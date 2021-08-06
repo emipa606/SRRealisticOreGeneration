@@ -9,6 +9,7 @@
 
 using System.Collections.Generic;
 using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration
@@ -82,7 +83,7 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
             }
 
-            return terrainFactor * _surfaceBerlinFactor;
+            return Mathf.Clamp(terrainFactor * _surfaceBerlinFactor * _surfaceValueFactor, 0f, 1f);
         }
 
         public void DebugShowSurfaceDistribution()

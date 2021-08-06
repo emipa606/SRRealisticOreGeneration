@@ -48,11 +48,11 @@ namespace RabiSquare.RealisticOreGeneration
                 tooltip: "SrVanillaSimilarityPercentageDesc".Translate());
             settingModel.vanillaPercent = ls.Slider(settingModel.vanillaPercent, 0f, 1f);
             ls.GapLine(20f);
-            ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier.ToStringPercent()}",
+            ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
                 tooltip: "SrDescriptionSurfaceMultiplier".Translate());
             settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 10f);
             ls.GapLine(20f);
-            ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier.ToStringPercent()}",
+            ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier}",
                 tooltip: "SrDescriptionUndergroundMultiplier".Translate());
             settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 1f, 10f);
             ls.GapLine(20f);

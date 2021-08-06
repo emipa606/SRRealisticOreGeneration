@@ -48,7 +48,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (Prefs.DevMode)
             {
-                Log.Warning($"{MsicDef.LogTag}total mesh: {WorldOreInfoRecorder.Instance.WorldOreInfoTile.Count()}");
+                Log.Message($"{MsicDef.LogTag}total mesh: {WorldOreInfoRecorder.Instance.WorldOreInfoTile.Count()}");
             }
 
             foreach (var oreInfoTileId in WorldOreInfoRecorder.Instance.WorldOreInfoTile)
