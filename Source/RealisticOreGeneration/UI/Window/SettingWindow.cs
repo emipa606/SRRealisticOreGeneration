@@ -67,7 +67,7 @@ namespace RabiSquare.RealisticOreGeneration
             {
                 ls.GapLine(20f);
                 ls.Label($"sigmaSeed: {settingModel.sigmaSeed}", tooltip: "sigma seed");
-                settingModel.sigmaSeed = ls.Slider(settingModel.sigmaSeed, 0.1f, 2f);
+                settingModel.sigmaSeed = ls.Slider(settingModel.sigmaSeed, 0.1f, 10f);
             }
 
             ls.End();

@@ -54,14 +54,15 @@ namespace RabiSquare.RealisticOreGeneration
         {
             //generate random ore distribution
             var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
-            var q = qMin + Rand.ValueSeeded(seed) * ((float) count / 2 - qMin);
+            var q1 = qMin + Rand.ValueSeeded(seed) * ((float) count / 2 - qMin);
+            var q2 = qMin + Rand.ValueSeeded(seed / 2) * ((float) count / 2 - qMin);
             var arrayNewCommonality = new float[count];
             for (var i = 0; i < count; i++)
             {
-                arrayNewCommonality[i] = 1 / (q * Mathf.Sqrt(2 * 3.14f)) *
-                                         Mathf.Exp(-Mathf.Pow(i - count / 2, 2) / (2 * Mathf.Pow(q, 2)));
-                arrayNewCommonality[i] *= 1 / (q * Mathf.Sqrt(2 * 3.14f)) * Mathf.Exp(-Mathf.Pow(
-                    i - Rand.ValueSeeded(seed) * ((float) count / 2), 2) / (2 * Mathf.Pow(q, 2)));
+                arrayNewCommonality[i] = 1 / (q1 * Mathf.Sqrt(2 * 3.14f)) *
+                                         Mathf.Exp(-Mathf.Pow(i - count / 2, 2) / (2 * Mathf.Pow(q1, 2)));
+                arrayNewCommonality[i] *= 1 / (q2 * Mathf.Sqrt(2 * 3.14f)) * Mathf.Exp(-Mathf.Pow(
+                    i - Rand.ValueSeeded(seed) * ((float) count / 2), 2) / (2 * Mathf.Pow(q2, 2)));
             }
 
             //shuffle
