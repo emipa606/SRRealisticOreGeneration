@@ -87,16 +87,26 @@ namespace RabiSquare.RealisticOreGeneration
 
         public override void CompTickRare()
         {
+            //works well
+            if (_selectedTile != -1) return;
+            //try find target
+            UpdateDefaultTarget();
+            if (_selectedTile != -1) return;
+            //still no target disable try change mode
+            if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface)
+            {
+                Messages.Message("SrAutomaticSwitchingMode".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
+                _oreScanMode &= ~OreScanMode.RangeSurface;
+                UpdateDefaultTarget();
+                if (_selectedTile != -1) return;
+            }
+
             if (!CanUseNow)
             {
                 return;
             }
 
-            //works well
-            if (_selectedTile != -1) return;
-            //no target
-            UpdateDefaultTarget();
-            //still no target disable
+            //still no target shut down
             var comp = parent.GetComp<CompFlickable>();
             if (comp == null)
             {
@@ -104,14 +114,8 @@ namespace RabiSquare.RealisticOreGeneration
                 return;
             }
 
-            if (_selectedTile == -1)
-            {
-                Messages.Message("SrNoTargetTile".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
-                comp.SwitchIsOn = false;
-                return;
-            }
-
-            UpdateCostTime();
+            comp.SwitchIsOn = false;
+            Messages.Message("SrNoTargetTile".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
         }
 
         private void UpdateDefaultTarget()
@@ -132,6 +136,11 @@ namespace RabiSquare.RealisticOreGeneration
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+
+            if (_selectedTile != -1)
+            {
+                UpdateCostTime();
             }
 
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}set default target: {_selectedTile}");
@@ -361,6 +370,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             _selectedTile = target.Tile;
+            UpdateCostTime();
             return true;
         }
 
