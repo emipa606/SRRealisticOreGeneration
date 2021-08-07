@@ -49,7 +49,7 @@ namespace RabiSquare.RealisticOreGeneration
         {
             base.PostSpawnSetup(respawningAfterLoad);
             GetRingMap(SingleModeRadius);
-            UpdateDefaultTarget();
+            FindDefaultTarget();
         }
 
         public override void PostExposeData()
@@ -82,7 +82,7 @@ namespace RabiSquare.RealisticOreGeneration
                 LetterDefOf.PositiveEvent,
                 new GlobalTargetInfo(_selectedTile));
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
-            UpdateDefaultTarget();
+            FindDefaultTarget();
         }
 
         public override void CompTickRare()
@@ -90,14 +90,14 @@ namespace RabiSquare.RealisticOreGeneration
             //works well
             if (_selectedTile != -1) return;
             //try find target
-            UpdateDefaultTarget();
+            FindDefaultTarget();
             if (_selectedTile != -1) return;
             //still no target disable try change mode
             if ((_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface)
             {
                 Messages.Message("SrAutomaticSwitchingMode".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
                 _oreScanMode &= ~OreScanMode.RangeSurface;
-                UpdateDefaultTarget();
+                FindDefaultTarget();
                 if (_selectedTile != -1) return;
             }
 
@@ -118,21 +118,21 @@ namespace RabiSquare.RealisticOreGeneration
             Messages.Message("SrNoTargetTile".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
         }
 
-        private void UpdateDefaultTarget()
+        private void FindDefaultTarget()
         {
             switch (_oreScanMode)
             {
                 case OreScanMode.SingleSurface:
-                    UpdateDefaultTargetSingleSurface();
+                    FindDefaultTargetSingle(true);
                     break;
                 case OreScanMode.SingleUnderground:
-                    UpdateDefaultTargetSingleUnderground();
+                    FindDefaultTargetSingle(false);
                     break;
                 case OreScanMode.RangeSurface:
-                    UpdateDefaultTargetRangeSurface();
+                    FindDefaultTargetRange(true);
                     break;
                 case OreScanMode.RangeUnderground:
-                    UpdateDefaultTargetRangeUnderground();
+                    FindDefaultTargetRange(false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -146,7 +146,7 @@ namespace RabiSquare.RealisticOreGeneration
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}set default target: {_selectedTile}");
         }
 
-        private void UpdateDefaultTargetSingleSurface()
+        private void FindDefaultTargetSingle(bool isSurface)
         {
             var list = _ringMap.Keys.ToList();
             if (list.Count <= 0)
@@ -156,8 +156,21 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             list.Shuffle();
-            foreach (var tileId in list.Where(tileId => !WorldOreInfoRecorder.Instance.IsTileScannedSurface(tileId)))
+            foreach (var tileId in list)
             {
+                switch (isSurface)
+                {
+                    //not valid target
+                    case true when !WorldOreInfoRecorder.Instance.IsTileScannedSurface(tileId):
+                    case false when !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(tileId):
+                        continue;
+                }
+
+                if (tileId.IsTileOceanOrLake())
+                {
+                    continue;
+                }
+
                 _selectedTile = tileId;
                 return;
             }
@@ -165,42 +178,14 @@ namespace RabiSquare.RealisticOreGeneration
             _selectedTile = -1;
         }
 
-        private void UpdateDefaultTargetSingleUnderground()
+        private void FindDefaultTargetRange(bool isSurface)
         {
-            var list = _ringMap.Keys.ToList();
-            if (list.Count <= 0)
-            {
-                _selectedTile = -1;
-                return;
-            }
-
-            list.Shuffle();
-            foreach (var tileId in list.Where(tileId =>
-                !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(tileId)))
-            {
-                _selectedTile = tileId;
-                return;
-            }
-
-            _selectedTile = -1;
-        }
-
-        private void UpdateDefaultTargetRangeSurface()
-        {
-            foreach (var kvp in _ringMap.Where(kvp =>
-                !WorldOreInfoRecorder.Instance.IsTileScannedSurface(kvp.Key) && kvp.Value <= RangeModeRadius))
-            {
-                _selectedTile = kvp.Key;
-                return;
-            }
-
-            _selectedTile = -1;
-        }
-
-        private void UpdateDefaultTargetRangeUnderground()
-        {
-            foreach (var kvp in _ringMap.Where(kvp =>
-                !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(kvp.Key) && kvp.Value <= RangeModeRadius))
+            foreach (var kvp in from kvp in _ringMap
+                where !isSurface || !WorldOreInfoRecorder.Instance.IsTileScannedSurface(kvp.Key)
+                where isSurface || !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(kvp.Key)
+                where !kvp.Key.IsTileOceanOrLake()
+                where kvp.Value <= RangeModeRadius
+                select kvp)
             {
                 _selectedTile = kvp.Key;
                 return;
@@ -227,8 +212,14 @@ namespace RabiSquare.RealisticOreGeneration
                     worldGrid.GetTileNeighbors(tileId, tempNeighborList);
                     foreach (var neighbor in tempNeighborList.Where(neighbor => !innerCircleSet.Contains(neighbor)))
                     {
-                        outerRing.Add(neighbor);
                         innerCircleSet.Add(neighbor);
+                        //invalid tile
+                        if (neighbor.IsTileOceanOrLake())
+                        {
+                            continue;
+                        }
+
+                        outerRing.Add(neighbor);
                     }
                 }
 
@@ -331,7 +322,7 @@ namespace RabiSquare.RealisticOreGeneration
             _oreScanMode = (_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface
                 ? _oreScanMode & ~OreScanMode.RangeSurface
                 : _oreScanMode | OreScanMode.RangeSurface;
-            UpdateDefaultTarget();
+            FindDefaultTarget();
         }
 
         private void OnClickScanAreaChange()
@@ -339,7 +330,7 @@ namespace RabiSquare.RealisticOreGeneration
             _oreScanMode = (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground
                 ? _oreScanMode & ~OreScanMode.SingleUnderground
                 : _oreScanMode | OreScanMode.SingleUnderground;
-            UpdateDefaultTarget();
+            FindDefaultTarget();
         }
 
         private bool OnWorldTargetSelected(GlobalTargetInfo target)
