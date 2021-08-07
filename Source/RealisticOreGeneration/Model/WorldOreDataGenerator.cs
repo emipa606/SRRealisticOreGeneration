@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using RimWorld.Planet;
 using UnityEngine;
@@ -72,6 +73,20 @@ namespace RabiSquare.RealisticOreGeneration
             return arrayNewCommonality;
         }
 
+        private static void VanillaFix(ref float[] arrayCommonality)
+        {
+            for (var i = 0; i < arrayCommonality.Length; i++)
+            {
+                var vanillaNormalizedCommonality =
+                    VanillaOreInfoRecorder.Instance.GetNormalizedSurfaceCommonality(i);
+                arrayCommonality[i] =
+                    vanillaNormalizedCommonality * SettingWindow.Instance.settingModel.vanillaPercent +
+                    arrayCommonality[i] * (1 - SettingWindow.Instance.settingModel.vanillaPercent);
+            }
+
+            arrayCommonality.Normalized();
+        }
+
         /// <summary>
         /// mix with vanilla
         /// </summary>
@@ -84,17 +99,12 @@ namespace RabiSquare.RealisticOreGeneration
                 ? VanillaOreInfoRecorder.Instance.GetSurfaceOreDataListCount()
                 : VanillaOreInfoRecorder.Instance.GetUndergroundOreDataListCount();
             var arrayCommonality = GenerateNormalizedRandomDistribution(isSurface ? seed : seed / 2, count);
-            for (var i = 0; i < count; i++)
+            if (isSurface)
             {
-                var vanillaNormalizedCommonality = isSurface
-                    ? VanillaOreInfoRecorder.Instance.GetNormalizedSurfaceCommonality(i)
-                    : VanillaOreInfoRecorder.Instance.GetNormalizedUndergroundCommonality(i);
-                arrayCommonality[i] =
-                    vanillaNormalizedCommonality * SettingWindow.Instance.settingModel.vanillaPercent +
-                    arrayCommonality[i] * (1 - SettingWindow.Instance.settingModel.vanillaPercent);
+                //make it similar to vanilla
+                VanillaFix(ref arrayCommonality);
             }
 
-            arrayCommonality.Normalized();
             //record ore distribution
             var mapCommonality = new Dictionary<string, float>();
             for (var i = 0; i < count; i++)

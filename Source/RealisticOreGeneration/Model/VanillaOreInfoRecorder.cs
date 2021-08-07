@@ -16,7 +16,6 @@ namespace RabiSquare.RealisticOreGeneration
     public class VanillaOreInfoRecorder : BaseSingleTon<VanillaOreInfoRecorder>
     {
         private float _vanillaTotalSurfaceCommonality;
-        private float _vanillaTotalUndergroundCommonality;
 
         private readonly List<OreData>
             _vanillaSurfaceOreDataList = new List<OreData>(); //vanilla data of all surface ores
@@ -104,31 +103,18 @@ namespace RabiSquare.RealisticOreGeneration
             return 0f;
         }
 
-        public float GetNormalizedUndergroundCommonality(int index)
-        {
-            if (_vanillaUndergroundOreDataList != null && _vanillaUndergroundOreDataList.Count > index)
-            {
-                return _vanillaUndergroundOreDataList[index].commonality / _vanillaTotalUndergroundCommonality;
-            }
-
-            Log.Error($"{MsicDef.LogTag}can't find underground oreData on index: {index}");
-            return 0f;
-        }
-
         /// <summary>
         /// set vanilla data of each underground ore 
         /// </summary>
         /// <param name="thingDefList"></param>
         public void SetUndergroundOreDataList(IEnumerable<ThingDef> thingDefList)
         {
-            _vanillaTotalUndergroundCommonality = 0f;
             foreach (var thingDef in thingDefList)
             {
                 var oreData = new OreData(thingDef.defName, thingDef.deepCommonality,
                     thingDef.deepLumpSizeRange, thingDef.deepCountPerPortion,
                     thingDef.BaseMarketValue);
                 _vanillaUndergroundOreDataList.Add(oreData);
-                _vanillaTotalUndergroundCommonality += oreData.commonality;
             }
         }
 
