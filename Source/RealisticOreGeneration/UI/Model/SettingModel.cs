@@ -20,7 +20,8 @@ namespace RabiSquare.RealisticOreGeneration
         public float undergroundMultiplier = 1.2f;
         public int outpostMapSize = 200;
         public int maxOutpostCount = 2;
-        public float sigmaSeed = 2f;
+        public float qMin = 2f;
+        public float qMax = 2f;
 
         public override void ExposeData()
         {
@@ -32,7 +33,8 @@ namespace RabiSquare.RealisticOreGeneration
             Scribe_Values.Look(ref undergroundMultiplier, "undergroundMultiplier", 1.2f);
             Scribe_Values.Look(ref outpostMapSize, "outpostMapSize", 250);
             Scribe_Values.Look(ref maxOutpostCount, "maxOutpostCount", 2);
-            Scribe_Values.Look(ref sigmaSeed, "sigmaSeed", 2f);
+            Scribe_Values.Look(ref qMin, "qMin", 2f);
+            Scribe_Values.Look(ref qMax, "qMax", 2f);
         }
 
         public void SetDefault()
@@ -44,7 +46,8 @@ namespace RabiSquare.RealisticOreGeneration
             undergroundMultiplier = 1.2f;
             outpostMapSize = 200;
             maxOutpostCount = 2;
-            sigmaSeed = 2f;
+            qMin = 2f;
+            qMax = 2f;
         }
     }
 }

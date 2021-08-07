@@ -54,9 +54,10 @@ namespace RabiSquare.RealisticOreGeneration
         private static float[] GenerateNormalizedRandomDistribution(int seed, int count)
         {
             //generate random ore distribution
-            var qMin = SettingWindow.Instance.settingModel.sigmaSeed;
-            var q1 = qMin + Rand.ValueSeeded(seed) * ((float) count / 2 - qMin);
-            var q2 = qMin + Rand.ValueSeeded(seed / 2) * ((float) count / 2 - qMin);
+            var qMin = SettingWindow.Instance.settingModel.qMin;
+            var qMax = SettingWindow.Instance.settingModel.qMax;
+            var q1 = qMin + Rand.ValueSeeded(seed) * (count / qMax - qMin);
+            var q2 = qMin + Rand.ValueSeeded(seed / 2) * (count / qMax - qMin);
             var arrayNewCommonality = new float[count];
             for (var i = 0; i < count; i++)
             {

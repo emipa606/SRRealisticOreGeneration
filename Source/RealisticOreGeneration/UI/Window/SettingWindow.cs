@@ -66,8 +66,11 @@ namespace RabiSquare.RealisticOreGeneration
             if (Prefs.DevMode)
             {
                 ls.GapLine(20f);
-                ls.Label($"sigmaSeed: {settingModel.sigmaSeed}", tooltip: "sigma seed");
-                settingModel.sigmaSeed = ls.Slider(settingModel.sigmaSeed, 0.1f, 10f);
+                ls.Label($"qMin: {settingModel.qMin}", tooltip: "qMin");
+                settingModel.qMin = ls.Slider(settingModel.qMin, 0.1f, 10f);
+                ls.GapLine(20f);
+                ls.Label($"qMax: {settingModel.qMax}", tooltip: "qMax");
+                settingModel.qMax = ls.Slider(settingModel.qMax, 2f, 10f);
             }
 
             ls.End();
