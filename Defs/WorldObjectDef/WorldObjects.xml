@@ -11,7 +11,7 @@
         <expandingIconPriority>10</expandingIconPriority>
         <canBePlayerHome>false</canBePlayerHome>
         <IncidentTargetTags>
-            <li>Map_Misc</li>
+            <li>Map_PlayerHome</li>
         </IncidentTargetTags>
         <comps>
             <li Class="WorldObjectCompProperties_FormCaravan"/>
