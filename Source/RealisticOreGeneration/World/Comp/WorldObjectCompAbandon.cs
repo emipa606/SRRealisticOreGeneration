@@ -62,7 +62,6 @@ namespace RabiSquare.RealisticOreGeneration
         private void Abandon()
         {
             MapParent.Destroy();
-            WorldOreInfoRecorder.Instance.RecordAbandonedTile(MapParent.Tile);
             MiningOutpostRecorder.Instance.MiningOutpostCountDecrease();
             Find.GameEnder.CheckOrUpdateGameOver();
         }

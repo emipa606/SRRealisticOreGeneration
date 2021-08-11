@@ -72,7 +72,6 @@ namespace RabiSquare.RealisticOreGeneration
         {
             if (_worldAbandonedTile.Contains(tileId))
             {
-                Log.Warning($"{MsicDef.LogTag}repeat abandon");
                 return;
             }
 

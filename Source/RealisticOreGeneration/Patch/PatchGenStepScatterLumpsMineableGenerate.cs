@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchGenStepScatterLumpsMineableGenerate
     {
         /// <summary>
-        ///     hook countPer10kCellsRange with my abundance
+        /// hook countPer10kCellsRange with my abundance
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
@@ -36,6 +36,7 @@ namespace RabiSquare.RealisticOreGeneration
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
             __instance.countPer10kCellsRange *=
                 WorldOreInfoRecorder.Instance.IsTileAbandoned(tileId) ? 0 : tileOreData.OreGenerationFactor;
+            WorldOreInfoRecorder.Instance.RecordAbandonedTile(tileId);
             if (!Prefs.DevMode) return true;
             Log.Message($"{MsicDef.LogTag}hook abundance success in tile: {tileId}");
             tileOreData.DebugShowSurfaceFactors();
