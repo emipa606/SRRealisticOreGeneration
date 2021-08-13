@@ -5,9 +5,9 @@
         <label>mining post</label>
         <description>A mining post.</description>
         <worldObjectClass>RabiSquare.RealisticOreGeneration.MiningOutpost</worldObjectClass>
-        <texture>World/WorldObjects/TribalSettlement</texture>
+        <texture>World/WorldObjects/MiningPost</texture>
         <expandingIcon>true</expandingIcon>
-        <expandingIconTexture>World/WorldObjects/Expanding/DestroyedSettlement</expandingIconTexture>
+        <expandingIconTexture>World/WorldObjects/MiningPost</expandingIconTexture>
         <expandingIconPriority>10</expandingIconPriority>
         <canBePlayerHome>false</canBePlayerHome>
         <IncidentTargetTags>
