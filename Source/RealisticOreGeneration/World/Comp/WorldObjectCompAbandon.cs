@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     [StaticConstructorOnStartup]
     public class WorldObjectCompAbandon : WorldObjectComp
     {
-        private static readonly Texture2D AbandonCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+        private static readonly Texture2D AbandonCommandTex = ContentFinder<Texture2D>.Get("UI/Commands/AbandonMiningPost");
         private MapParent MapParent => parent as MapParent;
         private Map Map => MapParent?.Map;
 

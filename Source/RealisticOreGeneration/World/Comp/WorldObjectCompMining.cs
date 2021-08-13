@@ -18,7 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
     [StaticConstructorOnStartup]
     public class WorldObjectCompMining : WorldObjectComp
     {
-        private static readonly Texture2D FormCaravanCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+        private static readonly Texture2D FormCaravanCommand = ContentFinder<Texture2D>.Get("UI/Commands/BuildMiningPost");
         private Caravan Caravan => (Caravan) parent;
 
         public override IEnumerable<Gizmo> GetGizmos()

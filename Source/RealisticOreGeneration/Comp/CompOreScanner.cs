@@ -24,21 +24,21 @@ namespace RabiSquare.RealisticOreGeneration
         private const int SingleModeRadius = 24;
 
         private static readonly Texture2D SingleScanModeCommand =
-            ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+            ContentFinder<Texture2D>.Get("UI/Commands/SingleMode");
 
         private static readonly Texture2D
-            RangeScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+            RangeScanModeCommand = ContentFinder<Texture2D>.Get("UI/Commands/AutoRangeMode");
 
         private static readonly Texture2D SurfaceScanModeCommand =
-            ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+            ContentFinder<Texture2D>.Get("UI/Commands/SurfaceMode");
 
         private static readonly Texture2D UndergroundScanModeCommand =
-            ContentFinder<Texture2D>.Get("UI/Commands/AbandonHome");
+            ContentFinder<Texture2D>.Get("UI/Commands/UndergroundMode");
 
-        private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/FormCaravan");
+        private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/SelectTarget");
 
         private static readonly Texture2D ScanCursor =
-            ContentFinder<Texture2D>.Get("UI/Overlays/LaunchableMouseAttachment");
+            ContentFinder<Texture2D>.Get("UI/Overlays/ScanCursor");
 
         private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
         private Dictionary<int, int> _ringMap = new Dictionary<int, int>();
