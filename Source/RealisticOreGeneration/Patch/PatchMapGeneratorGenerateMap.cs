@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchMapGeneratorGenerateMap
     {
         /// <summary>
-        ///     hook map gen with new params
+        /// hook map gen with new params
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
@@ -31,13 +31,7 @@ namespace RabiSquare.RealisticOreGeneration
             foreach (var kvp in tileOreData.surfaceDistribution)
             {
                 var rawOreDef = ThingDef.Named(kvp.Key);
-                if (rawOreDef == null)
-                {
-                    Log.Error($"{MsicDef.LogTag}can't find rawOreDef with defName: {kvp.Key}");
-                    return true;
-                }
-
-                var buildingProperties = rawOreDef.building;
+                var buildingProperties = rawOreDef?.building;
                 if (buildingProperties == null)
                 {
                     Log.Error($"{MsicDef.LogTag}can't find buildingProperties with defName: {kvp.Key}");
@@ -45,9 +39,21 @@ namespace RabiSquare.RealisticOreGeneration
                 }
 
                 buildingProperties.mineableScatterCommonality = kvp.Value;
+                //if need to shuffle lump size
                 if (SettingWindow.Instance.settingModel.needShuffleLumpSize)
+                {
                     buildingProperties.mineableScatterLumpSizeRange =
                         VanillaOreInfoRecorder.Instance.GetRandomSurfaceLumpSize();
+                    return true;
+                }
+
+                var vanillaOreData = VanillaOreInfoRecorder.Instance.GetSurfaceOreDataByDefName(kvp.Key);
+                if (vanillaOreData == null)
+                {
+                    return true;
+                }
+
+                buildingProperties.mineableScatterLumpSizeRange = vanillaOreData.lumpSize;
             }
 
             if (!Prefs.DevMode) return true;

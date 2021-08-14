@@ -35,7 +35,8 @@ namespace RabiSquare.RealisticOreGeneration
         private static readonly Texture2D UndergroundScanModeCommand =
             ContentFinder<Texture2D>.Get("UI/Commands/UndergroundMode");
 
-        private static readonly Texture2D TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/SelectTarget");
+        private static readonly Texture2D
+            TileSelectedCommand = ContentFinder<Texture2D>.Get("UI/Commands/SelectTarget");
 
         private static readonly Texture2D ScanCursor =
             ContentFinder<Texture2D>.Get("UI/Overlays/ScanCursor");
@@ -79,8 +80,7 @@ namespace RabiSquare.RealisticOreGeneration
             }
 
             Find.LetterStack.ReceiveLetter("SrScanComplete".Translate(), "SrScanCompleteDesc".Translate(),
-                LetterDefOf.PositiveEvent,
-                new GlobalTargetInfo(_selectedTile));
+                LetterDefOf.PositiveEvent, new GlobalTargetInfo(_selectedTile));
             if (Prefs.DevMode) Log.Message($"{MsicDef.LogTag}scanning complete: {_selectedTile}");
             FindDefaultTarget();
         }
@@ -161,8 +161,8 @@ namespace RabiSquare.RealisticOreGeneration
                 switch (isSurface)
                 {
                     //not valid target
-                    case true when !WorldOreInfoRecorder.Instance.IsTileScannedSurface(tileId):
-                    case false when !WorldOreInfoRecorder.Instance.IsTileScannedUnderground(tileId):
+                    case true when WorldOreInfoRecorder.Instance.IsTileScannedSurface(tileId):
+                    case false when WorldOreInfoRecorder.Instance.IsTileScannedUnderground(tileId):
                         continue;
                 }
 
@@ -355,8 +355,7 @@ namespace RabiSquare.RealisticOreGeneration
                 WorldOreInfoRecorder.Instance.IsTileScannedSurface(target.Tile) &&
                 (_oreScanMode & OreScanMode.SingleUnderground) != OreScanMode.SingleUnderground)
             {
-                Messages.Message("SrRepeatScan".Translate(), MessageTypeDefOf.RejectInput,
-                    false);
+                Messages.Message("SrRepeatScan".Translate(), MessageTypeDefOf.RejectInput, false);
                 return false;
             }
 

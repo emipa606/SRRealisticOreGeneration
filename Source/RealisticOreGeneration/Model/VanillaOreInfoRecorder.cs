@@ -8,6 +8,7 @@
 // ******************************************************************
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Verse;
 
@@ -154,6 +155,22 @@ namespace RabiSquare.RealisticOreGeneration
 
             Log.Error($"{MsicDef.LogTag}cant find ore data by random index: {randomIndex}");
             return new IntRange(1, 20);
+        }
+
+        /// <summary>
+        /// get vanilla data of surface ore by defName
+        /// </summary>
+        /// <param name="defName"></param>
+        /// <returns></returns>
+        public OreData GetSurfaceOreDataByDefName(string defName)
+        {
+            foreach (var oreData in _vanillaSurfaceOreDataList.Where(oreData => oreData.defName == defName))
+            {
+                return oreData;
+            }
+
+            Log.Error($"{MsicDef.LogTag}can't find surface oreData on defName: {defName}");
+            return null;
         }
 
         public override string ToString()
