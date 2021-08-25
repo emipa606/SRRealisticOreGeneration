@@ -5,7 +5,7 @@
         <label>mining post</label>
         <description>A mining post.</description>
         <worldObjectClass>RabiSquare.RealisticOreGeneration.MiningOutpost</worldObjectClass>
-        <texture>World/WorldObjects/MiningPost</texture>
+        <texture>World/WorldObjects/MiningPostMini</texture>
         <expandingIcon>true</expandingIcon>
         <expandingIconTexture>World/WorldObjects/MiningPost</expandingIconTexture>
         <expandingIconPriority>10</expandingIconPriority>
