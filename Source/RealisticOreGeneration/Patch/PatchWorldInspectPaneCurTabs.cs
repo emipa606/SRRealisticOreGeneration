@@ -25,7 +25,7 @@ namespace RabiSquare.RealisticOreGeneration
         private static readonly WITab oreTileInfoTab = new OreTileInfoTab();
 
         /// <summary>
-        ///     add new tab
+        /// add new tab
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]

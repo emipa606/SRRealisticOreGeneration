@@ -18,6 +18,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class SettingWindow : Mod
     {
         public readonly SettingModel settingModel;
+        public static SettingWindow Instance { get; private set; }
 
         public SettingWindow(ModContentPack content) : base(content)
         {
@@ -25,11 +26,9 @@ namespace RabiSquare.RealisticOreGeneration
             Instance = this;
         }
 
-        public static SettingWindow Instance { get; private set; }
-
         public override string SettingsCategory()
         {
-            return "RealisticOreGeneration";
+            return "Realistic Ore Generation";
         }
 
         public override void DoSettingsWindowContents(Rect inRect)

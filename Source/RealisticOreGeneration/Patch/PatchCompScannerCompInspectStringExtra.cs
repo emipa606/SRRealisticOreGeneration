@@ -22,7 +22,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompScannerCompInspectStringExtra
     {
         /// <summary>
-        ///     hook inspection
+        /// hook inspection
         /// </summary>
         [UsedImplicitly]
         [HarmonyPostfix]

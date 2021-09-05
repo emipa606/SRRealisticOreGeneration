@@ -36,7 +36,8 @@ namespace RabiSquare.RealisticOreGeneration
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
             __instance.countPer10kCellsRange *=
                 WorldOreInfoRecorder.Instance.IsTileAbandoned(tileId) ? 0 : tileOreData.OreGenerationFactor;
-            WorldOreInfoRecorder.Instance.RecordAbandonedTile(tileId);
+            //if no ore generated in vanilla, don't record it 
+            if (__instance.maxValue > 0) WorldOreInfoRecorder.Instance.RecordAbandonedTile(tileId);
             if (!Prefs.DevMode) return true;
             Log.Message($"{MsicDef.LogTag}hook abundance success in tile: {tileId}");
             tileOreData.DebugShowSurfaceFactors();

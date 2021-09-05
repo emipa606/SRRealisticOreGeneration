@@ -17,7 +17,9 @@ namespace RabiSquare.RealisticOreGeneration
         private HashSet<int> _worldAbandonedTile = new HashSet<int>(); //which tile has been abandoned
         private HashSet<int> _worldSurfaceScannedTile = new HashSet<int>(); //which tile has been scanned
         private HashSet<int> _worldUndergroundScannedTile = new HashSet<int>(); //which tile has been scanned
-        private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>(); // tileId,count
+
+        private Dictionary<int, int> _worldTileUndergroundOreMiningCount =
+            new Dictionary<int, int>(); //tileId,count The speed of underground ore discovery will gradually increase
 
         /// <summary>
         /// abandoned or surface scanned or underground scanned

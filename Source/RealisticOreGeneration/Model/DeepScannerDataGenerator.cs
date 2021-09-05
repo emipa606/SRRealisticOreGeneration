@@ -25,16 +25,9 @@ namespace RabiSquare.RealisticOreGeneration
             var tileOreData = WorldOreDataGenerator.Instance.GetTileOreData(tileId);
             var freeCycleCount = (int) tileOreData.FreeUndergroundCycleCount;
             var currentCycleCount = WorldOreInfoRecorder.Instance.GetUndergroundMiningCount(tileId);
-            //abandon post
-            if (WorldOreInfoRecorder.Instance.IsTileAbandoned(tileId))
-            {
-                scanFindGuaranteedDays = 99999;
-                scanFindMtbDays = 99999;
-                return;
-            }
-
             //free underground ore find
             if (currentCycleCount < freeCycleCount) return;
+            //hard to find more 
             var factor1 = Mathf.Log(10) / freeCycleCount;
             var factor2 = currentCycleCount - freeCycleCount;
             scanFindGuaranteedDays *= (int) Mathf.Exp(factor1 * factor2);

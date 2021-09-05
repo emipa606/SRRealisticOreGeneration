@@ -19,7 +19,7 @@ namespace RabiSquare.RealisticOreGeneration
     public class PatchCompScannerTickDoesFind
     {
         /// <summary>
-        ///     hook deep scanner working speed
+        /// hook deep scanner working speed
         /// </summary>
         [UsedImplicitly]
         [HarmonyPrefix]
