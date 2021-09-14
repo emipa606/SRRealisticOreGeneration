@@ -14,6 +14,12 @@
             </value>
         </match>
     </Operation>
+    <Operation Class="PatchOperationReplace">
+        <xpath>/Defs/ThingDef[defName="LongRangeMineralScanner"]/graphicData/texPath</xpath>
+        <value>
+            <texPath>Thing/Building/LongRangeMineralScanner</texPath>
+        </value>
+    </Operation>
     <Operation Class="PatchOperationAdd">
         <xpath>/Defs/ThingDef[defName="LongRangeMineralScanner"]</xpath>
         <value>
