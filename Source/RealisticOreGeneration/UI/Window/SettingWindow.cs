@@ -48,11 +48,11 @@ namespace RabiSquare.RealisticOreGeneration
             ls.GapLine(15f);
             ls.Label($"{"SrSurfaceMultiplier".Translate()}: {settingModel.surfaceMultiplier}",
                 tooltip: "SrDescriptionSurfaceMultiplier".Translate());
-            settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 1f, 10f);
+            settingModel.surfaceMultiplier = ls.Slider(settingModel.surfaceMultiplier, 0f, 10f);
             ls.GapLine(15f);
             ls.Label($"{"SrUndergroundMultiplier".Translate()}: {settingModel.undergroundMultiplier}",
                 tooltip: "SrDescriptionUndergroundMultiplier".Translate());
-            settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 1f, 10f);
+            settingModel.undergroundMultiplier = ls.Slider(settingModel.undergroundMultiplier, 0f, 10f);
             ls.GapLine(15f);
             ls.Label($"{"SrOutpostMapSize".Translate()}: {settingModel.outpostMapSize}",
                 tooltip: "SrDescriptionOutpostMapSize".Translate());
