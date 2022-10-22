@@ -1,0 +1,6 @@
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Assemblies\RealisticOreGeneration.dll
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Assemblies\RealisticOreGeneration.pdb
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Source\RealisticOreGeneration\obj\Debug\RealisticOreGeneration.csproj.AssemblyReference.cache
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Source\RealisticOreGeneration\obj\Debug\RealisticOreGeneration.csproj.CoreCompileInputs.cache
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Source\RealisticOreGeneration\obj\Debug\RealisticOreGeneration.dll
+C:\Users\ausu\Desktop\RealisticOreGeneration\1.4\Source\RealisticOreGeneration\obj\Debug\RealisticOreGeneration.pdb
