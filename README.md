@@ -1,4 +1,4 @@
-# [[SR]Realistic Ore Generation (Continued)]()
+# [[SR]Realistic Ore Generation (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=3277375546)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -13,7 +13,6 @@ Update of Shadowrabbit,engager6,3HST有限公司s mod https://steamcommunity.com
 ID:2604132286
 Author:Shadowrabbit
 Support Version: 1.3, 1.4
-Github: https://github.com/Shadowrabbit/RealisticOreGeneration
 Support Languages: English, Chinese(简体中文), ChineseTraditional (繁體中文)
 
 # Description
@@ -77,3 +76,5 @@ Thanks.
 -  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
 
+
+[![Image](https://img.shields.io/github/v/release/emipa606/SRRealisticOreGeneration?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3277375546)
