@@ -30,7 +30,7 @@ public class CompOreScanner : CompScanner
 
     private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
 
-    private Dictionary<int, int> _ringMap = new Dictionary<int, int>();
+    private Dictionary<int, int> _ringMap = new();
 
     private int _selectedTile = -1;
 
@@ -39,8 +39,8 @@ public class CompOreScanner : CompScanner
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {
         base.PostSpawnSetup(respawningAfterLoad);
-        GetRingMap(SingleModeRadius);
-        FindDefaultTarget();
+        getRingMap(SingleModeRadius);
+        findDefaultTarget();
     }
 
     public override void PostExposeData()
@@ -56,8 +56,8 @@ public class CompOreScanner : CompScanner
             yield return item;
         }
 
-        yield return GetScanAreaGizmo();
-        foreach (var item2 in GetScanModeGizmo())
+        yield return getScanAreaGizmo();
+        foreach (var item2 in getScanModeGizmo())
         {
             yield return item2;
         }
@@ -83,7 +83,7 @@ public class CompOreScanner : CompScanner
                 $"[RabiSquare.RealisticOreGeneration]scanning complete: {_selectedTile}");
         }
 
-        FindDefaultTarget();
+        findDefaultTarget();
     }
 
     public override void CompTickRare()
@@ -93,7 +93,7 @@ public class CompOreScanner : CompScanner
             return;
         }
 
-        FindDefaultTarget();
+        findDefaultTarget();
         if (_selectedTile != -1)
         {
             return;
@@ -103,7 +103,7 @@ public class CompOreScanner : CompScanner
         {
             Messages.Message("SrAutomaticSwitchingMode".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
             _oreScanMode &= ~OreScanMode.RangeSurface;
-            FindDefaultTarget();
+            findDefaultTarget();
             if (_selectedTile != -1)
             {
                 return;
@@ -126,21 +126,21 @@ public class CompOreScanner : CompScanner
         Messages.Message("SrNoTargetTile".Translate(parent.Label), MessageTypeDefOf.NeutralEvent);
     }
 
-    private void FindDefaultTarget()
+    private void findDefaultTarget()
     {
         switch (_oreScanMode)
         {
             case OreScanMode.SingleSurface:
-                FindDefaultTargetSingle(true);
+                findDefaultTargetSingle(true);
                 break;
             case OreScanMode.SingleUnderground:
-                FindDefaultTargetSingle(false);
+                findDefaultTargetSingle(false);
                 break;
             case OreScanMode.RangeSurface:
-                FindDefaultTargetRange(true);
+                findDefaultTargetRange(true);
                 break;
             case OreScanMode.RangeUnderground:
-                FindDefaultTargetRange(false);
+                findDefaultTargetRange(false);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -148,17 +148,16 @@ public class CompOreScanner : CompScanner
 
         if (_selectedTile != -1)
         {
-            UpdateCostTime();
+            updateCostTime();
         }
 
         if (Prefs.DevMode)
         {
-            Log.Message(string.Format("{0}set default target: {1}", "[RabiSquare.RealisticOreGeneration]",
-                _selectedTile));
+            Log.Message($"{"[RabiSquare.RealisticOreGeneration]"}set default target: {_selectedTile}");
         }
     }
 
-    private void FindDefaultTargetSingle(bool isSurface)
+    private void findDefaultTargetSingle(bool isSurface)
     {
         var list = _ringMap.Keys.ToList();
         if (list.Count <= 0)
@@ -194,7 +193,7 @@ public class CompOreScanner : CompScanner
         _selectedTile = -1;
     }
 
-    private void FindDefaultTargetRange(bool isSurface)
+    private void findDefaultTargetRange(bool isSurface)
     {
         using (var enumerator = _ringMap.Where(delegate(KeyValuePair<int, int> kvp)
                    {
@@ -202,8 +201,7 @@ public class CompOreScanner : CompScanner
                        if (isSurface)
                        {
                            var instance2 = BaseSingleTon<WorldOreInfoRecorder>.Instance;
-                           var keyValuePair4 = kvp;
-                           result2 = !instance2.IsTileScannedSurface(keyValuePair4.Key) ? 1 : 0;
+                           result2 = !instance2.IsTileScannedSurface(kvp.Key) ? 1 : 0;
                        }
                        else
                        {
@@ -217,8 +215,7 @@ public class CompOreScanner : CompScanner
                        if (!isSurface)
                        {
                            var instance = BaseSingleTon<WorldOreInfoRecorder>.Instance;
-                           var keyValuePair3 = kvp;
-                           result = !instance.IsTileScannedUnderground(keyValuePair3.Key) ? 1 : 0;
+                           result = !instance.IsTileScannedUnderground(kvp.Key) ? 1 : 0;
                        }
                        else
                        {
@@ -226,16 +223,8 @@ public class CompOreScanner : CompScanner
                        }
 
                        return (byte)result != 0;
-                   }).Where(delegate(KeyValuePair<int, int> kvp)
-                   {
-                       var keyValuePair2 = kvp;
-                       return !keyValuePair2.Key.IsTileOceanOrLake();
-                   })
-                   .Where(delegate(KeyValuePair<int, int> kvp)
-                   {
-                       var keyValuePair = kvp;
-                       return keyValuePair.Value <= RangeModeRadius;
-                   })
+                   }).Where(kvp => !kvp.Key.IsTileOceanOrLake())
+                   .Where(kvp => kvp.Value <= RangeModeRadius)
                    .GetEnumerator())
         {
             if (enumerator.MoveNext())
@@ -248,7 +237,7 @@ public class CompOreScanner : CompScanner
         _selectedTile = -1;
     }
 
-    private void GetRingMap(int radius)
+    private void getRingMap(int radius)
     {
         var worldGrid = Find.WorldGrid;
         if (worldGrid == null)
@@ -260,7 +249,7 @@ public class CompOreScanner : CompScanner
         var list = new List<int> { parent.Tile };
         var list2 = new List<int>();
         var innerCircleSet = new HashSet<int> { parent.Tile };
-        var list3 = new List<int>();
+        var list3 = new List<PlanetTile>();
         for (var i = 1; i <= radius; i++)
         {
             list2.Clear();
@@ -270,7 +259,7 @@ public class CompOreScanner : CompScanner
                 foreach (var item2 in list3.Where(neighbor => !innerCircleSet.Contains(neighbor)))
                 {
                     innerCircleSet.Add(item2);
-                    if (!item2.IsTileOceanOrLake())
+                    if (!item2.Tile.WaterCovered)
                     {
                         list2.Add(item2);
                     }
@@ -291,9 +280,9 @@ public class CompOreScanner : CompScanner
         }
     }
 
-    private void UpdateCostTime()
+    private void updateCostTime()
     {
-        var targetDistance = GetTargetDistance(_selectedTile);
+        var targetDistance = getTargetDistance(_selectedTile);
         Props.scanFindGuaranteedDays = 1.4f * targetDistance / (targetDistance + 1);
         Props.scanFindMtbDays = Props.scanFindGuaranteedDays / 2f;
         if ((_oreScanMode & OreScanMode.SingleUnderground) != OreScanMode.SingleUnderground)
@@ -305,15 +294,14 @@ public class CompOreScanner : CompScanner
         Props.scanFindMtbDays *= 2f;
     }
 
-    private int GetTargetDistance(int tileId)
+    private int getTargetDistance(int tileId)
     {
         if (_ringMap.TryGetValue(tileId, out var distance))
         {
             return distance;
         }
 
-        Log.Error(string.Format("{0}can't find target tile in circle tileId: {1}",
-            "[RabiSquare.RealisticOreGeneration]", tileId));
+        Log.Error($"[RabiSquare.RealisticOreGeneration]can't find target tile in circle tileId: {tileId}");
         return 1;
     }
 
@@ -341,7 +329,7 @@ public class CompOreScanner : CompScanner
         }
     }
 
-    private IEnumerable<Gizmo> GetScanModeGizmo()
+    private IEnumerable<Gizmo> getScanModeGizmo()
     {
         yield return new Command_Action
         {
@@ -365,7 +353,7 @@ public class CompOreScanner : CompScanner
         }
     }
 
-    private Gizmo GetScanAreaGizmo()
+    private Gizmo getScanAreaGizmo()
     {
         return new Command_Action
         {
@@ -385,7 +373,7 @@ public class CompOreScanner : CompScanner
         _oreScanMode = (_oreScanMode & OreScanMode.RangeSurface) == OreScanMode.RangeSurface
             ? _oreScanMode & ~OreScanMode.RangeSurface
             : _oreScanMode | OreScanMode.RangeSurface;
-        FindDefaultTarget();
+        findDefaultTarget();
     }
 
     private void OnClickScanAreaChange()
@@ -393,7 +381,7 @@ public class CompOreScanner : CompScanner
         _oreScanMode = (_oreScanMode & OreScanMode.SingleUnderground) == OreScanMode.SingleUnderground
             ? _oreScanMode & ~OreScanMode.SingleUnderground
             : _oreScanMode | OreScanMode.SingleUnderground;
-        FindDefaultTarget();
+        findDefaultTarget();
     }
 
     private bool OnWorldTargetSelected(GlobalTargetInfo target)
@@ -422,11 +410,11 @@ public class CompOreScanner : CompScanner
         }
 
         _selectedTile = target.Tile;
-        UpdateCostTime();
+        updateCostTime();
         return true;
     }
 
-    private string TargetingLabelGetter(GlobalTargetInfo target)
+    private TaggedString targetingLabelGetter(GlobalTargetInfo target)
     {
         if (!target.IsValid)
         {
@@ -458,6 +446,6 @@ public class CompOreScanner : CompScanner
         CameraJumper.TryJump(CameraJumper.GetWorldTarget(parent));
         Find.WorldSelector.ClearSelection();
         Find.WorldTargeter.BeginTargeting(OnWorldTargetSelected, true, ScanCursor, true,
-            delegate { GenDraw.DrawWorldRadiusRing(parent.Tile, SingleModeRadius); }, TargetingLabelGetter);
+            delegate { GenDraw.DrawWorldRadiusRing(parent.Tile, SingleModeRadius); }, targetingLabelGetter);
     }
 }

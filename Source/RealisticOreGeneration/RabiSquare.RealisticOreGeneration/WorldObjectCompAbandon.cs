@@ -52,11 +52,11 @@ public class WorldObjectCompAbandon : WorldObjectComp
 
     private void OnClickAbandon()
     {
-        Abandon();
+        abandon();
         SoundDefOf.Tick_High.PlayOneShotOnCamera();
     }
 
-    private void Abandon()
+    private void abandon()
     {
         MapParent.Destroy();
         BaseSingleTon<MiningOutpostRecorder>.Instance.MiningOutpostCountDecrease();

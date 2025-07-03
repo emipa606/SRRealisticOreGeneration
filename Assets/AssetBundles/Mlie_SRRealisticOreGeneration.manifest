@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 3374164978
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8f45d7fb8cdcaa8a5162c8ad8f57ae5d
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2612ac43db082a73502ee80f2eceb73f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 8f45d7fb8cdcaa8a5162c8ad8f57ae5d
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/UndergroundMode.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/BuildMiningPost.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/Thing/Building/LongRangeMineralScanner_east.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/SurfaceMode.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/Thing/Building/LongRangeMineralScanner_south.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/Thing/Building/LongRangeMineralScanner_west.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/Thing/Building/LongRangeMineralScanner_north.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/AutoRangeMode.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/AbandonMiningPost.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Overlays/ScanCursor.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/SelectTarget.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/World/WorldObjects/MiningPostMini.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/UI/Commands/SingleMode.png
+- Assets/Data/Mlie.SRRealisticOreGeneration/Textures/World/WorldObjects/MiningPost.png
+Dependencies: []

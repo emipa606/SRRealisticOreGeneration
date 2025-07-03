@@ -13,7 +13,7 @@ public class OreTileInfoTab : WITab
 
     private const float BarWidth = 16f;
 
-    private static readonly Vector2 WinSize = new Vector2(440f, 540f);
+    private static readonly Vector2 WinSize = new(440f, 540f);
 
     private Vector2 _scrollPosition;
 
@@ -25,7 +25,7 @@ public class OreTileInfoTab : WITab
         labelKey = "SrTabOreTileInfo";
     }
 
-    public override bool IsVisible => SelTileID >= 0;
+    public override bool IsVisible => SelTile.tile.tileId >= 0;
 
     protected override void FillTab()
     {
@@ -42,7 +42,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawWarning(ref float curY, float width)
     {
-        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileAbandoned(SelTileID))
+        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileAbandoned(SelTile.tile.tileId))
         {
             return;
         }
@@ -80,7 +80,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawSurfaceInfo(ref float curY, float width)
     {
-        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileScannedSurface(SelTileID))
+        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileScannedSurface(SelTile.tile.tileId))
         {
             DrawInfo(ref curY, width, "SrNoSurfaceInfo".Translate());
             return;
@@ -92,7 +92,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawUndergroundInfo(ref float curY, float width)
     {
-        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileScannedUnderground(SelTileID))
+        if (!BaseSingleTon<WorldOreInfoRecorder>.Instance.IsTileScannedUnderground(SelTile.tile.tileId))
         {
             DrawInfo(ref curY, width, "SrNoUndergroundInfo".Translate());
             return;
@@ -104,7 +104,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawSurfaceAbundance(ref float curY, float width)
     {
-        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTileID);
+        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTile.tile.tileId);
         var rect = default(Rect);
         rect.width = width;
         rect.y = curY;
@@ -122,7 +122,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawSurfaceOreDistribution(ref float curY, float width)
     {
-        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTileID);
+        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTile.tile.tileId);
         var rect = default(Rect);
         rect.width = width;
         rect.y = curY;
@@ -156,7 +156,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawUndergroundAbundance(ref float curY, float width)
     {
-        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTileID);
+        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTile.tile.tileId);
         var rect = default(Rect);
         rect.width = width;
         rect.y = curY;
@@ -174,7 +174,7 @@ public class OreTileInfoTab : WITab
 
     private void DrawUndergroundOreDistribution(ref float curY, float width)
     {
-        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTileID);
+        var tileOreData = BaseSingleTon<WorldOreDataGenerator>.Instance.GetTileOreData(SelTile.tile.tileId);
         var rect = default(Rect);
         rect.width = width;
         rect.y = curY;

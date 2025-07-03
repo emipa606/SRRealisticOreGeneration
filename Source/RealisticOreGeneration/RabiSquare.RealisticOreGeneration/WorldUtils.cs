@@ -1,12 +1,11 @@
-using RimWorld.Planet;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration;
 
 public static class WorldUtils
 {
-    public static void SetWorldLayerDirty<T>() where T : WorldLayer
+    public static void SetWorldLayerDirty()
     {
-        Find.World?.renderer?.SetDirty<T>();
+        Find.World?.renderer?.SetAllLayersDirty();
     }
 }

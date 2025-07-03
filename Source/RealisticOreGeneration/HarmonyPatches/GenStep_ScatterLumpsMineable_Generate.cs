@@ -1,28 +1,18 @@
 using HarmonyLib;
-using JetBrains.Annotations;
 using RabiSquare.RealisticOreGeneration;
 using RimWorld;
 using Verse;
 
 namespace RealisticOreGeneration.HarmonyPatches;
 
-[UsedImplicitly]
 [HarmonyPatch(typeof(GenStep_ScatterLumpsMineable), nameof(GenStep_ScatterLumpsMineable.Generate))]
 public class GenStep_ScatterLumpsMineable_Generate
 {
-    [UsedImplicitly]
-    [HarmonyPrefix]
-    public static bool Prefix(GenStep_ScatterLumpsMineable __instance, Map map)
+    public static void Prefix(GenStep_ScatterLumpsMineable __instance, Map map)
     {
         if (map == null)
         {
-            return true;
-        }
-
-        if (Prefs.DevMode)
-        {
-            Log.Message(
-                $"[RabiSquare.RealisticOreGeneration]vanilla countPer10kCellsRange: {__instance.countPer10kCellsRange}");
+            return;
         }
 
         var tile = map.Tile;
@@ -34,18 +24,5 @@ public class GenStep_ScatterLumpsMineable_Generate
         {
             BaseSingleTon<WorldOreInfoRecorder>.Instance.RecordAbandonedTile(tile);
         }
-
-        if (!Prefs.DevMode)
-        {
-            return true;
-        }
-
-        Log.Message($"[RabiSquare.RealisticOreGeneration]hook abundance success in tile: {tile}");
-        tileOreData.DebugShowSurfaceFactors();
-        Log.Message(
-            $"[RabiSquare.RealisticOreGeneration]surfaceMultiplier: {SettingWindow.Instance.settingModel.surfaceMultiplier}");
-        Log.Message(
-            $"[RabiSquare.RealisticOreGeneration]current countPer10kCellsRange: {__instance.countPer10kCellsRange}");
-        return true;
     }
 }

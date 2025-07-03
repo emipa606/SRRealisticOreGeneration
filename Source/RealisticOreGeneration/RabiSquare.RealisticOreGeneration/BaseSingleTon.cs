@@ -6,6 +6,6 @@ public class BaseSingleTon<T> where T : class, new()
 
     private static class Inner
     {
-        internal static readonly T InternalInstance = new T();
+        internal static readonly T InternalInstance = new();
     }
 }

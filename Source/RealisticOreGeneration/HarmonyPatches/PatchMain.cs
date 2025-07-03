@@ -1,11 +1,9 @@
 using System.Reflection;
 using HarmonyLib;
-using JetBrains.Annotations;
 using Verse;
 
 namespace RealisticOreGeneration.HarmonyPatches;
 
-[UsedImplicitly]
 [StaticConstructorOnStartup]
 public class PatchMain
 {

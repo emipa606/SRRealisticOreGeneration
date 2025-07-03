@@ -1,23 +1,19 @@
 using HarmonyLib;
-using JetBrains.Annotations;
 using RabiSquare.RealisticOreGeneration;
 using RimWorld;
 using Verse;
 
 namespace RealisticOreGeneration.HarmonyPatches;
 
-[UsedImplicitly]
 [HarmonyPatch(typeof(CompDeepScanner), "ChooseLumpThingDef")]
 public class CompDeepScanner_ChooseLumpThingDef
 {
-    [UsedImplicitly]
-    [HarmonyPrefix]
-    public static bool Prefix(CompDeepScanner __instance)
+    public static void Prefix(CompDeepScanner __instance)
     {
         var parent = __instance.parent;
         if (parent == null)
         {
-            return true;
+            return;
         }
 
         var tile = parent.Tile;
@@ -28,7 +24,7 @@ public class CompDeepScanner_ChooseLumpThingDef
             if (thingDef == null)
             {
                 Log.Error($"[RabiSquare.RealisticOreGeneration]can't find oreDef with defName: {item.Key}");
-                return true;
+                return;
             }
 
             thingDef.deepCommonality = item.Value;
@@ -38,14 +34,5 @@ public class CompDeepScanner_ChooseLumpThingDef
                     BaseSingleTon<VanillaOreInfoRecorder>.Instance.GetRandomUndergroundLumpSize();
             }
         }
-
-        if (!Prefs.DevMode)
-        {
-            return true;
-        }
-
-        Log.Message($"hook underground ore gen success in tile: {tile}");
-        tileOreData.DebugShowUndergroundDistribution();
-        return true;
     }
 }

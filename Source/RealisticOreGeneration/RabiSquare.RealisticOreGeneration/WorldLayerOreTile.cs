@@ -10,7 +10,7 @@ namespace RabiSquare.RealisticOreGeneration;
 
 [UsedImplicitly]
 [StaticConstructorOnStartup]
-public class WorldLayerOreTile : WorldLayer
+public class WorldLayerOreTile : WorldDrawLayerBase
 {
     private static readonly Material OreInfoTileDepletion =
         MaterialPool.MatFrom("World/SelectedTile", ShaderDatabase.WorldOverlayAdditive, Color.red, 3559);

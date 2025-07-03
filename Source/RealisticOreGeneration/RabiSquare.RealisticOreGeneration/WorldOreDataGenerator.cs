@@ -11,7 +11,7 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
 {
     private const float Relief = 5f;
 
-    private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new Dictionary<int, TileOreData>();
+    private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new();
 
     [NotNull]
     public TileOreData GetTileOreData(int tileId)
@@ -51,7 +51,7 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
         for (var i = 0; i < count; i++)
         {
             array[i] = 1f / (num * Mathf.Sqrt(6.28f)) *
-                       Mathf.Exp((0f - Mathf.Pow(i - (count / 2), 2f)) / (2f * Mathf.Pow(num, 2f)));
+                       Mathf.Exp((0f - Mathf.Pow(i - (count / 2f), 2f)) / (2f * Mathf.Pow(num, 2f)));
             array[i] *= 1f / (num2 * Mathf.Sqrt(6.28f)) *
                         Mathf.Exp((0f - Mathf.Pow(i - (Rand.ValueSeeded(seed) * (count / 2f)), 2f)) /
                                   (2f * Mathf.Pow(num2, 2f)));
@@ -103,14 +103,14 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
         var tile = worldGrid[tileId];
         if (tile == null)
         {
-            Log.Error($"{"[RabiSquare.RealisticOreGeneration]"}can't find tile: {tileId}");
+            Log.Error($"[RabiSquare.RealisticOreGeneration]can't find tile: {tileId}");
             return 1f;
         }
 
         var tileCenter = worldGrid.GetTileCenter(tileId);
         var num = isSurface ? tile.GetHashCode() : tile.GetHashCode() / 2;
         var num2 = Mathf.PerlinNoise((tileCenter.x + (num % 100)) / Relief, (tileCenter.z + (num % 100)) / Relief);
-        Mathf.Clamp(num2, 0f, 1f);
+        num2 = Mathf.Clamp(num2, 0f, 1f);
         return num2;
     }
 
@@ -129,7 +129,7 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
             var surfaceOreDataByIndex = BaseSingleTon<VanillaOreInfoRecorder>.Instance.GetSurfaceOreDataByIndex(i);
             if (surfaceOreDataByIndex == null)
             {
-                Log.Error($"{"[RabiSquare.RealisticOreGeneration]"}can't find ore data by index: {i}");
+                Log.Error($"[RabiSquare.RealisticOreGeneration]can't find ore data by index: {i}");
                 return 1f;
             }
 

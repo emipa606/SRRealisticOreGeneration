@@ -12,9 +12,9 @@ public class TileOreData
     private readonly float _surfaceValueFactor;
     private readonly int _tileId;
 
-    public Dictionary<string, float> surfaceDistribution = new Dictionary<string, float>();
+    public Dictionary<string, float> surfaceDistribution = new();
 
-    public Dictionary<string, float> undergroundDistribution = new Dictionary<string, float>();
+    public Dictionary<string, float> undergroundDistribution = new();
 
     public TileOreData()
     {
@@ -71,27 +71,5 @@ public class TileOreData
         }
 
         return Mathf.Clamp(num * _surfaceBerlinFactor * _surfaceValueFactor, 0f, 1f);
-    }
-
-    public void DebugShowSurfaceDistribution()
-    {
-        foreach (var item in surfaceDistribution)
-        {
-            Log.Message($"surface ore: {item.Key}\ncommonality: {item.Value}");
-        }
-    }
-
-    public void DebugShowUndergroundDistribution()
-    {
-        foreach (var item in undergroundDistribution)
-        {
-            Log.Message($"underground ore: {item.Key}\ncommonality: {item.Value}");
-        }
-    }
-
-    public void DebugShowSurfaceFactors()
-    {
-        Log.Message($"surfaceBerlinFactor: {_surfaceBerlinFactor}");
-        Log.Message($"surfaceValueFactor: {_surfaceValueFactor}");
     }
 }

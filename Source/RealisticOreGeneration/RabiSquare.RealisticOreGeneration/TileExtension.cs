@@ -1,3 +1,4 @@
+using System.Linq;
 using RimWorld;
 using Verse;
 
@@ -7,7 +8,7 @@ public static class TileExtension
 {
     public static bool IsTileOceanOrLake(this int tileId)
     {
-        var biomeDef = Find.WorldGrid?.tiles[tileId]?.biome;
+        var biomeDef = Find.WorldGrid?.Tiles.FirstOrDefault(tile => tile.tile.tileId == tileId)?.PrimaryBiome;
         if (biomeDef == null)
         {
             return false;

@@ -1,18 +1,14 @@
 using System.Text;
 using HarmonyLib;
-using JetBrains.Annotations;
 using RabiSquare.RealisticOreGeneration;
 using RimWorld;
 using Verse;
 
 namespace RealisticOreGeneration.HarmonyPatches;
 
-[UsedImplicitly]
 [HarmonyPatch(typeof(CompScanner), nameof(CompScanner.CompInspectStringExtra))]
 public class CompScanner_CompInspectStringExtra
 {
-    [UsedImplicitly]
-    [HarmonyPostfix]
     public static void Postfix(ref string __result, CompScanner __instance)
     {
         var parent = __instance.parent;

@@ -9,7 +9,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
 
     private HashSet<int> _worldSurfaceScannedTile = [];
 
-    private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
+    private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new();
 
     private HashSet<int> _worldUndergroundScannedTile = [];
 
@@ -32,25 +32,13 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         Scribe_Collections.Look(ref _worldSurfaceScannedTile, "_worldSurfaceScannedTile", LookMode.Value);
         Scribe_Collections.Look(ref _worldUndergroundScannedTile, "_worldUndergroundScannedTile", LookMode.Value);
         Scribe_Collections.Look(ref _worldAbandonedTile, "_worldAbandonedTile", LookMode.Value);
-        if (_worldTileUndergroundOreMiningCount == null)
-        {
-            _worldTileUndergroundOreMiningCount = new Dictionary<int, int>();
-        }
+        _worldTileUndergroundOreMiningCount ??= new Dictionary<int, int>();
 
-        if (_worldSurfaceScannedTile == null)
-        {
-            _worldSurfaceScannedTile = [];
-        }
+        _worldSurfaceScannedTile ??= [];
 
-        if (_worldUndergroundScannedTile == null)
-        {
-            _worldUndergroundScannedTile = [];
-        }
+        _worldUndergroundScannedTile ??= [];
 
-        if (_worldAbandonedTile == null)
-        {
-            _worldAbandonedTile = [];
-        }
+        _worldAbandonedTile ??= [];
     }
 
     public void UndergroundMiningCountIncrease(int tileId)
@@ -73,7 +61,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
             return;
         }
 
-        WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
+        WorldUtils.SetWorldLayerDirty();
     }
 
     public void RecordScannedTileSurface(int tileId)
@@ -84,7 +72,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
             return;
         }
 
-        WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
+        WorldUtils.SetWorldLayerDirty();
     }
 
     public void RecordScannedTileUnderground(int tileId)
@@ -95,7 +83,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
             return;
         }
 
-        WorldUtils.SetWorldLayerDirty<WorldLayerOreTile>();
+        WorldUtils.SetWorldLayerDirty();
     }
 
     public bool IsTileAbandoned(int tileId)
