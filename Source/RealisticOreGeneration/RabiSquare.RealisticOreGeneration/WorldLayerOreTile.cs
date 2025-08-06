@@ -61,7 +61,7 @@ public class WorldLayerOreTile : WorldDrawLayerBase
         }
     }
 
-    private void DrawOreInfoCursor(int tileId, Material material)
+    private void DrawOreInfoCursor(PlanetTile tileId, Material material)
     {
         var subMesh = GetSubMesh(material);
         Find.WorldGrid.GetTileVertices(tileId, _verts);

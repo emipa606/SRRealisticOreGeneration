@@ -1,3 +1,4 @@
+using RimWorld.Planet;
 using UnityEngine;
 
 namespace RabiSquare.RealisticOreGeneration;
@@ -8,7 +9,8 @@ public static class DeepScannerDataGenerator
 
     private const int VanillaScanFindMtbDays = 3;
 
-    public static void GenerateDeepScannerFindDays(int tileId, out int scanFindGuaranteedDays, out int scanFindMtbDays)
+    public static void GenerateDeepScannerFindDays(PlanetTile tileId, out int scanFindGuaranteedDays,
+        out int scanFindMtbDays)
     {
         scanFindGuaranteedDays = VanillaScanFindGuaranteedDays;
         scanFindMtbDays = VanillaScanFindMtbDays;

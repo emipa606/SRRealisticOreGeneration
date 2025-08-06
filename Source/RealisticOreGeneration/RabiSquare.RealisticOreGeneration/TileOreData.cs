@@ -10,7 +10,7 @@ public class TileOreData
     private readonly float _surfaceBerlinFactor;
 
     private readonly float _surfaceValueFactor;
-    private readonly int _tileId;
+    private readonly PlanetTile _tileId;
 
     public Dictionary<string, float> surfaceDistribution = new();
 
@@ -20,7 +20,8 @@ public class TileOreData
     {
     }
 
-    public TileOreData(int tileId, float surfaceBerlinFactor, float undergroundBerlinFactor, float surfaceValueFactor)
+    public TileOreData(PlanetTile tileId, float surfaceBerlinFactor, float undergroundBerlinFactor,
+        float surfaceValueFactor)
     {
         _tileId = tileId;
         _surfaceBerlinFactor = surfaceBerlinFactor;

@@ -12,41 +12,31 @@ public class WorldInspectPane_CurTabs
 {
     private static readonly WITab oreTileInfoTab = new OreTileInfoTab();
 
-    public static void Postfix(ref IEnumerable<InspectTabBase> __result, WorldInspectPane __instance)
+    public static IEnumerable<InspectTabBase> Postfix(IEnumerable<InspectTabBase> values)
     {
-        if (__result == null)
+        if (!values.Any())
         {
-            return;
+            yield break;
+        }
+
+        foreach (var value in values)
+        {
+            yield return value;
         }
 
         if (Find.WorldSelector == null)
         {
             Log.Error("[RabiSquare.RealisticOreGeneration]cant't find worldSelector");
-            return;
+            yield break;
         }
 
         var numSelectedObjects = Find.WorldSelector.NumSelectedObjects;
         var selectedTile = Find.WorldSelector.SelectedTile;
         if (numSelectedObjects != 0 || selectedTile < 0)
         {
-            return;
+            yield break;
         }
 
-        if (__instance.CurTabs == null || !__instance.CurTabs.Any())
-        {
-            Log.Error("[RabiSquare.RealisticOreGeneration]empty ___TileTabs");
-            return;
-        }
-
-        var tileTabs = __instance.CurTabs.ToArray();
-
-        var array = new InspectTabBase[tileTabs.Length + 1];
-        for (var i = 0; i < tileTabs.Length; i++)
-        {
-            array[i] = tileTabs[i];
-        }
-
-        array[tileTabs.Length] = oreTileInfoTab;
-        __result = array;
+        yield return oreTileInfoTab;
     }
 }

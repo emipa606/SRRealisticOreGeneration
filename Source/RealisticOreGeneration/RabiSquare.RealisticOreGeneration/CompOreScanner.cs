@@ -30,9 +30,9 @@ public class CompOreScanner : CompScanner
 
     private OreScanMode _oreScanMode = OreScanMode.RangeSurface;
 
-    private Dictionary<int, int> _ringMap = new();
+    private Dictionary<PlanetTile, int> _ringMap = new();
 
-    private int _selectedTile = -1;
+    private PlanetTile _selectedTile = -1;
 
     private new CompPropertiesOreScanner Props => (CompPropertiesOreScanner)props;
 
@@ -181,7 +181,7 @@ public class CompOreScanner : CompScanner
                 continue;
             }
 
-            if (item.IsTileOceanOrLake())
+            if (item.Tile.WaterCovered)
             {
                 continue;
             }
@@ -195,7 +195,7 @@ public class CompOreScanner : CompScanner
 
     private void findDefaultTargetRange(bool isSurface)
     {
-        using (var enumerator = _ringMap.Where(delegate(KeyValuePair<int, int> kvp)
+        using (var enumerator = _ringMap.Where(delegate(KeyValuePair<PlanetTile, int> kvp)
                    {
                        int result2;
                        if (isSurface)
@@ -209,7 +209,7 @@ public class CompOreScanner : CompScanner
                        }
 
                        return (byte)result2 != 0;
-                   }).Where(delegate(KeyValuePair<int, int> kvp)
+                   }).Where(delegate(KeyValuePair<PlanetTile, int> kvp)
                    {
                        int result;
                        if (!isSurface)
@@ -223,7 +223,7 @@ public class CompOreScanner : CompScanner
                        }
 
                        return (byte)result != 0;
-                   }).Where(kvp => !kvp.Key.IsTileOceanOrLake())
+                   }).Where(kvp => !kvp.Key.Tile.WaterCovered)
                    .Where(kvp => kvp.Value <= RangeModeRadius)
                    .GetEnumerator())
         {
@@ -245,10 +245,10 @@ public class CompOreScanner : CompScanner
             throw new Exception("[RabiSquare.RealisticOreGeneration]can't find world grid");
         }
 
-        _ringMap = new Dictionary<int, int>();
-        var list = new List<int> { parent.Tile };
-        var list2 = new List<int>();
-        var innerCircleSet = new HashSet<int> { parent.Tile };
+        _ringMap = new Dictionary<PlanetTile, int>();
+        var list = new List<PlanetTile> { parent.Tile };
+        var list2 = new List<PlanetTile>();
+        var innerCircleSet = new HashSet<PlanetTile> { parent.Tile };
         var list3 = new List<PlanetTile>();
         for (var i = 1; i <= radius; i++)
         {
@@ -294,7 +294,7 @@ public class CompOreScanner : CompScanner
         Props.scanFindMtbDays *= 2f;
     }
 
-    private int getTargetDistance(int tileId)
+    private int getTargetDistance(PlanetTile tileId)
     {
         if (_ringMap.TryGetValue(tileId, out var distance))
         {

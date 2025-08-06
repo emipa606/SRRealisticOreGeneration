@@ -11,10 +11,10 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
 {
     private const float Relief = 5f;
 
-    private readonly Dictionary<int, TileOreData> _cacheTileOreDataHashmap = new();
+    private readonly Dictionary<PlanetTile, TileOreData> _cacheTileOreDataHashmap = new();
 
     [NotNull]
-    public TileOreData GetTileOreData(int tileId)
+    public TileOreData GetTileOreData(PlanetTile tileId)
     {
         if (_cacheTileOreDataHashmap.TryGetValue(tileId, out var data))
         {
@@ -98,7 +98,7 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
         return dictionary;
     }
 
-    private static float CalcBerlinFactor(int tileId, WorldGrid worldGrid, bool isSurface)
+    private static float CalcBerlinFactor(PlanetTile tileId, WorldGrid worldGrid, bool isSurface)
     {
         var tile = worldGrid[tileId];
         if (tile == null)

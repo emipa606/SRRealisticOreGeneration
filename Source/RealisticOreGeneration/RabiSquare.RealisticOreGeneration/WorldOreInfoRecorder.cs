@@ -1,23 +1,24 @@
 using System.Collections.Generic;
+using RimWorld.Planet;
 using Verse;
 
 namespace RabiSquare.RealisticOreGeneration;
 
 public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposable
 {
-    private HashSet<int> _worldAbandonedTile = [];
+    private HashSet<PlanetTile> _worldAbandonedTile = [];
 
-    private HashSet<int> _worldSurfaceScannedTile = [];
+    private HashSet<PlanetTile> _worldSurfaceScannedTile = [];
 
-    private Dictionary<int, int> _worldTileUndergroundOreMiningCount = new();
+    private Dictionary<PlanetTile, int> _worldTileUndergroundOreMiningCount = new();
 
-    private HashSet<int> _worldUndergroundScannedTile = [];
+    private HashSet<PlanetTile> _worldUndergroundScannedTile = [];
 
-    public IEnumerable<int> WorldOreInfoTile
+    public IEnumerable<PlanetTile> WorldOreInfoTile
     {
         get
         {
-            var hashSet = new HashSet<int>();
+            var hashSet = new HashSet<PlanetTile>();
             hashSet.AddRange(_worldAbandonedTile);
             hashSet.AddRange(_worldSurfaceScannedTile);
             hashSet.AddRange(_worldUndergroundScannedTile);
@@ -32,7 +33,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         Scribe_Collections.Look(ref _worldSurfaceScannedTile, "_worldSurfaceScannedTile", LookMode.Value);
         Scribe_Collections.Look(ref _worldUndergroundScannedTile, "_worldUndergroundScannedTile", LookMode.Value);
         Scribe_Collections.Look(ref _worldAbandonedTile, "_worldAbandonedTile", LookMode.Value);
-        _worldTileUndergroundOreMiningCount ??= new Dictionary<int, int>();
+        _worldTileUndergroundOreMiningCount ??= new Dictionary<PlanetTile, int>();
 
         _worldSurfaceScannedTile ??= [];
 
@@ -41,7 +42,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         _worldAbandonedTile ??= [];
     }
 
-    public void UndergroundMiningCountIncrease(int tileId)
+    public void UndergroundMiningCountIncrease(PlanetTile tileId)
     {
         if (!_worldTileUndergroundOreMiningCount.TryAdd(tileId, 1))
         {
@@ -49,12 +50,12 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         }
     }
 
-    public int GetUndergroundMiningCount(int tileId)
+    public int GetUndergroundMiningCount(PlanetTile tileId)
     {
         return _worldTileUndergroundOreMiningCount.GetValueOrDefault(tileId, 0);
     }
 
-    public void RecordAbandonedTile(int tileId)
+    public void RecordAbandonedTile(PlanetTile tileId)
     {
         if (!_worldAbandonedTile.Add(tileId))
         {
@@ -64,7 +65,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         WorldUtils.SetWorldLayerDirty();
     }
 
-    public void RecordScannedTileSurface(int tileId)
+    public void RecordScannedTileSurface(PlanetTile tileId)
     {
         if (!_worldSurfaceScannedTile.Add(tileId))
         {
@@ -75,7 +76,7 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         WorldUtils.SetWorldLayerDirty();
     }
 
-    public void RecordScannedTileUnderground(int tileId)
+    public void RecordScannedTileUnderground(PlanetTile tileId)
     {
         if (!_worldUndergroundScannedTile.Add(tileId))
         {
@@ -86,17 +87,17 @@ public class WorldOreInfoRecorder : BaseSingleTon<WorldOreInfoRecorder>, IExposa
         WorldUtils.SetWorldLayerDirty();
     }
 
-    public bool IsTileAbandoned(int tileId)
+    public bool IsTileAbandoned(PlanetTile tileId)
     {
         return _worldAbandonedTile.Contains(tileId);
     }
 
-    public bool IsTileScannedSurface(int tileId)
+    public bool IsTileScannedSurface(PlanetTile tileId)
     {
         return _worldSurfaceScannedTile.Contains(tileId) || SettingWindow.Instance.settingModel.disableScanner;
     }
 
-    public bool IsTileScannedUnderground(int tileId)
+    public bool IsTileScannedUnderground(PlanetTile tileId)
     {
         return _worldUndergroundScannedTile.Contains(tileId) || SettingWindow.Instance.settingModel.disableScanner;
     }

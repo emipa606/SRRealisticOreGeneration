@@ -4,14 +4,15 @@
   "CanRemove": "2",
   "SocialImageSet": true,
   "PreviewVersion": "1.6",
-  "LastXmlCleaning": "2025-07-03T19:54:48.6421445+02:00",
+  "LastXmlCleaning": "2025-08-06T22:19:19.3156642+02:00",
   "Patches": true,
   "Defs": true,
   "Assemblies": true,
-  "LinesOfCode": 71514.0,
-  "LinesOfXML": 3235.0,
+  "LinesOfCode": 70941,
+  "LinesOfXML": 3235,
   "SearchTags": [
     " distribution",
     " customisation"
-  ]
+  ],
+  "CodeBaseSize": 77
 }
