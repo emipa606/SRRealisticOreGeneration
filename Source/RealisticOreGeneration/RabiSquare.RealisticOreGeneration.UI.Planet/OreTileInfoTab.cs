@@ -25,7 +25,18 @@ public class OreTileInfoTab : WITab
         labelKey = "SrTabOreTileInfo";
     }
 
-    public override bool IsVisible => SelTile.tile.tileId >= 0;
+    public override bool IsVisible
+    {
+        get
+        {
+            if (!SelTile.OnSurface)
+            {
+                return false;
+            }
+
+            return SelTile.tile.tileId >= 0;
+        }
+    }
 
     protected override void FillTab()
     {

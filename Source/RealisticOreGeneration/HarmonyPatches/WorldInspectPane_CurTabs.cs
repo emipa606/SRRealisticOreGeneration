@@ -14,7 +14,7 @@ public class WorldInspectPane_CurTabs
 
     public static IEnumerable<InspectTabBase> Postfix(IEnumerable<InspectTabBase> values)
     {
-        if (!values.Any())
+        if (values == null || !values.Any())
         {
             yield break;
         }

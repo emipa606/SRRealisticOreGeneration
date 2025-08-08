@@ -1,5 +1,8 @@
 # Changelog for SRRealisticOreGeneration
 
+1.6.2 - Fix for space-tiles and landing tiles
+
+
 1.6.1 - Fixed faulty patch that caused hard crash
 
 
