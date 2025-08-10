@@ -1,5 +1,8 @@
 # Changelog for SRRealisticOreGeneration
 
+1.6.3 - Fixed loading issue
+
+
 1.6.2 - Fix for space-tiles and landing tiles
 
 

@@ -7,7 +7,7 @@ namespace RealisticOreGeneration.HarmonyPatches;
 [HarmonyPatch(typeof(World), nameof(World.ExposeData))]
 public class World_ExposeData
 {
-    public static void Prefix()
+    public static void Postfix()
     {
         BaseSingleTon<WorldOreInfoRecorder>.Instance.ExposeData();
         BaseSingleTon<MiningOutpostRecorder>.Instance.ExposeData();
