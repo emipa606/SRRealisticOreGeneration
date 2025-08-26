@@ -1,5 +1,8 @@
 # Changelog for SRRealisticOreGeneration
 
+1.6.4 - Should not cause issues with pocket maps
+
+
 1.6.3 - Fixed loading issue
 
 

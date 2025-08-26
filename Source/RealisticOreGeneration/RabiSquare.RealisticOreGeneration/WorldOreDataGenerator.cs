@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using RimWorld.Planet;
 using UnityEngine;
@@ -100,6 +101,11 @@ public class WorldOreDataGenerator : BaseSingleTon<WorldOreDataGenerator>
 
     private static float CalcBerlinFactor(PlanetTile tileId, WorldGrid worldGrid, bool isSurface)
     {
+        if (worldGrid.Tiles.All(tile => tile.tile != tileId))
+        {
+            return 1f;
+        }
+
         var tile = worldGrid[tileId];
         if (tile == null)
         {
