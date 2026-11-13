@@ -6,7 +6,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(GenStep_ScatterLumpsMineable), nameof(GenStep_ScatterLumpsMineable.Generate))]
-public class GenStep_ScatterLumpsMineable_Generate
+public static class GenStep_ScatterLumpsMineable_Generate
 {
     public static void Prefix(GenStep_ScatterLumpsMineable __instance, Map map)
     {

@@ -5,7 +5,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [StaticConstructorOnStartup]
-public class PatchMain
+public static class PatchMain
 {
     static PatchMain()
     {

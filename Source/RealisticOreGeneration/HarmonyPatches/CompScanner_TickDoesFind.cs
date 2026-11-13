@@ -6,7 +6,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(CompScanner), "TickDoesFind")]
-public class CompScanner_TickDoesFind
+public static class CompScanner_TickDoesFind
 {
     public static void Prefix(CompScanner __instance)
     {

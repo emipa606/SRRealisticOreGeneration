@@ -6,7 +6,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(CompDeepScanner), "ChooseLumpThingDef")]
-public class CompDeepScanner_ChooseLumpThingDef
+public static class CompDeepScanner_ChooseLumpThingDef
 {
     public static void Prefix(CompDeepScanner __instance)
     {

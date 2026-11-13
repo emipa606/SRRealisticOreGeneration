@@ -7,7 +7,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(CompScanner), nameof(CompScanner.CompInspectStringExtra))]
-public class CompScanner_CompInspectStringExtra
+public static class CompScanner_CompInspectStringExtra
 {
     public static void Postfix(ref string __result, CompScanner __instance)
     {

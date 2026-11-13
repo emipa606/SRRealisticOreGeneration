@@ -6,4 +6,25 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="RealisticOreGeneration/RealisticOreGeneration.csproj" />
+  <Folder Name="/XML/1.7/Patches/">
+    <File Path="../1.7/Patches/PatchBuildingsMisc.xml" />
+    <File Path="../1.7/Patches/PatchWorldObjects.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/WorldObjectDef/">
+    <File Path="../1.7/Defs/WorldObjectDef/WorldObjects.xml" />
+  </Folder>
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/Languages/English/Keyed/">
+    <File Path="../Languages/English/Keyed/CompOreScanner.xml" />
+    <File Path="../Languages/English/Keyed/OreTileInfoTab.xml" />
+    <File Path="../Languages/English/Keyed/PatchCompScannerCompInspectStringExtra.xml" />
+    <File Path="../Languages/English/Keyed/SettingWindow.xml" />
+    <File Path="../Languages/English/Keyed/WorldObjectCompAbandon.xml" />
+    <File Path="../Languages/English/Keyed/WorldObjectCompMining.xml" />
+  </Folder>
+  <Folder Name="/XML/1.7/Defs/MapGeneratorDef/">
+    <File Path="../1.7/Defs/MapGeneratorDef/MiningOutpostMapGenerator.xml" />
+  </Folder>
 </Solution>

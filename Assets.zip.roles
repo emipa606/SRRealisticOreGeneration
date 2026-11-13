@@ -1,0 +1,14 @@
+Textures/Thing/Building/LongRangeMineralScanner_east.png.dds.split image:Default
+Textures/Thing/Building/LongRangeMineralScanner_north.png.dds.split image:Default
+Textures/Thing/Building/LongRangeMineralScanner_south.png.dds.split image:Default
+Textures/Thing/Building/LongRangeMineralScanner_west.png.dds.split image:Default
+Textures/UI/Commands/AbandonMiningPost.png.dds.split image:Default
+Textures/UI/Commands/AutoRangeMode.png.dds.split image:Default
+Textures/UI/Commands/BuildMiningPost.png.dds.split image:Default
+Textures/UI/Commands/SelectTarget.png.dds.split image:Default
+Textures/UI/Commands/SingleMode.png.dds.split image:Default
+Textures/UI/Commands/SurfaceMode.png.dds.split image:Default
+Textures/UI/Commands/UndergroundMode.png.dds.split image:Default
+Textures/UI/Overlays/ScanCursor.png.dds.split image:Default
+Textures/World/WorldObjects/MiningPost.png.dds.split image:Default
+Textures/World/WorldObjects/MiningPostMini.png.dds.split image:Default

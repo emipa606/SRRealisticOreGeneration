@@ -5,7 +5,7 @@ using RimWorld;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(CompDeepScanner), "DoFind")]
-public class CompDeepScanner_DoFind
+public static class CompDeepScanner_DoFind
 {
     public static void Postfix(CompDeepScanner __instance)
     {

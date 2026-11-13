@@ -8,7 +8,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(WorldInspectPane), nameof(WorldInspectPane.CurTabs), MethodType.Getter)]
-public class WorldInspectPane_CurTabs
+public static class WorldInspectPane_CurTabs
 {
     private static readonly WITab oreTileInfoTab = new OreTileInfoTab();
 

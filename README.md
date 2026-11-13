@@ -1,12 +1,12 @@
 # [[SR]Realistic Ore Generation (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=3277375546)
 
-![Image](https://i.imgur.com/buuPQel.png)
+![Image](https://img.litet.net/logos/Info.png)
 
 Update of Shadowrabbit,engager6,3HST有限公司s mod https://steamcommunity.com/sharedfiles/filedetails/?id=2604132286
 
-![Image](https://i.imgur.com/pufA0kM.png)
+![Image](https://img.litet.net/logos/Notice.png)
 	
-![Image](https://i.imgur.com/Z4GOv8H.png)
+![Image](https://img.litet.net/logos/OriginalDescription.png)
 
 # Realistic Ore Generation
 
@@ -34,10 +34,10 @@ Realistic Ore generation contains a range of customisation settings allowing pla
 - Modified code for deep scanner that removes unlimited resource lump generation: after some amount of cycles, scan times will grow up dramatically, providing the soft cap for underground resource generation. Limit depends on overal resource richness of the world map tile.
 - New option for caravans, that allows to set up temporary mining camps (similar in functionality with Set Up Camp mod).  
 
-![Image](https://i.imgur.com/xiJQm2u.jpg)
-![Image](https://i.imgur.com/hRoRbJF.jpg)
-![Image](https://i.imgur.com/oV2IbPS.jpg)
-![Image](https://i.imgur.com/P76TLTw.jpg)
+![Image](https://img.litet.net/xiJQm2u.jpg)
+![Image](https://img.litet.net/hRoRbJF.jpg)
+![Image](https://img.litet.net/oV2IbPS.jpg)
+![Image](https://img.litet.net/P76TLTw.jpg)
 
 # Customisation
 
@@ -63,13 +63,13 @@ Japanese by [Proxyer](https://steamcommunity.com/profiles/76561198257945076)
 
 Thanks.
 
-![Image](https://i.imgur.com/PwoNOj4.png)
+![Image](https://img.litet.net/logos/ReportingIssues.png)
 
 
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
+-  Always post your log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404)
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
@@ -77,4 +77,4 @@ Thanks.
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/SRRealisticOreGeneration?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3277375546) | tags:  distribution,  customisation
+[![Image](https://img.shields.io/github/v/release/emipa606/SRRealisticOreGeneration?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3277375546) | customisation, distribution

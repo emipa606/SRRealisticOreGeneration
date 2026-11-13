@@ -5,7 +5,7 @@ using RimWorld.Planet;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(World), nameof(World.ExposeData))]
-public class World_ExposeData
+public static class World_ExposeData
 {
     public static void Postfix()
     {

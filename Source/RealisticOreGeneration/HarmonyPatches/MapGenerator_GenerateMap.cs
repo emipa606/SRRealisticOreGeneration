@@ -6,7 +6,7 @@ using Verse;
 namespace RealisticOreGeneration.HarmonyPatches;
 
 [HarmonyPatch(typeof(MapGenerator), nameof(MapGenerator.GenerateMap))]
-public class MapGenerator_GenerateMap
+public static class MapGenerator_GenerateMap
 {
     public static void Prefix(MapParent parent)
     {
